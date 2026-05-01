@@ -1,0 +1,6237 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>受験日本史 時期判断トレーニング 前近代①版 v32</title>
+  <style>
+    :root{
+      --bg:#fff7ed;
+      --bg2:#ffedd5;
+      --card:#fffdf8;
+      --ink:#3b2418;
+      --muted:#8a6250;
+      --line:#fed7aa;
+      --soft:#ffedd5;
+      --brand:#c05621;
+      --brand2:#fb923c;
+      --accent:#f97316;
+      --accent2:#fdba74;
+      --ok:#0f9d58;
+      --ok-bg:#ecfff4;
+      --ng:#d64545;
+      --ng-bg:#fff1f1;
+      --shadow:0 12px 28px rgba(133, 95, 62, .10);
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:
+        radial-gradient(circle at top left, #fff4e6 0, #fff4e6 26%, transparent 27%) 0 0/90px 90px,
+        linear-gradient(180deg, var(--bg2), var(--bg));
+      color:var(--ink);
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Kaku Gothic ProN","Yu Gothic","Noto Sans JP",sans-serif;
+    }
+    .wrap{max-width:1140px;margin:0 auto;padding:24px}
+    .hero,.card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:30px;
+      box-shadow:var(--shadow);
+    }
+    .hero{padding:26px 28px;margin-bottom:22px;overflow:hidden;position:relative}
+    .hero::before{
+      content:"";
+      position:absolute;right:-40px;top:-40px;width:220px;height:220px;border-radius:50%;
+      background:radial-gradient(circle, rgba(243,198,138,.36), rgba(243,198,138,0));
+      pointer-events:none;
+    }
+    .heroGrid{display:grid;grid-template-columns:1.2fr .8fr;gap:20px;align-items:center}
+    .mascotArea{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+    .miniCard{
+      background:#fff7ed;border:1px solid var(--line);border-radius:22px;padding:10px 12px;box-shadow:0 6px 16px rgba(133,95,62,.08)
+    }
+    h1{font-size:34px;line-height:1.28;margin:12px 0 12px}
+    h2{font-size:20px;margin:0 0 14px}
+    h3{font-size:16px;margin:0 0 8px}
+    p{line-height:1.8}
+    .lead{font-size:14px;color:var(--muted)}
+    .badge{
+      display:inline-block;margin:0 8px 8px 0;padding:8px 12px;border-radius:999px;
+      background:var(--soft);color:#9a3412;font-size:12px;font-weight:800;border:1px solid #fed7aa;
+    }
+
+    .grid{display:grid;gap:18px}
+    .grid2{grid-template-columns:1.25fr .75fr}
+    .modes{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .choices{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .choices.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .countRow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    @media (max-width:920px){
+      .heroGrid,.grid2,.modes,.choices,.choices.three,.questionHead,.explainWrap,.diffGrid,.diffRow{grid-template-columns:1fr}
+      h1{font-size:28px}
+    }
+
+    button{font:inherit}
+    .card{padding:22px}
+    .selectCard,.scopeBtn,.choiceBtn,.countBtn,.primary,.secondary,.ghostBtn{
+      border-radius:22px;border:1px solid var(--line);background:white;cursor:pointer;transition:.18s ease;
+    }
+    .selectCard,.scopeBtn{padding:18px;text-align:left}
+    .selectCard:hover,.scopeBtn:hover,.choiceBtn:hover,.countBtn:hover,.secondary:hover,.ghostBtn:hover{
+      transform:translateY(-2px);box-shadow:0 10px 18px rgba(133,95,62,.09)
+    }
+    .active{
+      background:linear-gradient(180deg,#f97316,#c2410c)!important;color:white!important;border-color:#c2410c!important;
+    }
+    .active .hint{color:#f5ddc7!important}
+    .hint{color:var(--muted);font-size:13px}
+    .small{font-size:13px;color:var(--muted)}
+    .scopeBtn{display:block;width:100%;margin:10px 0}
+    .countBtn{padding:12px;font-weight:900}
+    .primary{
+      background:linear-gradient(180deg,#fb923c,#ea580c);color:white;border-color:#ea580c;
+      padding:15px 18px;font-weight:900;width:100%;
+    }
+    .primary:disabled{background:#d8d0c8;border-color:#d8d0c8;cursor:not-allowed}
+    .secondary,.ghostBtn{
+      padding:11px 14px;font-weight:900;color:var(--ink);background:#fffdf9;
+    }
+    .ghostBtn{background:#fff7eb}
+    .pill{
+      display:inline-flex;align-items:center;gap:6px;padding:8px 12px;background:#fff7eb;border:1px solid var(--line);
+      border-radius:999px;font-size:12px;font-weight:800;color:#9a3412;
+    }
+
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+    .progressWrap{
+      position:relative;background:#f1e4d3;border-radius:999px;overflow:hidden;margin-bottom:18px;height:14px;border:1px solid #eadfcd;
+    }
+    .bar{
+      height:100%;
+      background:linear-gradient(90deg,#fed7aa,#fb923c,#f97316);
+      border-radius:999px;
+      transition:width .25s ease;
+    }
+
+    .questionHead{
+      display:grid;
+      grid-template-columns:128px 1fr;
+      gap:16px;
+      align-items:center;
+      margin-bottom:8px;
+      background:linear-gradient(180deg,#fffaf3,#fff6ea);
+      border:1px solid #f0e2cf;
+      border-radius:24px;
+      padding:14px 16px;
+    }
+    .questionArt{
+      display:flex;align-items:center;justify-content:center;
+      background:#fffdf8;border:1px solid var(--line);border-radius:22px;
+      min-height:116px;
+      overflow:hidden;
+    }
+    .questionText p{margin:.2rem 0}
+    .questionTitle{font-size:30px;font-weight:1000;margin:6px 0 4px}
+    .choiceGroup{
+      background:linear-gradient(180deg,#fffaf3,#fff5e8);
+      padding:16px;border-radius:24px;margin:16px 0;border:1px solid #f0e2cf;
+    }
+    .choiceBtn{
+      position:relative;
+      padding:14px 16px;text-align:left;font-weight:800;background:#ffffff;
+    }
+    .choiceBtn::before{
+      content:"";
+      position:absolute;inset:0;border-radius:20px;
+      box-shadow:inset 0 0 0 0 rgba(0,0,0,0);
+      transition:.15s ease;
+    }
+    .choiceBtn:hover::before{box-shadow:inset 0 0 0 2px rgba(167,116,75,.14)}
+    .picked{
+      background:linear-gradient(180deg,#f97316,#c2410c)!important;color:white!important;border-color:#c2410c!important;
+    }
+    .correct{
+      background:linear-gradient(180deg,#f0fff7,#e6fff0)!important;
+      color:var(--ok)!important;
+      border-color:#7dd3a7!important;
+      box-shadow:0 0 0 3px rgba(16,185,129,.12);
+    }
+    .wrong{
+      background:linear-gradient(180deg,#fff8f8,#fff0f0)!important;
+      color:var(--ng)!important;
+      border-color:#f1a7a7!important;
+      box-shadow:0 0 0 3px rgba(214,69,69,.10);
+    }
+
+    .answerBox{
+      border:1px solid var(--line);border-radius:24px;padding:16px;margin-top:16px;background:white;
+    }
+    .answerItem{
+      display:flex;justify-content:space-between;align-items:center;
+      background:#fff7ed;border:1px solid var(--line);border-radius:18px;padding:12px 14px;margin:8px 0;font-weight:900
+    }
+    .answerMain{display:flex;align-items:center;gap:10px}
+    .step{
+      width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;
+      background:#f3dfbf;color:#8a5b39;font-size:12px;font-weight:900;flex:0 0 auto;
+    }
+
+    .statusBanner{
+      display:flex;align-items:center;gap:16px;padding:16px 18px;border-radius:24px;margin-bottom:14px;
+      border:2px solid transparent;
+      animation:pop .22s ease;
+      position:relative;
+      overflow:hidden;
+    }
+    .statusBanner.ok{
+      background:linear-gradient(180deg,#f0fff7,#e7fff2);border-color:#9fe3bc;color:#086a3a;
+      box-shadow:0 10px 22px rgba(15,157,88,.10);
+    }
+    .statusBanner.ng{
+      background:linear-gradient(180deg,#fff8f8,#fff0f0);border-color:#f2b2b2;color:#aa2f2f;
+      box-shadow:0 10px 22px rgba(214,69,69,.10);
+    }
+    .statusIcon{
+      width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+      font-size:30px;font-weight:900;flex:0 0 auto;background:white;
+      box-shadow:0 6px 16px rgba(0,0,0,.06);z-index:1;
+    }
+    .ok .statusIcon{color:var(--ok);border:2px solid #9fe3bc}
+    .ng .statusIcon{color:var(--ng);border:2px solid #f2b2b2}
+    .statusTitle{font-size:24px;font-weight:1000;line-height:1.2}
+    .statusText{font-size:13px;line-height:1.7}
+    @keyframes pop{
+      from{transform:scale(.96);opacity:.4}
+      to{transform:scale(1);opacity:1}
+    }
+
+    /* 正解時のちょっとしたアニメーション */
+    .confetti{
+      position:absolute; inset:0; pointer-events:none;
+    }
+    .piece{
+      position:absolute; top:-16px; width:10px; height:14px; border-radius:3px;
+      animation:fall 1.1s ease-out forwards;
+      opacity:.95;
+    }
+    .piece.c1{background:#f6d365}
+    .piece.c2{background:#8fd3f4}
+    .piece.c3{background:#fda085}
+    .piece.c4{background:#84fab0}
+    .piece.c5{background:#ffd1dc}
+    .piece.p1{left:8%}.piece.p2{left:18%}.piece.p3{left:30%}.piece.p4{left:42%}.piece.p5{left:54%}
+    .piece.p6{left:64%}.piece.p7{left:74%}.piece.p8{left:84%}.piece.p9{left:92%}
+    .piece.d1{animation-delay:0s}.piece.d2{animation-delay:.06s}.piece.d3{animation-delay:.12s}.piece.d4{animation-delay:.18s}
+    .piece.d5{animation-delay:.24s}.piece.d6{animation-delay:.30s}.piece.d7{animation-delay:.36s}.piece.d8{animation-delay:.42s}
+    .piece.d9{animation-delay:.48s}
+    @keyframes fall{
+      0%{transform:translateY(-10px) rotate(0deg); opacity:0}
+      15%{opacity:1}
+      100%{transform:translateY(100px) rotate(260deg); opacity:0}
+    }
+    .celebrate{
+      display:inline-block;
+      animation:jump 0.7s ease 1;
+      transform-origin:center;
+    }
+    @keyframes jump{
+      0%,100%{transform:translateY(0) scale(1)}
+      30%{transform:translateY(-6px) scale(1.08)}
+      60%{transform:translateY(0) scale(1)}
+      75%{transform:translateY(-3px) scale(1.03)}
+    }
+
+    .explainWrap{
+      display:grid;
+      grid-template-columns:128px 1fr;
+      gap:16px;
+      align-items:start;
+      margin-top:18px;
+      background:linear-gradient(180deg,#c05621,#9a3412);
+      color:white;border-radius:24px;padding:18px;
+      box-shadow:0 12px 24px rgba(194,93,25,.20);
+    }
+    .explainArt{
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:20px;
+      min-height:116px;
+      overflow:hidden;
+    }
+    .explain .muted{color:#f6e5d3}
+    .answerChips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+    .chip{
+      padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.18);font-size:13px;font-weight:800
+    }
+
+    .diffBox{
+      margin-top:16px;
+      background:#fffaf8;
+      border:1px solid #ecd9ca;
+      border-radius:20px;
+      padding:14px;
+      color:var(--ink);
+    }
+    .diffTitle{
+      font-size:14px;font-weight:1000;margin-bottom:10px;color:#7a5140;
+    }
+    .diffGrid{
+      display:grid;
+      gap:10px;
+    }
+    .diffRow{
+      display:grid;
+      grid-template-columns:140px 1fr 1fr;
+      gap:10px;
+      align-items:stretch;
+    }
+    .diffHead{
+      padding:10px 12px;border-radius:14px;background:#ffedd5;border:1px solid #ecd9ca;font-weight:900;
+    }
+    .diffCell{
+      padding:10px 12px;border-radius:14px;border:1px solid #eadfcd;background:white;font-weight:800;
+    }
+    .same{background:#f2fff6;border-color:#b8e7c9;color:#0c7f47}
+    .different{
+      position:relative;
+      background:#fff4f4;
+      border-color:#efb2b2;
+      color:#b53d3d;
+      box-shadow:inset 0 0 0 2px rgba(214,69,69,.12);
+    }
+    .wrongRow .diffCell:first-child{
+      background:#fff0f0;
+      border-color:#efb2b2;
+      color:#9f3030;
+    }
+    .bigX{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:30px;
+      height:30px;
+      margin-right:8px;
+      border-radius:50%;
+      background:#d64545;
+      color:white;
+      font-size:22px;
+      font-weight:1000;
+      line-height:1;
+      box-shadow:0 4px 10px rgba(214,69,69,.22);
+      vertical-align:middle;
+    }
+    .answerTextWithMark{
+      display:flex;
+      align-items:center;
+      gap:2px;
+    }
+    .labelBad{
+      display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:900;margin-left:8px;
+      background:#ffe1e1;color:#b53d3d;border:1px solid #f1b7b7;
+    }
+    .labelGood{
+      display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:900;margin-left:8px;
+      background:#e6fff0;color:#0c7f47;border:1px solid #b8e7c9;
+    }
+
+    .footerActions{
+      display:flex;justify-content:space-between;gap:12px;align-items:center;
+      border-top:1px dashed #eddcc8;padding-top:18px;margin-top:22px;flex-wrap:wrap
+    }
+    .resultMini{font-weight:900}
+    .resultBig{font-size:54px;font-weight:1000;margin:18px 0 0}
+    .reviewItem{
+      background:white;border:1px solid var(--line);border-radius:18px;padding:14px;margin:10px 0
+    }
+    .note{
+      border-left:4px solid #f97316;background:#fff7ed;padding:12px 14px;border-radius:14px;color:#7c2d12;font-size:13px;line-height:1.7
+    }
+    .summaryCard{
+      background:linear-gradient(180deg,#fffaf3,#fff5e8);
+      border:1px solid var(--line);border-radius:26px;padding:18px
+    }
+  
+    /* --- tablet / smartphone optimization --- */
+    html{
+      -webkit-text-size-adjust:100%;
+      scroll-behavior:smooth;
+    }
+    button{
+      -webkit-tap-highlight-color:rgba(166,103,44,.16);
+      touch-action:manipulation;
+    }
+    .choiceBtn,.primary,.secondary,.ghostBtn,.selectCard,.scopeBtn,.countBtn{
+      min-height:48px;
+    }
+    @media (max-width:720px){
+      .wrap{
+        padding:12px;
+      }
+      .hero,.card{
+        border-radius:22px;
+      }
+      .hero{
+        padding:18px 16px;
+        margin-bottom:14px;
+      }
+      .card{
+        padding:16px;
+      }
+      h1{
+        font-size:23px;
+        line-height:1.35;
+      }
+      h2{
+        font-size:18px;
+      }
+      .lead,.small,.hint{
+        font-size:13px;
+      }
+      .badge{
+        font-size:11px;
+        padding:6px 9px;
+        margin-right:4px;
+      }
+      .mascotArea{
+        gap:8px;
+      }
+      .miniCard{
+        padding:6px;
+        border-radius:16px;
+      }
+      .miniCard svg{
+        width:82px;
+        height:82px;
+      }
+      .questionHead{
+        grid-template-columns:82px 1fr;
+        gap:10px;
+        padding:10px;
+        border-radius:18px;
+      }
+      .questionArt{
+        min-height:82px;
+        border-radius:16px;
+      }
+      .questionArt svg{
+        width:78px;
+        height:78px;
+      }
+      .questionTitle{
+        font-size:23px;
+        line-height:1.35;
+      }
+      .choiceGroup{
+        padding:12px;
+        border-radius:18px;
+        margin:12px 0;
+      }
+      .choices,.choices.three{
+        grid-template-columns:1fr;
+        gap:10px;
+      }
+      .choiceBtn{
+        padding:14px 13px;
+        font-size:16px;
+        line-height:1.45;
+      }
+      .topbar{
+        align-items:flex-start;
+      }
+      .topbar .secondary{
+        width:100%;
+      }
+      .pill{
+        margin-top:4px;
+      }
+      .footerActions{
+        display:block;
+      }
+      .footerActions > div:last-child{
+        display:grid;
+        gap:10px;
+        margin-top:12px;
+      }
+      .footerActions .primary,
+      .footerActions .secondary{
+        width:100%!important;
+      }
+      .explainWrap{
+        grid-template-columns:1fr;
+        padding:14px;
+        border-radius:20px;
+      }
+      .explainArt{
+        min-height:78px;
+      }
+      .explainArt svg{
+        width:82px;
+        height:82px;
+      }
+      .statusBanner{
+        padding:12px;
+        border-radius:18px;
+        gap:10px;
+      }
+      .statusIcon{
+        width:50px;
+        height:50px;
+        font-size:26px;
+      }
+      .statusTitle{
+        font-size:21px;
+      }
+      .diffRow{
+        grid-template-columns:1fr;
+        gap:6px;
+      }
+      .diffHead:nth-child(1),
+      .diffHead:nth-child(2),
+      .diffHead:nth-child(3){
+        display:none;
+      }
+      .diffCell{
+        font-size:14px;
+      }
+      .bigX{
+        width:28px;
+        height:28px;
+        font-size:20px;
+      }
+      .resultBig{
+        font-size:42px;
+      }
+    }
+    @media (max-width:390px){
+      .questionHead{
+        grid-template-columns:1fr;
+      }
+      .questionArt{
+        min-height:70px;
+      }
+      .questionArt svg{
+        width:72px;
+        height:72px;
+      }
+      .questionTitle{
+        font-size:21px;
+      }
+    }
+
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+const MODES = [
+  {id:"order", label:"年代順並べ替え", short:"古い順に並べる", desc:"出来事・人物・政策を古い順に並べ、歴史の流れを確認します。"},
+  {id:"period", label:"時代・世紀・政権担当者判断", short:"いつ？ 誰の時期？", desc:"何時代か、何世紀か、前半／後半、関係する政権担当者を判断します。"},
+  {id:"culture", label:"文化史の時期判断", short:"文化・作品・人物の時期", desc:"文化史の用語について、時代・世紀・前半／後半・文化区分を判断します。"},
+  {id:"random", label:"総合ランダム", short:"全モード混合", desc:"年代順・時代判断・文化史判断を混ぜて出題します。"}
+];
+const SCOPES = [
+  {id:"all", label:"全範囲", desc:"前近代編＋近現代編"},
+  {id:"premodern", label:"前近代編", desc:"原始・古代・中世・近世"},
+  {id:"modern", label:"近現代編", desc:"幕末・明治・大正・昭和・戦後"}
+];
+const COUNTS = [5,10,20];
+
+const ERA_NEIGHBORS = {
+  "弥生時代":["縄文時代","弥生時代","古墳時代","飛鳥時代"],
+  "古墳時代":["弥生時代","古墳時代","飛鳥時代","奈良時代"],
+  "飛鳥時代":["古墳時代","飛鳥時代","奈良時代","平安時代"],
+  "奈良時代":["飛鳥時代","奈良時代","平安時代","鎌倉時代"],
+  "平安時代":["奈良時代","平安時代","鎌倉時代","室町時代"],
+  "鎌倉時代":["平安時代","鎌倉時代","室町時代","南北朝時代"],
+  "室町時代":["鎌倉時代","南北朝時代","室町時代","戦国時代"],
+  "戦国時代":["室町時代","戦国時代","安土桃山時代","江戸時代"],
+  "安土桃山時代":["室町時代","戦国時代","安土桃山時代","江戸時代"],
+  "江戸時代":["安土桃山時代","江戸時代","江戸時代末期","明治時代"],
+  "江戸時代末期":["江戸時代","江戸時代末期","明治時代","大正時代"],
+  "明治時代":["江戸時代末期","明治時代","大正時代","昭和戦前"],
+  "大正時代":["明治時代","大正時代","昭和戦前","昭和戦後"],
+  "昭和戦前":["明治時代","大正時代","昭和戦前","昭和戦後"],
+  "昭和戦後":["昭和戦前","昭和戦後","平成時代","令和時代"],
+  "平成時代":["昭和戦後","平成時代","令和時代","昭和戦前"]
+};
+
+const PERSON_NEIGHBORS = {
+  "文武天皇":["天武天皇","持統天皇","文武天皇","元明天皇"],
+  "聖武天皇":["元明天皇","元正天皇","聖武天皇","孝謙天皇"],
+  "桓武天皇":["聖武天皇","孝謙天皇","桓武天皇","嵯峨天皇"],
+  "白河上皇":["後三条天皇","白河上皇","鳥羽上皇","後白河上皇"],
+  "平清盛":["源義朝","平清盛","後白河上皇","源頼朝"],
+  "源頼朝":["平清盛","源頼朝","源頼家","源実朝"],
+  "北条義時":["北条時政","北条義時","北条泰時","北条時頼"],
+  "北条泰時":["北条義時","北条泰時","北条時頼","北条時宗"],
+  "北条時宗":["北条泰時","北条時頼","北条時宗","北条貞時"],
+  "足利義満":["足利尊氏","足利義詮","足利義満","足利義政"],
+  "足利義政":["足利義満","足利義教","足利義政","足利義昭"],
+  "豊臣秀吉":["織田信長","豊臣秀吉","徳川家康","徳川秀忠"],
+  "徳川秀忠":["徳川家康","徳川秀忠","徳川家光","徳川綱吉"],
+  "徳川家光":["徳川秀忠","徳川家光","徳川綱吉","徳川吉宗"],
+  "徳川吉宗":["徳川綱吉","徳川吉宗","田沼意次","松平定信"],
+  "田沼意次":["徳川吉宗","田沼意次","松平定信","水野忠邦"],
+  "松平定信":["徳川吉宗","田沼意次","松平定信","水野忠邦"],
+  "水野忠邦":["田沼意次","松平定信","水野忠邦","阿部正弘"],
+  "徳川家定":["徳川家慶","徳川家定","徳川家茂","徳川慶喜"],
+  "明治政府":["明治政府","大久保利通","伊藤博文","山県有朋"],
+  "第2次伊藤博文内閣":["第1次伊藤博文内閣","第2次伊藤博文内閣","第2次松方正義内閣","第2次山県有朋内閣"],
+  "加藤高明内閣":["原敬内閣","高橋是清内閣","加藤高明内閣","第1次若槻礼次郎内閣"],
+  "第2次若槻礼次郎内閣":["浜口雄幸内閣","第2次若槻礼次郎内閣","犬養毅内閣","斎藤実内閣"],
+  "第1次近衛文麿内閣":["岡田啓介内閣","広田弘毅内閣","林銑十郎内閣","第1次近衛文麿内閣"],
+  "吉田茂内閣":["東久邇宮稔彦王内閣","幣原喜重郎内閣","吉田茂内閣","片山哲内閣"],
+  "鳩山一郎内閣":["吉田茂内閣","鳩山一郎内閣","石橋湛山内閣","岸信介内閣"],
+  "佐藤栄作内閣":["池田勇人内閣","佐藤栄作内閣","田中角栄内閣","三木武夫内閣"],
+  "皇極天皇":["推古天皇", "舒明天皇", "皇極天皇", "孝徳天皇"],
+  "孝徳天皇":["皇極天皇", "孝徳天皇", "斉明天皇", "天智天皇"],
+  "斉明天皇":["孝徳天皇", "斉明天皇", "天智天皇", "天武天皇"],
+  "仁明天皇":["嵯峨天皇", "淳和天皇", "仁明天皇", "文徳天皇"],
+  "清和天皇":["文徳天皇", "清和天皇", "陽成天皇", "光孝天皇"],
+  "宇多天皇":["光孝天皇", "宇多天皇", "醍醐天皇", "朱雀天皇"],
+  "冷泉天皇":["村上天皇", "冷泉天皇", "円融天皇", "花山天皇"],
+  "後一条天皇":["一条天皇", "三条天皇", "後一条天皇", "後朱雀天皇"],
+  "後白河天皇":["鳥羽上皇", "崇徳上皇", "後白河天皇", "二条天皇"],
+  "徳川家斉":["徳川家治", "徳川家斉", "徳川家慶", "徳川家定"],
+  "大海人皇子":["中大兄皇子", "大友皇子", "大海人皇子", "持統天皇"],
+  "藤原良房":["藤原冬嗣", "藤原良房", "藤原基経", "藤原時平"],
+  "藤原基経":["藤原良房", "藤原基経", "藤原時平", "菅原道真"],
+  "菅原道真":["藤原基経", "菅原道真", "藤原時平", "藤原忠平"],
+  "藤原道長":["藤原道隆", "藤原道長", "藤原頼通", "後三条天皇"],
+};
+
+
+const RULER_NEIGHBORS = {
+  "欽明天皇":["継体天皇","欽明天皇","敏達天皇","用明天皇"],
+  "推古天皇":["崇峻天皇","推古天皇","舒明天皇","皇極天皇"],
+  "皇極天皇":["舒明天皇","皇極天皇","孝徳天皇","天智天皇"],
+  "孝徳天皇":["皇極天皇","孝徳天皇","天智天皇","天武天皇"],
+  "天智天皇":["孝徳天皇","天智天皇","天武天皇","持統天皇"],
+  "天武天皇":["天智天皇","天武天皇","持統天皇","文武天皇"],
+  "持統天皇":["天武天皇","持統天皇","文武天皇","元明天皇"],
+  "文武天皇":["持統天皇","文武天皇","元明天皇","元正天皇"],
+  "元明天皇":["文武天皇","元明天皇","元正天皇","聖武天皇"],
+  "元正天皇":["元明天皇","元正天皇","聖武天皇","孝謙天皇"],
+  "聖武天皇":["元明天皇","元正天皇","聖武天皇","孝謙天皇"],
+  "称徳天皇":["聖武天皇","淳仁天皇","称徳天皇","光仁天皇"],
+  "桓武天皇":["光仁天皇","桓武天皇","平城天皇","嵯峨天皇"],
+  "嵯峨天皇":["桓武天皇","平城天皇","嵯峨天皇","淳和天皇"],
+  "仁明天皇":["淳和天皇","仁明天皇","文徳天皇","清和天皇"],
+  "清和天皇":["文徳天皇","清和天皇","陽成天皇","光孝天皇"],
+  "宇多天皇":["光孝天皇","宇多天皇","醍醐天皇","朱雀天皇"],
+  "醍醐天皇":["宇多天皇","醍醐天皇","朱雀天皇","村上天皇"],
+  "村上天皇":["朱雀天皇","村上天皇","冷泉天皇","円融天皇"],
+  "冷泉天皇":["村上天皇","冷泉天皇","円融天皇","花山天皇"],
+  "後一条天皇":["一条天皇","三条天皇","後一条天皇","後朱雀天皇"],
+  "後三条天皇":["後冷泉天皇","後三条天皇","白河天皇","堀河天皇"],
+  "後白河天皇":["近衛天皇","後白河天皇","二条天皇","六条天皇"],
+  "徳川家斉":["徳川家治","徳川家斉","徳川家慶","徳川家定"],
+  "加藤高明内閣":["原敬内閣","高橋是清内閣","加藤高明内閣","第1次若槻礼次郎内閣"],
+  "第2次若槻礼次郎内閣":["浜口雄幸内閣","第2次若槻礼次郎内閣","犬養毅内閣","斎藤実内閣"],
+  "吉田茂内閣":["幣原喜重郎内閣","吉田茂内閣","片山哲内閣","鳩山一郎内閣"],
+  "源頼朝":["源頼朝", "源頼家", "源実朝", "藤原頼経"],
+  "源頼家":["源頼朝", "源頼家", "源実朝", "藤原頼経"],
+  "源実朝":["源頼朝", "源頼家", "源実朝", "藤原頼経"],
+  "藤原頼経":["源頼家", "源実朝", "藤原頼経", "宗尊親王"],
+  "後醍醐天皇":["後宇多天皇", "後醍醐天皇", "光明天皇", "後村上天皇"],
+  "足利尊氏":["足利尊氏", "足利義詮", "足利義満", "足利義持"],
+  "足利義満":["足利尊氏", "足利義詮", "足利義満", "足利義持"],
+  "足利義教":["足利義持", "足利義量", "足利義教", "足利義政"],
+  "足利義政":["足利義教", "足利義政", "足利義尚", "足利義稙"],
+  "足利義昭":["足利義輝", "足利義栄", "足利義昭", "徳川家康"],
+  "徳川家康":["徳川家康", "徳川秀忠", "徳川家光", "徳川家綱"],
+  "徳川秀忠":["徳川家康", "徳川秀忠", "徳川家光", "徳川家綱"],
+  "徳川家光":["徳川秀忠", "徳川家光", "徳川家綱", "徳川綱吉"],
+  "徳川家綱":["徳川家光", "徳川家綱", "徳川綱吉", "徳川家宣"],
+  "徳川綱吉":["徳川家光", "徳川家綱", "徳川綱吉", "徳川家宣"],
+  "徳川家宣":["徳川綱吉", "徳川家宣", "徳川家継", "徳川吉宗"],
+  "徳川吉宗":["徳川家宣", "徳川家継", "徳川吉宗", "徳川家重"],
+  "徳川家治":["徳川家重", "徳川家治", "徳川家斉", "徳川家慶"],
+  "徳川家慶":["徳川家斉", "徳川家慶", "徳川家定", "徳川慶喜"],
+  "徳川慶喜":["徳川家定", "徳川家茂", "徳川慶喜", "明治政府"],
+  "徳川家定":["徳川家慶", "徳川家定", "徳川家茂", "徳川慶喜"],
+  "徳川家茂":["徳川家定", "徳川家茂", "徳川慶喜", "明治政府"],
+  "第1次伊藤博文内閣":["太政官制", "第1次伊藤博文内閣", "黒田清隆内閣", "第1次山県有朋内閣"],
+  "黒田清隆内閣":["第1次伊藤博文内閣", "黒田清隆内閣", "第1次山県有朋内閣", "第1次松方正義内閣"],
+  "第1次山県有朋内閣":["黒田清隆内閣", "第1次山県有朋内閣", "第1次松方正義内閣", "第2次伊藤博文内閣"],
+  "第2次伊藤博文内閣":["第1次松方正義内閣", "第2次伊藤博文内閣", "第2次松方正義内閣", "第2次山県有朋内閣"],
+  "第1次桂太郎内閣":["第4次伊藤博文内閣", "第1次桂太郎内閣", "第1次西園寺公望内閣", "第2次桂太郎内閣"],
+  "第2次桂太郎内閣":["第1次西園寺公望内閣", "第2次桂太郎内閣", "第2次西園寺公望内閣", "第3次桂太郎内閣"],
+  "第2次大隈重信内閣":["第1次山本権兵衛内閣", "第2次大隈重信内閣", "寺内正毅内閣", "原敬内閣"],
+  "寺内正毅内閣":["第2次大隈重信内閣", "寺内正毅内閣", "原敬内閣", "高橋是清内閣"],
+  "原敬内閣":["寺内正毅内閣", "原敬内閣", "高橋是清内閣", "加藤高明内閣"],
+  "高橋是清内閣":["原敬内閣", "高橋是清内閣", "加藤友三郎内閣", "加藤高明内閣"],
+  "第1次若槻礼次郎内閣":["加藤高明内閣", "第1次若槻礼次郎内閣", "田中義一内閣", "浜口雄幸内閣"],
+  "田中義一内閣":["第1次若槻礼次郎内閣", "田中義一内閣", "浜口雄幸内閣", "第2次若槻礼次郎内閣"],
+  "浜口雄幸内閣":["田中義一内閣", "浜口雄幸内閣", "第2次若槻礼次郎内閣", "犬養毅内閣"],
+  "犬養毅内閣":["第2次若槻礼次郎内閣", "犬養毅内閣", "斎藤実内閣", "岡田啓介内閣"],
+  "斎藤実内閣":["犬養毅内閣", "斎藤実内閣", "岡田啓介内閣", "広田弘毅内閣"],
+  "岡田啓介内閣":["斎藤実内閣", "岡田啓介内閣", "広田弘毅内閣", "林銑十郎内閣"],
+  "第1次近衛文麿内閣":["林銑十郎内閣", "第1次近衛文麿内閣", "平沼騏一郎内閣", "阿部信行内閣"],
+  "第2次近衛文麿内閣":["米内光政内閣", "第2次近衛文麿内閣", "第3次近衛文麿内閣", "東条英機内閣"],
+  "東条英機内閣":["第3次近衛文麿内閣", "東条英機内閣", "小磯国昭内閣", "鈴木貫太郎内閣"],
+  "鈴木貫太郎内閣":["東条英機内閣", "小磯国昭内閣", "鈴木貫太郎内閣", "東久邇宮稔彦王内閣"],
+  "幣原喜重郎内閣":["東久邇宮稔彦王内閣", "幣原喜重郎内閣", "第1次吉田茂内閣", "片山哲内閣"],
+  "第1次吉田茂内閣":["幣原喜重郎内閣", "第1次吉田茂内閣", "片山哲内閣", "芦田均内閣"],
+  "第3次吉田茂内閣":["片山哲内閣", "芦田均内閣", "第2次吉田茂内閣", "第3次吉田茂内閣"],
+  "鳩山一郎内閣":["吉田茂内閣", "鳩山一郎内閣", "石橋湛山内閣", "岸信介内閣"],
+  "石橋湛山内閣":["鳩山一郎内閣", "石橋湛山内閣", "岸信介内閣", "池田勇人内閣"],
+  "岸信介内閣":["石橋湛山内閣", "岸信介内閣", "池田勇人内閣", "佐藤栄作内閣"],
+  "池田勇人内閣":["岸信介内閣", "池田勇人内閣", "佐藤栄作内閣", "田中角栄内閣"],
+  "佐藤栄作内閣":["池田勇人内閣", "佐藤栄作内閣", "田中角栄内閣", "三木武夫内閣"],
+  "田中角栄内閣":["佐藤栄作内閣", "田中角栄内閣", "三木武夫内閣", "福田赳夫内閣"],
+  "中曽根康弘内閣":["鈴木善幸内閣", "中曽根康弘内閣", "竹下登内閣", "海部俊樹内閣"],
+};
+
+const RULER_FALLBACK = [
+  "推古天皇","皇極天皇","孝徳天皇","天智天皇","天武天皇","持統天皇",
+  "文武天皇","元明天皇","元正天皇","聖武天皇","称徳天皇","桓武天皇",
+  "嵯峨天皇","醍醐天皇","村上天皇","後三条天皇","後白河天皇","徳川家斉",
+  "加藤高明内閣","吉田茂内閣","源頼朝","源頼家","源実朝","後醍醐天皇",
+  "足利尊氏","足利義満","足利義教","足利義政","足利義昭","徳川家康",
+  "徳川秀忠","徳川家光","徳川綱吉","徳川家宣","徳川吉宗","徳川家治",
+  "徳川家慶","徳川慶喜","徳川家定","徳川家茂","第1次伊藤博文内閣","黒田清隆内閣",
+  "第1次山県有朋内閣","第2次伊藤博文内閣","第1次桂太郎内閣","第2次桂太郎内閣","第2次大隈重信内閣","寺内正毅内閣",
+  "原敬内閣","高橋是清内閣","第1次若槻礼次郎内閣","田中義一内閣","浜口雄幸内閣","第2次若槻礼次郎内閣",
+  "犬養毅内閣","斎藤実内閣","岡田啓介内閣","第1次近衛文麿内閣","第2次近衛文麿内閣","東条英機内閣",
+  "鈴木貫太郎内閣","幣原喜重郎内閣","第1次吉田茂内閣","第3次吉田茂内閣","鳩山一郎内閣","石橋湛山内閣",
+  "岸信介内閣","池田勇人内閣","佐藤栄作内閣","田中角栄内閣","中曽根康弘内閣"
+];
+
+const ACTOR_NEIGHBORS = {
+  "聖徳太子":["聖徳太子","中大兄皇子","藤原不比等","藤原道長"],
+  "中大兄皇子":["聖徳太子","中大兄皇子","藤原不比等","藤原道長"],
+  "大海人皇子":["中大兄皇子","大海人皇子","藤原不比等","藤原道長"],
+  "藤原良房":["藤原良房","藤原基経","藤原時平","藤原道長"],
+  "藤原基経":["藤原良房","藤原基経","藤原時平","藤原道長"],
+  "菅原道真":["藤原良房","藤原基経","菅原道真","藤原道長"],
+  "藤原道長":["藤原良房","藤原基経","藤原道長","藤原頼通"],
+  "白河上皇":["後三条天皇","白河上皇","鳥羽上皇","後白河上皇"],
+  "北条泰時":["北条時政","北条義時","北条泰時","北条時宗"],
+  "松平定信":["徳川吉宗","田沼意次","松平定信","水野忠邦"],
+  "北条義時":["北条時政", "北条義時", "北条泰時", "北条時頼"],
+  "北条時宗":["北条泰時", "北条時頼", "北条時宗", "北条貞時"],
+  "北条貞時":["北条時宗", "北条貞時", "北条高時", "足利尊氏"],
+  "後醍醐天皇":["後鳥羽上皇", "後醍醐天皇", "足利尊氏", "足利義満"],
+  "足利尊氏":["後醍醐天皇", "足利尊氏", "足利義満", "足利義政"],
+  "足利義満":["足利尊氏", "足利義満", "足利義教", "足利義政"],
+  "足利義政":["足利義満", "足利義教", "足利義政", "足利義稙"],
+  "フランシスコ・ザビエル":["フランシスコ・ザビエル", "織田信長", "豊臣秀吉", "新井白石"],
+  "織田信長":["織田信長", "豊臣秀吉", "徳川家康", "足利義満"],
+  "豊臣秀吉":["織田信長", "豊臣秀吉", "徳川家康", "徳川吉宗"],
+  "徳川家康":["織田信長", "豊臣秀吉", "徳川家康", "徳川吉宗"],
+  "新井白石":["新井白石", "田沼意次", "松平定信", "水野忠邦"],
+  "田沼意次":["新井白石", "田沼意次", "松平定信", "水野忠邦"],
+  "水野忠邦":["新井白石", "田沼意次", "松平定信", "水野忠邦"],
+  "大塩平八郎":["大塩平八郎", "新井白石", "松平定信", "水野忠邦"],
+  "井伊直弼":["井伊直弼", "大久保利通", "伊藤博文", "陸奥宗光"],
+  "岩倉具視":["岩倉具視", "板垣退助", "伊藤博文", "陸奥宗光"],
+  "板垣退助":["板垣退助", "大久保利通", "伊藤博文", "陸奥宗光"],
+  "西郷隆盛":["西郷隆盛", "板垣退助", "伊藤博文", "陸奥宗光"],
+  "伊藤博文":["大久保利通", "伊藤博文", "陸奥宗光", "小村寿太郎"],
+  "陸奥宗光":["伊藤博文", "陸奥宗光", "小村寿太郎", "桂太郎"],
+  "小村寿太郎":["陸奥宗光", "小村寿太郎", "桂太郎", "西園寺公望"],
+  "吉野作造":["吉野作造", "美濃部達吉", "柳田国男", "小林多喜二"],
+  "犬養毅":["原敬", "犬養毅", "斎藤実", "岡田啓介"],
+  "小林多喜二":["志賀直哉", "小林多喜二", "柳宗悦", "吉野作造"],
+  "北条義時":["北条義時","源頼朝","北条時宗","源実朝"],
+  "平清盛":["平清盛","崇徳上皇","藤原頼長","源義家"],
+  "武田勝頼":["武田勝頼","足利義昭","足利義満","徳川吉宗"]
+};
+
+const ACTOR_FALLBACK = [
+  "聖徳太子","中大兄皇子","大海人皇子","藤原良房","藤原基経","菅原道真",
+  "藤原道長","北条泰時","松平定信","北条義時","北条時宗","北条貞時",
+  "後醍醐天皇","足利尊氏","足利義満","足利義政","フランシスコ・ザビエル","織田信長",
+  "豊臣秀吉","徳川家康","新井白石","田沼意次","水野忠邦","大塩平八郎",
+  "井伊直弼","岩倉具視","板垣退助","西郷隆盛","伊藤博文","陸奥宗光",
+  "小村寿太郎","吉野作造","犬養毅","小林多喜二",
+  "武田勝頼"
+];
+
+
+const CULTURE_NEIGHBORS = {
+  "飛鳥文化":["飛鳥文化","白鳳文化","天平文化","弘仁・貞観文化"],
+  "白鳳文化":["飛鳥文化","白鳳文化","天平文化","弘仁・貞観文化"],
+  "天平文化":["白鳳文化","天平文化","弘仁・貞観文化","国風文化"],
+  "弘仁・貞観文化":["天平文化","弘仁・貞観文化","国風文化","院政期文化"],
+  "国風文化":["弘仁・貞観文化","国風文化","院政期文化","鎌倉文化"],
+  "院政期文化":["国風文化","院政期文化","鎌倉文化","北山文化"],
+  "鎌倉文化":["院政期文化","鎌倉文化","北山文化","東山文化"],
+  "北山文化":["鎌倉文化","北山文化","東山文化","桃山文化"],
+  "東山文化":["北山文化","東山文化","桃山文化","元禄文化"],
+  "桃山文化":["東山文化","桃山文化","元禄文化","化政文化"],
+  "元禄文化":["桃山文化","元禄文化","化政文化","明治文化"],
+  "化政文化":["元禄文化","化政文化","明治文化","大正文化"],
+  "明治文化":["化政文化","明治文化","大正文化","昭和戦前の文化"],
+  "大正文化":["明治文化","大正文化","昭和戦前の文化","昭和戦後の文化"],
+  "昭和戦前の文化":["明治文化","大正文化","昭和戦前の文化","昭和戦後の文化"],
+  "昭和戦後の文化":["大正文化","昭和戦前の文化","昭和戦後の文化","平成時代の文化"],
+  "平成時代の文化":["昭和戦前の文化","昭和戦後の文化","平成時代の文化","令和時代の文化"]
+};
+
+
+Object.assign(PERSON_NEIGHBORS, {
+  "光武帝":["光武帝","卑弥呼","倭王武","ワカタケル大王"],
+  "卑弥呼":["光武帝","卑弥呼","倭王武","ワカタケル大王"],
+  "倭王武":["倭王讃","倭王済","倭王興","倭王武"],
+  "ワカタケル大王":["ワカタケル大王","オホド大王","タリシヒコ","推古天皇"],
+  "継体天皇":["倭王武","継体天皇","欽明天皇","推古天皇"],
+  "欽明天皇":["継体天皇","欽明天皇","推古天皇","聖徳太子"],
+  "推古天皇":["欽明天皇","推古天皇","聖徳太子","小野妹子"],
+  "聖徳太子":["推古天皇","聖徳太子","小野妹子","中大兄皇子"],
+  "小野妹子":["推古天皇","聖徳太子","小野妹子","中大兄皇子"],
+  "中大兄皇子":["聖徳太子","中大兄皇子","孝徳天皇","天武天皇"],
+  "孝徳天皇":["中大兄皇子","孝徳天皇","天智天皇","天武天皇"],
+  "天智天皇":["聖徳太子","孝徳天皇","天智天皇","天武天皇"],
+  "天武天皇":["天智天皇","天武天皇","持統天皇","文武天皇"],
+  "持統天皇":["天武天皇","持統天皇","文武天皇","元明天皇"],
+  "文武天皇":["天武天皇","持統天皇","文武天皇","元明天皇"],
+  "元明天皇":["文武天皇","元明天皇","元正天皇","聖武天皇"],
+  "元正天皇":["元明天皇","元正天皇","聖武天皇","称徳天皇"],
+  "聖武天皇":["元明天皇","元正天皇","聖武天皇","称徳天皇"],
+  "称徳天皇":["聖武天皇","孝謙天皇","称徳天皇","桓武天皇"],
+  "桓武天皇":["聖武天皇","称徳天皇","桓武天皇","嵯峨天皇"],
+  "嵯峨天皇":["桓武天皇","嵯峨天皇","藤原良房","藤原基経"],
+  "藤原良房":["嵯峨天皇","藤原良房","藤原基経","菅原道真"],
+  "藤原基経":["藤原良房","藤原基経","菅原道真","醍醐天皇"],
+  "菅原道真":["藤原基経","菅原道真","醍醐天皇","村上天皇"],
+  "醍醐天皇":["菅原道真","醍醐天皇","村上天皇","藤原北家"],
+  "村上天皇":["醍醐天皇","村上天皇","藤原北家","藤原道長"],
+  "藤原北家":["村上天皇","藤原北家","藤原道長","藤原頼通"],
+  "藤原道長":["藤原北家","藤原道長","藤原頼通","後三条天皇"],
+  "藤原頼通":["藤原道長","藤原頼通","後三条天皇","白河上皇"],
+  "後三条天皇":["藤原頼通","後三条天皇","白河上皇","後白河天皇"],
+  "白河上皇":["後三条天皇","白河上皇","鳥羽上皇","後白河天皇"],
+  "後白河天皇":["白河上皇","後白河天皇","平清盛","源頼朝"],
+  "平清盛":["後白河天皇","平清盛","源頼朝","北条義時"]
+});
+
+const QUESTIONS = [
+ {
+  "id": "o-pre01",
+  "type": "order",
+  "scope": "premodern",
+  "title": "旧石器から縄文へ",
+  "prompt": "次の出来事・時代を古い順に並べよ。",
+  "items": [
+   [
+    "更新世",
+    -2000000
+   ],
+   [
+    "岩宿遺跡の石器",
+    -30000
+   ],
+   [
+    "縄文時代の開始",
+    -13000
+   ],
+   [
+    "三内丸山遺跡の集落",
+    -3500
+   ]
+  ],
+  "explanation": "旧石器文化から縄文文化へ、人びとの生活が狩猟・採集を基礎に展開していく流れを押さえます。"
+ },
+ {
+  "id": "o-pre02",
+  "type": "order",
+  "scope": "premodern",
+  "title": "縄文から弥生へ",
+  "prompt": "次の事項を古い順に並べよ。",
+  "items": [
+   [
+    "大森貝塚",
+    -3000
+   ],
+   [
+    "水稲耕作の開始",
+    -400
+   ],
+   [
+    "吉野ヶ里遺跡",
+    -100
+   ],
+   [
+    "漢委奴国王印",
+    57
+   ]
+  ],
+  "explanation": "縄文文化から弥生文化へ、水稲耕作・金属器・集落の発達を経て、中国史料に倭が現れる流れです。"
+ },
+ {
+  "id": "o-pre03",
+  "type": "order",
+  "scope": "premodern",
+  "title": "中国史料にみる倭",
+  "prompt": "次の事項を古い順に並べよ。",
+  "items": [
+   [
+    "漢委奴国王印",
+    57
+   ],
+   [
+    "倭国大乱",
+    180
+   ],
+   [
+    "卑弥呼が魏に遣使",
+    239
+   ],
+   [
+    "倭の五王が南朝に遣使",
+    478
+   ]
+  ],
+  "explanation": "倭に関する中国史料の記述を、弥生後期から古墳時代にかけて時期順に整理します。"
+ },
+ {
+  "id": "o-pre04",
+  "type": "order",
+  "scope": "premodern",
+  "title": "ヤマト政権の形成",
+  "prompt": "次の事項を古い順に並べよ。",
+  "items": [
+   [
+    "前方後円墳の出現",
+    250
+   ],
+   [
+    "倭の五王の遣使",
+    478
+   ],
+   [
+    "磐井の乱",
+    527
+   ],
+   [
+    "仏教伝来",
+    538
+   ]
+  ],
+  "explanation": "古墳の広がり、対中国外交、地方豪族との関係、仏教伝来を通じてヤマト政権の展開を押さえます。"
+ },
+ {
+  "id": "o-pre05",
+  "type": "order",
+  "scope": "premodern",
+  "title": "推古朝の政治",
+  "prompt": "次の事項を古い順に並べよ。",
+  "items": [
+   [
+    "推古天皇の即位",
+    592
+   ],
+   [
+    "冠位十二階",
+    603
+   ],
+   [
+    "憲法十七条",
+    604
+   ],
+   [
+    "小野妹子の遣隋使",
+    607
+   ]
+  ],
+  "explanation": "推古朝では、豪族秩序の再編と対隋外交が進められました。冠位十二階・憲法十七条・遣隋使をセットで整理します。"
+ },
+ {
+  "id": "o-pre06",
+  "type": "order",
+  "scope": "premodern",
+  "title": "大化改新から壬申の乱へ",
+  "prompt": "次の事項を古い順に並べよ。",
+  "items": [
+   [
+    "乙巳の変",
+    645
+   ],
+   [
+    "改新の詔",
+    646
+   ],
+   [
+    "白村江の戦い",
+    663
+   ],
+   [
+    "壬申の乱",
+    672
+   ]
+  ],
+  "explanation": "蘇我氏打倒から中央集権化、対外危機、皇位継承争いを経て、律令国家形成へつながります。"
+ },
+ {
+  "id": "o-pre07",
+  "type": "order",
+  "scope": "premodern",
+  "title": "律令国家の成立",
+  "prompt": "次の事項を古い順に並べよ。",
+  "items": [
+   [
+    "飛鳥浄御原令",
+    689
+   ],
+   [
+    "大宝律令",
+    701
+   ],
+   [
+    "平城京遷都",
+    710
+   ],
+   [
+    "養老律令の施行",
+    757
+   ]
+  ],
+  "explanation": "天武・持統朝以来の律令整備が、大宝律令・平城京を通じて律令国家の形を整えていきます。"
+ },
+ {
+  "id": "o-pre08",
+  "type": "order",
+  "scope": "premodern",
+  "title": "奈良時代の政治と土地制度",
+  "prompt": "次の事項を古い順に並べよ。",
+  "items": [
+   [
+    "長屋王の変",
+    729
+   ],
+   [
+    "藤原広嗣の乱",
+    740
+   ],
+   [
+    "墾田永年私財法",
+    743
+   ],
+   [
+    "大仏開眼供養",
+    752
+   ]
+  ],
+  "explanation": "奈良時代の政争、土地制度の変化、鎮護国家思想を流れで確認します。"
+ },
+ {
+  "id": "o-pre09",
+  "type": "order",
+  "scope": "premodern",
+  "title": "平安初期の政治",
+  "prompt": "次の事項を古い順に並べよ。",
+  "items": [
+   [
+    "平安京遷都",
+    794
+   ],
+   [
+    "蔵人所の設置",
+    810
+   ],
+   [
+    "検非違使の設置",
+    816
+   ],
+   [
+    "承和の変",
+    842
+   ]
+  ],
+  "explanation": "平安初期は律令制の修正が進み、令外官の設置や藤原氏の台頭が見られます。"
+ },
+ {
+  "id": "o-pre10",
+  "type": "order",
+  "scope": "premodern",
+  "title": "摂関政治の成立",
+  "prompt": "次の事項を古い順に並べよ。",
+  "items": [
+   [
+    "承和の変",
+    842
+   ],
+   [
+    "応天門の変",
+    866
+   ],
+   [
+    "阿衡の紛議",
+    887
+   ],
+   [
+    "昌泰の変",
+    901
+   ]
+  ],
+  "explanation": "藤原北家が他氏を退け、摂政・関白を中心とする政治的地位を強めていく過程です。"
+ },
+ {
+  "id": "o-pre11",
+  "type": "order",
+  "scope": "premodern",
+  "title": "摂関政治の展開",
+  "prompt": "次の事項を古い順に並べよ。",
+  "items": [
+   [
+    "安和の変",
+    969
+   ],
+   [
+    "藤原道長が摂政となる",
+    1016
+   ],
+   [
+    "平等院鳳凰堂",
+    1053
+   ],
+   [
+    "後三条天皇の即位",
+    1068
+   ]
+  ],
+  "explanation": "藤原氏の摂関政治が全盛を迎えたのち、後三条天皇の親政へつながります。"
+ },
+ {
+  "id": "o-pre12",
+  "type": "order",
+  "scope": "premodern",
+  "title": "院政と武士の台頭",
+  "prompt": "次の事項を古い順に並べよ。",
+  "items": [
+   [
+    "延久の荘園整理令",
+    1069
+   ],
+   [
+    "白河上皇の院政開始",
+    1086
+   ],
+   [
+    "保元の乱",
+    1156
+   ],
+   [
+    "平治の乱",
+    1159
+   ]
+  ],
+  "explanation": "摂関政治の後、院政が始まり、中央の政争に武士が深く関わるようになります。"
+ },
+ {
+  "id": "o-pre14",
+  "type": "order",
+  "scope": "premodern",
+  "title": "奈良文化の書物",
+  "prompt": "次の書物を古い順に並べよ。",
+  "items": [
+   [
+    "古事記",
+    712
+   ],
+   [
+    "日本書紀",
+    720
+   ],
+   [
+    "風土記",
+    713
+   ],
+   [
+    "万葉集",
+    759
+   ]
+  ],
+  "explanation": "奈良時代には、国家の歴史・地誌・和歌をまとめる文化事業が進みました。風土記は編纂命令の時期で位置づけます。"
+ },
+ {
+  "id": "o-pre15",
+  "type": "order",
+  "scope": "premodern",
+  "title": "平安文化の流れ",
+  "prompt": "次の文化事項を古い順に並べよ。",
+  "items": [
+   [
+    "古今和歌集",
+    905
+   ],
+   [
+    "土佐日記",
+    935
+   ],
+   [
+    "源氏物語",
+    1008
+   ],
+   [
+    "平等院鳳凰堂",
+    1053
+   ]
+  ],
+  "explanation": "国風文化では、かな文学や浄土教美術が発展しました。"
+ },
+ {
+  "id": "o-later01",
+  "type": "order",
+  "scope": "premodern",
+  "title": "鎌倉幕府の展開",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "鎌倉幕府の成立",
+    1185
+   ],
+   [
+    "承久の乱",
+    1221
+   ],
+   [
+    "御成敗式目",
+    1232
+   ],
+   [
+    "文永の役",
+    1274
+   ]
+  ],
+  "explanation": "幕府成立後、朝廷との関係、武家法の整備、対外危機へと展開します。"
+ },
+ {
+  "id": "o-later02",
+  "type": "order",
+  "scope": "premodern",
+  "title": "江戸幕政改革",
+  "prompt": "次の政治・改革を古い順に並べよ。",
+  "items": [
+   [
+    "生類憐みの令",
+    1685
+   ],
+   [
+    "享保の改革",
+    1716
+   ],
+   [
+    "寛政の改革",
+    1787
+   ],
+   [
+    "天保の改革",
+    1841
+   ]
+  ],
+  "explanation": "江戸幕府の政治展開を、将軍・政権担当者と結びつけて整理します。"
+ },
+ {
+  "id": "o-modern01",
+  "type": "order",
+  "scope": "modern",
+  "title": "開国から幕末政局へ",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "ペリー来航",
+    1853
+   ],
+   [
+    "日米和親条約",
+    1854
+   ],
+   [
+    "日米修好通商条約",
+    1858
+   ],
+   [
+    "大政奉還",
+    1867
+   ]
+  ],
+  "explanation": "開国から不平等条約、幕府権威の動揺、政権返上への流れを押さえます。"
+ },
+ {
+  "id": "o-modern02",
+  "type": "order",
+  "scope": "modern",
+  "title": "大正から昭和戦前へ",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "米騒動",
+    1918
+   ],
+   [
+    "普通選挙法",
+    1925
+   ],
+   [
+    "満州事変",
+    1931
+   ],
+   [
+    "二・二六事件",
+    1936
+   ]
+  ],
+  "explanation": "大正デモクラシーから政党政治の動揺、軍部の発言力拡大へ向かう流れです。"
+ },
+ {
+  "id": "p-pre01",
+  "type": "period",
+  "scope": "premodern",
+  "term": "漢委奴国王印",
+  "era": "弥生時代",
+  "century": "1世紀",
+  "half": "後半",
+  "person": "光武帝",
+  "explanation": "後漢の光武帝から倭の奴国王に授けられたとされる金印です。倭が中国王朝の冊封体制の中で記録される早い例として押さえます。",
+  "personRequired": false
+ },
+ {
+  "id": "p-pre02",
+  "type": "period",
+  "scope": "premodern",
+  "term": "卑弥呼の魏への遣使",
+  "era": "弥生時代",
+  "century": "3世紀",
+  "half": "前半",
+  "person": "卑弥呼",
+  "explanation": "邪馬台国の女王卑弥呼が魏に使いを送り、親魏倭王の称号を受けました。",
+  "personRequired": false
+ },
+ {
+  "id": "p-pre03",
+  "type": "period",
+  "scope": "premodern",
+  "term": "倭の五王の遣使",
+  "era": "古墳時代",
+  "century": "5世紀",
+  "half": "後半",
+  "person": "倭王武",
+  "explanation": "倭の五王は中国南朝に使者を送りました。倭王武はワカタケル大王に比定されることが多い人物です。",
+  "personRequired": false
+ },
+ {
+  "id": "p-pre04",
+  "type": "period",
+  "scope": "premodern",
+  "term": "稲荷山古墳出土鉄剣銘",
+  "era": "古墳時代",
+  "century": "5世紀",
+  "half": "後半",
+  "person": "ワカタケル大王",
+  "explanation": "ワカタケル大王の名を含む銘文は、ヤマト政権の広がりを考えるうえで重要です。",
+  "personRequired": false
+ },
+ {
+  "id": "p-pre05",
+  "type": "period",
+  "scope": "premodern",
+  "term": "磐井の乱",
+  "era": "古墳時代",
+  "century": "6世紀",
+  "half": "前半",
+  "person": "継体天皇",
+  "explanation": "筑紫国造磐井の反乱です。ヤマト政権と地方豪族の関係を示す事件として整理します。",
+  "personRequired": false
+ },
+ {
+  "id": "p-pre06",
+  "type": "period",
+  "scope": "premodern",
+  "term": "仏教伝来",
+  "era": "古墳時代",
+  "century": "6世紀",
+  "half": "前半",
+  "person": "欽明天皇",
+  "explanation": "百済から仏教が伝えられた出来事です。538年として整理し、6世紀前半の出来事として押さえます。なお、552年とする説もあります。",
+  "personRequired": true
+ },
+ {
+  "id": "p-pre07",
+  "type": "period",
+  "scope": "premodern",
+  "term": "冠位十二階",
+  "era": "飛鳥時代",
+  "century": "7世紀",
+  "half": "前半",
+  "person": "推古天皇",
+  "explanation": "豪族を冠位により序列化し、氏姓にとらわれない人材登用をめざした制度です。",
+  "personRequired": true,
+  "actor": "聖徳太子",
+  "actorRequired": true
+ },
+ {
+  "id": "p-pre08",
+  "type": "period",
+  "scope": "premodern",
+  "term": "憲法十七条",
+  "era": "飛鳥時代",
+  "century": "7世紀",
+  "half": "前半",
+  "person": "推古天皇",
+  "explanation": "官人の心構えを示したとされる条文です。推古朝の政治改革と結びつけます。",
+  "personRequired": true,
+  "actor": "聖徳太子",
+  "actorRequired": true
+ },
+ {
+  "id": "p-pre09",
+  "type": "period",
+  "scope": "premodern",
+  "term": "小野妹子の遣隋使",
+  "era": "飛鳥時代",
+  "century": "7世紀",
+  "half": "前半",
+  "person": "小野妹子",
+  "explanation": "隋との外交を通じて、中国の制度や文化を学ぼうとした動きです。",
+  "personRequired": false
+ },
+ {
+  "id": "p-pre10",
+  "type": "period",
+  "scope": "premodern",
+  "term": "乙巳の変",
+  "era": "飛鳥時代",
+  "century": "7世紀",
+  "half": "前半",
+  "person": "皇極天皇",
+  "explanation": "蘇我入鹿が倒された事件です。大化改新につながる政治的転換点として押さえます。",
+  "personRequired": true,
+  "actor": "中大兄皇子",
+  "actorRequired": true
+ },
+ {
+  "id": "p-pre11",
+  "type": "period",
+  "scope": "premodern",
+  "term": "改新の詔",
+  "era": "飛鳥時代",
+  "century": "7世紀",
+  "half": "前半",
+  "person": "孝徳天皇",
+  "explanation": "公地公民制や地方制度など、中央集権化の方針を示したものとして整理されます。",
+  "personRequired": true,
+  "actor": "中大兄皇子",
+  "actorRequired": true
+ },
+ {
+  "id": "p-pre12",
+  "type": "period",
+  "scope": "premodern",
+  "term": "白村江の戦い",
+  "era": "飛鳥時代",
+  "century": "7世紀",
+  "half": "後半",
+  "person": "天智天皇",
+  "explanation": "日本・百済遺民軍が唐・新羅連合軍に敗れた戦いです。対外危機の中で国防整備が進みます。",
+  "personRequired": false,
+  "actor": "中大兄皇子",
+  "actorRequired": true
+ },
+ {
+  "id": "p-pre13",
+  "type": "period",
+  "scope": "premodern",
+  "term": "壬申の乱",
+  "era": "飛鳥時代",
+  "century": "7世紀",
+  "half": "後半",
+  "person": "天武天皇",
+  "explanation": "大海人皇子と大友皇子の皇位継承争いです。勝利した大海人皇子が天武天皇となります。",
+  "personRequired": false,
+  "actor": "大海人皇子",
+  "actorRequired": true
+ },
+ {
+  "id": "p-pre14",
+  "type": "period",
+  "scope": "premodern",
+  "term": "飛鳥浄御原令",
+  "era": "飛鳥時代",
+  "century": "7世紀",
+  "half": "後半",
+  "person": "持統天皇",
+  "explanation": "天武・持統朝の律令整備の成果として位置づけられる法令です。",
+  "personRequired": true,
+  "actorRequired": false
+ },
+ {
+  "id": "p-pre15",
+  "type": "period",
+  "scope": "premodern",
+  "term": "大宝律令",
+  "era": "飛鳥時代",
+  "century": "8世紀",
+  "half": "前半",
+  "person": "文武天皇",
+  "explanation": "律令国家の基本法典として押さえる用語です。天武・持統朝以来の律令整備の流れと結びつけます。",
+  "personRequired": true
+ },
+ {
+  "id": "p-pre16",
+  "type": "period",
+  "scope": "premodern",
+  "term": "平城京遷都",
+  "era": "奈良時代",
+  "century": "8世紀",
+  "half": "前半",
+  "person": "元明天皇",
+  "explanation": "奈良時代の始まりを示す基準となる遷都です。唐の都城制の影響も意識します。",
+  "personRequired": true
+ },
+ {
+  "id": "p-pre17",
+  "type": "period",
+  "scope": "premodern",
+  "term": "三世一身法",
+  "era": "奈良時代",
+  "century": "8世紀",
+  "half": "前半",
+  "person": "元正天皇",
+  "explanation": "開墾地の私有を一定期間認めた法令です。墾田永年私財法の前段階として押さえます。",
+  "personRequired": true
+ },
+ {
+  "id": "p-pre18",
+  "type": "period",
+  "scope": "premodern",
+  "term": "長屋王の変",
+  "era": "奈良時代",
+  "century": "8世紀",
+  "half": "前半",
+  "person": "聖武天皇",
+  "explanation": "長屋王が自殺に追い込まれた事件です。藤原四子の台頭と結びつけて整理します。",
+  "personRequired": true
+ },
+ {
+  "id": "p-pre19",
+  "type": "period",
+  "scope": "premodern",
+  "term": "墾田永年私財法",
+  "era": "奈良時代",
+  "century": "8世紀",
+  "half": "前半",
+  "person": "聖武天皇",
+  "explanation": "開墾地の永久私有を認めた法令です。公地公民制の動揺と荘園発生の前提として重要です。",
+  "personRequired": true
+ },
+ {
+  "id": "p-pre20",
+  "type": "period",
+  "scope": "premodern",
+  "term": "東大寺大仏造立の詔",
+  "era": "奈良時代",
+  "century": "8世紀",
+  "half": "前半",
+  "person": "聖武天皇",
+  "explanation": "鎮護国家思想を背景に、聖武天皇が大仏造立を命じました。",
+  "personRequired": true
+ },
+ {
+  "id": "p-pre21",
+  "type": "period",
+  "scope": "premodern",
+  "term": "大仏開眼供養",
+  "era": "奈良時代",
+  "century": "8世紀",
+  "half": "後半",
+  "person": "聖武天皇",
+  "explanation": "東大寺大仏の完成を象徴する行事です。天平文化の代表的事項としても重要です。",
+  "personRequired": true
+ },
+ {
+  "id": "p-pre22",
+  "type": "period",
+  "scope": "premodern",
+  "term": "道鏡の政治",
+  "era": "奈良時代",
+  "century": "8世紀",
+  "half": "後半",
+  "person": "称徳天皇",
+  "explanation": "称徳天皇のもとで道鏡が重用されました。宇佐八幡宮神託事件とも結びつけます。",
+  "personRequired": true
+ },
+ {
+  "id": "p-pre23",
+  "type": "period",
+  "scope": "premodern",
+  "term": "平安京遷都",
+  "era": "平安時代",
+  "century": "8世紀",
+  "half": "後半",
+  "person": "桓武天皇",
+  "explanation": "奈良時代から平安時代への転換を示す重要事項です。桓武天皇の政治と結びつけます。",
+  "personRequired": true
+ },
+ {
+  "id": "p-pre24",
+  "type": "period",
+  "scope": "premodern",
+  "term": "坂上田村麻呂の征夷大将軍任命",
+  "era": "平安時代",
+  "century": "8世紀",
+  "half": "後半",
+  "person": "桓武天皇",
+  "explanation": "桓武天皇期の蝦夷征討と結びつけて押さえる事項です。坂上田村麻呂が征夷大将軍に任じられたのは797年で、平安時代に入った直後ですが、世紀判断としては8世紀後半になります。平安時代初期という時代感と、8世紀後半という世紀判断がずれやすいので注意します。",
+  "personRequired": true
+ },
+ {
+  "id": "p-pre25",
+  "type": "period",
+  "scope": "premodern",
+  "term": "蔵人所の設置",
+  "era": "平安時代",
+  "century": "9世紀",
+  "half": "前半",
+  "person": "嵯峨天皇",
+  "explanation": "薬子の変後、天皇の機密文書を扱う令外官として蔵人所が置かれました。",
+  "personRequired": true
+ },
+ {
+  "id": "p-pre26",
+  "type": "period",
+  "scope": "premodern",
+  "term": "検非違使の設置",
+  "era": "平安時代",
+  "century": "9世紀",
+  "half": "前半",
+  "person": "嵯峨天皇",
+  "explanation": "京内の警察・裁判などを担った令外官です。律令制の実態的変化を示します。",
+  "personRequired": true
+ },
+ {
+  "id": "p-pre27",
+  "type": "period",
+  "scope": "premodern",
+  "term": "承和の変",
+  "era": "平安時代",
+  "century": "9世紀",
+  "half": "前半",
+  "person": "仁明天皇",
+  "explanation": "藤原北家が他氏を退けて台頭する契機となる事件です。",
+  "personRequired": true,
+  "actor": "藤原良房",
+  "actorRequired": true
+ },
+ {
+  "id": "p-pre28",
+  "type": "period",
+  "scope": "premodern",
+  "term": "応天門の変",
+  "era": "平安時代",
+  "century": "9世紀",
+  "half": "後半",
+  "person": "清和天皇",
+  "explanation": "伴氏らが失脚し、藤原良房の政治的地位が強まりました。",
+  "personRequired": true,
+  "actor": "藤原良房",
+  "actorRequired": true
+ },
+ {
+  "id": "p-pre29",
+  "type": "period",
+  "scope": "premodern",
+  "term": "阿衡の紛議",
+  "era": "平安時代",
+  "century": "9世紀",
+  "half": "後半",
+  "person": "宇多天皇",
+  "explanation": "宇多天皇と藤原基経の間で起こった政治問題です。関白の地位を考えるうえで重要です。",
+  "personRequired": true,
+  "actor": "藤原基経",
+  "actorRequired": true
+ },
+ {
+  "id": "p-pre30",
+  "type": "period",
+  "scope": "premodern",
+  "term": "昌泰の変",
+  "era": "平安時代",
+  "century": "10世紀",
+  "half": "前半",
+  "person": "醍醐天皇",
+  "explanation": "菅原道真が大宰府に左遷された事件です。藤原氏の勢力拡大と結びつけます。",
+  "personRequired": true,
+  "actor": "菅原道真",
+  "actorRequired": true
+ },
+ {
+  "id": "p-pre31",
+  "type": "period",
+  "scope": "premodern",
+  "term": "延喜の治",
+  "era": "平安時代",
+  "century": "10世紀",
+  "half": "前半",
+  "person": "醍醐天皇",
+  "explanation": "摂関を置かず天皇親政が行われた時期として整理されます。",
+  "personRequired": true
+ },
+ {
+  "id": "p-pre32",
+  "type": "period",
+  "scope": "premodern",
+  "term": "天暦の治",
+  "era": "平安時代",
+  "century": "10世紀",
+  "half": "後半",
+  "person": "村上天皇",
+  "explanation": "村上天皇による親政期です。延喜の治とあわせて押さえます。",
+  "personRequired": true
+ },
+ {
+  "id": "p-pre33",
+  "type": "period",
+  "scope": "premodern",
+  "term": "安和の変",
+  "era": "平安時代",
+  "century": "10世紀",
+  "half": "後半",
+  "person": "冷泉天皇",
+  "explanation": "源高明が失脚し、藤原北家の他氏排斥が進んだ事件です。",
+  "personRequired": true,
+  "actorRequired": false
+ },
+ {
+  "id": "p-pre34",
+  "type": "period",
+  "scope": "premodern",
+  "term": "藤原道長の摂政就任",
+  "era": "平安時代",
+  "century": "11世紀",
+  "half": "前半",
+  "person": "後一条天皇",
+  "explanation": "摂関政治の全盛を象徴する人物です。一家三后など外戚政策と結びつけます。",
+  "personRequired": true,
+  "actor": "藤原道長",
+  "actorRequired": true
+ },
+ {
+  "id": "p-pre35",
+  "type": "period",
+  "scope": "premodern",
+  "term": "平等院鳳凰堂",
+  "era": "平安時代",
+  "century": "11世紀",
+  "half": "後半",
+  "person": "藤原頼通",
+  "explanation": "藤原頼通が建立した阿弥陀堂です。国風文化・浄土教美術の代表例です。",
+  "personRequired": false,
+  "actorRequired": false
+ },
+ {
+  "id": "p-pre36",
+  "type": "period",
+  "scope": "premodern",
+  "term": "延久の荘園整理令",
+  "era": "平安時代",
+  "century": "11世紀",
+  "half": "後半",
+  "person": "後三条天皇",
+  "explanation": "記録荘園券契所を設置し、荘園整理を進めました。摂関政治の動揺と結びつけます。",
+  "personRequired": true
+ },
+ {
+  "id": "p-pre37",
+  "type": "period",
+  "scope": "premodern",
+  "term": "院政の開始",
+  "era": "平安時代",
+  "century": "11世紀",
+  "half": "後半",
+  "person": "白河上皇",
+  "explanation": "白河上皇が院政を始め、摂関家とは異なる政治基盤を形成しました。",
+  "personRequired": false,
+  "actor": "白河上皇",
+  "actorRequired": true
+ },
+ {
+  "id": "p-pre38",
+  "type": "period",
+  "scope": "premodern",
+  "term": "保元の乱",
+  "era": "平安時代",
+  "century": "12世紀",
+  "half": "後半",
+  "person": "後白河天皇",
+  "explanation": "皇位継承と摂関家内部の対立に武士が関わった争乱です。武士の中央政界進出を示します。",
+  "personRequired": true
+ },
+ {
+  "id": "p-pre39",
+  "type": "period",
+  "scope": "premodern",
+  "term": "平治の乱",
+  "era": "平安時代",
+  "century": "12世紀",
+  "half": "後半",
+  "person": "平清盛",
+  "explanation": "平清盛が政治的地位を高める契機となった争乱です。",
+  "personRequired": false,
+  "actor": "平清盛",
+  "actorRequired": true
+ },
+ {
+  "id": "p-pre40",
+  "type": "period",
+  "scope": "premodern",
+  "term": "平清盛が太政大臣となる",
+  "era": "平安時代",
+  "century": "12世紀",
+  "half": "後半",
+  "person": "平清盛",
+  "explanation": "武士として初めて太政大臣となり、平氏政権の成立を象徴する出来事です。",
+  "personRequired": false,
+  "actorRequired": false
+ },
+ {
+  "id": "p-medieval07",
+  "type": "period",
+  "scope": "premodern",
+  "term": "御成敗式目",
+  "era": "鎌倉時代",
+  "century": "13世紀",
+  "half": "前半",
+  "person": "北条泰時",
+  "explanation": "鎌倉幕府の基本法として押さえる事項です。御家人社会の慣習や先例をもとに、武家社会の裁判・所領関係を処理する基準として整えられました。北条泰時の時期に制定された点を、鎌倉前期の執権政治の整備と結びつけます。",
+  "personRequired": false,
+  "actor": "北条泰時",
+  "actorRequired": true
+ },
+ {
+  "id": "p-earlymodern22",
+  "type": "period",
+  "scope": "premodern",
+  "term": "寛政の改革",
+  "era": "江戸時代",
+  "century": "18世紀",
+  "half": "後半",
+  "person": "徳川家斉",
+  "explanation": "松平定信による幕政改革です。田沼政治の後に行われた改革として、18世紀後半に位置づけます。",
+  "personRequired": true,
+  "actor": "松平定信",
+  "actorRequired": true
+ },
+ {
+  "id": "p-modern2-12",
+  "type": "period",
+  "scope": "modern",
+  "term": "普通選挙法",
+  "era": "大正時代",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "加藤高明内閣",
+  "explanation": "男子普通選挙を定めた法律です。治安維持法と同じ年に成立した点も重要です。",
+  "personRequired": true,
+  "year": 1925,
+  "timeLevel": "decade",
+  "timeRange": "1920年代"
+ },
+ {
+  "id": "p-modern2-17",
+  "type": "period",
+  "scope": "modern",
+  "term": "満州事変",
+  "era": "昭和戦前",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "第2次若槻礼次郎内閣",
+  "explanation": "柳条湖事件をきっかけに始まった軍事行動です。昭和戦前の軍部台頭を判断する重要事項です。",
+  "personRequired": true,
+  "year": 1931,
+  "timeLevel": "decade",
+  "timeRange": "1930年代"
+ },
+ {
+  "id": "p-modern3-11",
+  "type": "period",
+  "scope": "modern",
+  "term": "サンフランシスコ平和条約",
+  "era": "昭和戦後",
+  "century": "20世紀",
+  "half": "後半",
+  "person": "第3次吉田茂内閣",
+  "explanation": "日本の独立回復に関わる講和条約です。日米安全保障条約とあわせて、戦後日本の国際的位置づけを判断する事項です。",
+  "personRequired": true,
+  "year": 1951,
+  "timeLevel": "halfdecade",
+  "timeRange": "1950年代前半"
+ },
+ {
+  "id": "c-pre01",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "法隆寺金堂釈迦三尊像",
+  "era": "飛鳥時代",
+  "century": "7世紀",
+  "half": "前半",
+  "culture": "飛鳥文化",
+  "explanation": "飛鳥文化を代表する仏像です。聖徳太子の時期の仏教文化と結びつけて整理します。"
+ },
+ {
+  "id": "c-pre02",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "玉虫厨子",
+  "era": "飛鳥時代",
+  "century": "7世紀",
+  "half": "前半",
+  "culture": "飛鳥文化",
+  "explanation": "飛鳥文化を代表する工芸品です。法隆寺関係の文化財として押さえます。"
+ },
+ {
+  "id": "c-pre03",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "薬師寺の建立",
+  "era": "飛鳥時代",
+  "century": "8世紀",
+  "half": "前半",
+  "culture": "白鳳文化",
+  "explanation": "薬師寺は、天武天皇の発願により藤原京で建立された寺院です。白鳳文化の代表的な仏教寺院として整理します。",
+  "omitCenturyHalf": true
+ },
+ {
+  "id": "c-pre04",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "高松塚古墳壁画",
+  "era": "奈良時代",
+  "century": "8世紀",
+  "half": "前半",
+  "culture": "白鳳文化",
+  "explanation": "高松塚古墳壁画は、白鳳文化を代表する絵画資料です。7世紀末から8世紀初めごろの大陸文化の影響を示すものとして整理します。",
+  "omitCenturyHalf": true
+ },
+ {
+  "id": "c-pre05",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "古事記",
+  "era": "奈良時代",
+  "century": "8世紀",
+  "half": "前半",
+  "culture": "天平文化",
+  "explanation": "古代国家による歴史編纂の流れで押さえる書物です。"
+ },
+ {
+  "id": "c-pre06",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "日本書紀",
+  "era": "奈良時代",
+  "century": "8世紀",
+  "half": "前半",
+  "culture": "天平文化",
+  "explanation": "六国史の最初に位置づけられる官撰の歴史書です。"
+ },
+ {
+  "id": "c-pre07",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "風土記",
+  "era": "奈良時代",
+  "century": "8世紀",
+  "half": "前半",
+  "culture": "天平文化",
+  "explanation": "諸国の地名・産物・伝承などを記した地誌です。奈良時代の国家的編纂事業として整理します。"
+ },
+ {
+  "id": "c-pre08",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "万葉集",
+  "era": "奈良時代",
+  "century": "8世紀",
+  "half": "後半",
+  "culture": "天平文化",
+  "explanation": "奈良時代までの歌を集めた和歌集です。天平文化の代表的文学として押さえます。"
+ },
+ {
+  "id": "c-pre09",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "懐風藻",
+  "era": "奈良時代",
+  "century": "8世紀",
+  "half": "後半",
+  "culture": "天平文化",
+  "explanation": "現存最古の漢詩集です。貴族層における漢文学の受容を示します。"
+ },
+ {
+  "id": "c-pre10",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "正倉院宝物",
+  "era": "奈良時代",
+  "century": "8世紀",
+  "half": "後半",
+  "culture": "天平文化",
+  "explanation": "国際色豊かな天平文化を象徴する宝物群です。"
+ },
+ {
+  "id": "c-pre11",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "唐招提寺金堂",
+  "era": "奈良時代",
+  "century": "8世紀",
+  "half": "後半",
+  "culture": "天平文化",
+  "explanation": "鑑真に関わる寺院建築として、奈良時代後期の仏教文化と結びつけます。"
+ },
+ {
+  "id": "c-pre12",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "最澄の天台宗",
+  "era": "平安時代",
+  "century": "9世紀",
+  "half": "前半",
+  "culture": "弘仁・貞観文化",
+  "explanation": "平安初期の仏教として、比叡山延暦寺を拠点とする天台宗を押さえます。"
+ },
+ {
+  "id": "c-pre13",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "空海の真言宗",
+  "era": "平安時代",
+  "century": "9世紀",
+  "half": "前半",
+  "culture": "弘仁・貞観文化",
+  "explanation": "高野山金剛峯寺を拠点とする密教です。平安初期文化の重要事項です。"
+ },
+ {
+  "id": "c-pre14",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "東寺講堂不動明王像",
+  "era": "平安時代",
+  "century": "9世紀",
+  "half": "前半",
+  "culture": "弘仁・貞観文化",
+  "explanation": "密教美術を代表する仏像として、弘仁・貞観文化に位置づけます。"
+ },
+ {
+  "id": "c-pre15",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "室生寺五重塔",
+  "era": "平安時代",
+  "century": "9世紀",
+  "half": "前半",
+  "culture": "弘仁・貞観文化",
+  "explanation": "平安初期の山岳寺院建築として押さえる文化財です。"
+ },
+ {
+  "id": "c-pre16",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "古今和歌集",
+  "era": "平安時代",
+  "century": "10世紀",
+  "half": "前半",
+  "culture": "国風文化",
+  "explanation": "最初の勅撰和歌集です。国風文化の文学を代表します。"
+ },
+ {
+  "id": "c-pre17",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "土佐日記",
+  "era": "平安時代",
+  "century": "10世紀",
+  "half": "前半",
+  "culture": "国風文化",
+  "explanation": "紀貫之による日記文学です。かな文学の発達と結びつけます。"
+ },
+ {
+  "id": "c-pre18",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "枕草子",
+  "era": "平安時代",
+  "century": "11世紀",
+  "half": "前半",
+  "culture": "国風文化",
+  "explanation": "清少納言による随筆です。宮廷文学の発展を代表する作品です。"
+ },
+ {
+  "id": "c-pre19",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "源氏物語",
+  "era": "平安時代",
+  "century": "11世紀",
+  "half": "前半",
+  "culture": "国風文化",
+  "explanation": "紫式部による物語文学です。国風文化の代表的作品として押さえます。"
+ },
+ {
+  "id": "c-pre20",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "往生要集",
+  "era": "平安時代",
+  "century": "10世紀",
+  "half": "後半",
+  "culture": "国風文化",
+  "explanation": "源信が著した浄土教関係の書物です。末法思想や浄土信仰と結びつけます。"
+ },
+ {
+  "id": "c-pre21",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "平等院鳳凰堂",
+  "era": "平安時代",
+  "century": "11世紀",
+  "half": "後半",
+  "culture": "国風文化",
+  "explanation": "阿弥陀堂建築を代表する文化財です。藤原頼通・浄土教と結びつけます。"
+ },
+ {
+  "id": "c-pre22",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "大和絵",
+  "era": "平安時代",
+  "century": "10世紀",
+  "half": "後半",
+  "culture": "国風文化",
+  "explanation": "唐風文化を消化した日本的な絵画様式として、国風文化の中で整理します。"
+ },
+ {
+  "id": "c-pre23",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "寝殿造",
+  "era": "平安時代",
+  "century": "11世紀",
+  "half": "前半",
+  "culture": "国風文化",
+  "explanation": "平安貴族の住宅様式です。国風文化の生活文化として押さえます。"
+ },
+ {
+  "id": "c-pre24",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "かな文字の発達",
+  "era": "平安時代",
+  "century": "10世紀",
+  "half": "前半",
+  "culture": "国風文化",
+  "explanation": "かな文字の発達により、和歌・物語・日記文学が発展しました。"
+ },
+ {
+  "id": "c-medieval12",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "金閣",
+  "era": "室町時代",
+  "century": "14世紀",
+  "half": "後半",
+  "culture": "北山文化",
+  "explanation": "足利義満の時期の文化を代表する建築です。公家文化と武家文化、さらに禅宗文化の影響が重なった北山文化の象徴として整理します。室町前期、14世紀後半の文化事項として押さえます。"
+ },
+ {
+  "id": "c-medieval15",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "銀閣",
+  "era": "室町時代",
+  "century": "15世紀",
+  "half": "後半",
+  "culture": "東山文化",
+  "explanation": "足利義政の時期の文化を代表する建築です。書院造や水墨画などとともに、わび・さびにつながる室町後期の東山文化として整理します。15世紀後半の文化事項として押さえます。"
+ },
+ {
+  "id": "c-modern05",
+  "type": "culture",
+  "scope": "modern",
+  "term": "森鴎外『舞姫』",
+  "era": "明治時代",
+  "century": "19世紀",
+  "half": "後半",
+  "culture": "明治文化",
+  "explanation": "森鴎外の作品として、明治文学を代表する文化事項の一つです。",
+  "year": 1890,
+  "timeLevel": "decade",
+  "timeRange": "1890年代"
+ },
+ {
+  "id": "c-modern2-06",
+  "type": "culture",
+  "scope": "modern",
+  "term": "プロレタリア文学",
+  "era": "昭和戦前",
+  "century": "20世紀",
+  "half": "前半",
+  "culture": "昭和戦前の文化",
+  "explanation": "社会運動の広がりや治安維持法体制下の文化状況と結びつけて押さえます。",
+  "year": 1920,
+  "timeLevel": "decade",
+  "timeRange": "1920年代"
+ },
+ {
+  "id": "o-medieval01",
+  "type": "order",
+  "scope": "premodern",
+  "title": "鎌倉幕府成立までの流れ",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "治承・寿永の乱",
+    1180
+   ],
+   [
+    "壇の浦の戦い",
+    1185
+   ],
+   [
+    "守護・地頭の設置",
+    1185
+   ],
+   [
+    "源頼朝の征夷大将軍任命",
+    1192
+   ]
+  ],
+  "explanation": "平氏政権の崩壊から鎌倉幕府の成立へ向かう流れを確認します。"
+ },
+ {
+  "id": "o-medieval02",
+  "type": "order",
+  "scope": "premodern",
+  "title": "鎌倉前期の政治",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "源頼朝の征夷大将軍任命",
+    1192
+   ],
+   [
+    "承久の乱",
+    1221
+   ],
+   [
+    "御成敗式目",
+    1232
+   ],
+   [
+    "宝治合戦",
+    1247
+   ]
+  ],
+  "explanation": "鎌倉幕府成立後、北条氏による執権政治が整っていく流れです。"
+ },
+ {
+  "id": "o-medieval03",
+  "type": "order",
+  "scope": "premodern",
+  "title": "元寇と鎌倉後期",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "文永の役",
+    1274
+   ],
+   [
+    "弘安の役",
+    1281
+   ],
+   [
+    "永仁の徳政令",
+    1297
+   ],
+   [
+    "鎌倉幕府滅亡",
+    1333
+   ]
+  ],
+  "explanation": "元寇後、御家人の窮乏や幕府の動揺が進み、鎌倉幕府の滅亡へ向かいます。"
+ },
+ {
+  "id": "o-medieval04",
+  "type": "order",
+  "scope": "premodern",
+  "title": "鎌倉仏教の展開",
+  "prompt": "次の人物を活動時期の古い順に並べよ。",
+  "items": [
+   [
+    "法然",
+    1175
+   ],
+   [
+    "栄西",
+    1191
+   ],
+   [
+    "親鸞",
+    1224
+   ],
+   [
+    "日蓮",
+    1253
+   ]
+  ],
+  "explanation": "鎌倉新仏教の人物を、おおまかな活動時期で整理します。"
+ },
+ {
+  "id": "o-medieval05",
+  "type": "order",
+  "scope": "premodern",
+  "title": "南北朝から室町幕府へ",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "鎌倉幕府滅亡",
+    1333
+   ],
+   [
+    "建武の新政",
+    1333
+   ],
+   [
+    "室町幕府の成立",
+    1336
+   ],
+   [
+    "南北朝の合一",
+    1392
+   ]
+  ],
+  "explanation": "鎌倉幕府滅亡後、建武の新政、南北朝の動乱、室町幕府の安定へ向かう流れです。"
+ },
+ {
+  "id": "o-medieval06",
+  "type": "order",
+  "scope": "premodern",
+  "title": "室町幕府の展開",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "南北朝の合一",
+    1392
+   ],
+   [
+    "日明貿易の開始",
+    1404
+   ],
+   [
+    "正長の土一揆",
+    1428
+   ],
+   [
+    "嘉吉の変",
+    1441
+   ]
+  ],
+  "explanation": "足利義満の時期の安定から、室町中期の社会不安・将軍権威の動揺を確認します。"
+ },
+ {
+  "id": "o-medieval07",
+  "type": "order",
+  "scope": "premodern",
+  "title": "応仁の乱から戦国へ",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "応仁の乱",
+    1467
+   ],
+   [
+    "山城国一揆",
+    1485
+   ],
+   [
+    "加賀の一向一揆",
+    1488
+   ],
+   [
+    "明応の政変",
+    1493
+   ]
+  ],
+  "explanation": "応仁の乱後、惣村・一揆の動きや下剋上が広がり、戦国時代へ移っていきます。"
+ },
+ {
+  "id": "o-medieval08",
+  "type": "order",
+  "scope": "premodern",
+  "title": "鎌倉・室町文化の流れ",
+  "prompt": "次の文化事項を古い順に並べよ。",
+  "items": [
+   [
+    "新古今和歌集",
+    1205
+   ],
+   [
+    "金剛力士像",
+    1203
+   ],
+   [
+    "金閣",
+    1397
+   ],
+   [
+    "銀閣",
+    1482
+   ]
+  ],
+  "explanation": "鎌倉文化から北山文化・東山文化への流れを確認します。"
+ },
+ {
+  "id": "p-medieval01",
+  "type": "period",
+  "scope": "premodern",
+  "term": "治承・寿永の乱",
+  "era": "平安時代",
+  "century": "12世紀",
+  "half": "後半",
+  "person": "後白河天皇",
+  "personRequired": false,
+  "explanation": "平氏政権の成立後、源平の争乱を経て武家政権成立へ向かう重要な内乱です。"
+ },
+ {
+  "id": "p-medieval02",
+  "type": "period",
+  "scope": "premodern",
+  "term": "壇の浦の戦い",
+  "era": "平安時代",
+  "century": "12世紀",
+  "half": "後半",
+  "personRequired": false,
+  "explanation": "平氏が滅亡した戦いです。源平争乱の終結と鎌倉幕府成立の流れで押さえます。"
+ },
+ {
+  "id": "p-medieval03",
+  "type": "period",
+  "scope": "premodern",
+  "term": "守護・地頭の設置",
+  "era": "鎌倉時代",
+  "century": "12世紀",
+  "half": "後半",
+  "person": "源頼朝",
+  "personRequired": true,
+  "explanation": "鎌倉幕府の地方支配の基礎となる制度です。源頼朝の時期の幕府成立過程と結びつけます。"
+ },
+ {
+  "id": "p-medieval04",
+  "type": "period",
+  "scope": "premodern",
+  "term": "源頼朝の征夷大将軍任命",
+  "era": "鎌倉時代",
+  "century": "12世紀",
+  "half": "後半",
+  "person": "源頼朝",
+  "personRequired": true,
+  "explanation": "源頼朝が征夷大将軍に任じられ、武家政権の成立を示す象徴的な出来事です。"
+ },
+ {
+  "id": "p-medieval05",
+  "type": "period",
+  "scope": "premodern",
+  "term": "承久の乱",
+  "era": "鎌倉時代",
+  "century": "13世紀",
+  "half": "前半",
+  "personRequired": false,
+  "explanation": "後鳥羽上皇が幕府打倒を企てた事件です。乱後、幕府の西国支配が強化されました。",
+  "actorRequired": true,
+  "actor": "北条義時"
+ },
+ {
+  "id": "p-medieval06",
+  "type": "period",
+  "scope": "premodern",
+  "term": "六波羅探題の設置",
+  "era": "鎌倉時代",
+  "century": "13世紀",
+  "half": "前半",
+  "personRequired": false,
+  "explanation": "承久の乱後、京都に置かれた幕府の機関です。朝廷監視と西国支配の強化に関わります。"
+ },
+ {
+  "id": "p-medieval08",
+  "type": "period",
+  "scope": "premodern",
+  "term": "文永の役",
+  "era": "鎌倉時代",
+  "century": "13世紀",
+  "half": "後半",
+  "personRequired": false,
+  "actor": "北条時宗",
+  "actorRequired": true,
+  "explanation": "元による日本遠征の第一回として押さえる事項です。鎌倉幕府にとっては大きな対外危機であり、北条時宗の時期の出来事として整理します。文永の役と弘安の役をセットで押さえると、13世紀後半の鎌倉後期の位置づけが安定します。"
+ },
+ {
+  "id": "p-medieval09",
+  "type": "period",
+  "scope": "premodern",
+  "term": "弘安の役",
+  "era": "鎌倉時代",
+  "century": "13世紀",
+  "half": "後半",
+  "personRequired": false,
+  "actor": "北条時宗",
+  "actorRequired": true,
+  "explanation": "元寇の第二回です。文永の役とあわせて、鎌倉後期の対外危機として押さえます。"
+ },
+ {
+  "id": "p-medieval10",
+  "type": "period",
+  "scope": "premodern",
+  "term": "永仁の徳政令",
+  "era": "鎌倉時代",
+  "century": "13世紀",
+  "half": "後半",
+  "personRequired": false,
+  "actor": "北条貞時",
+  "actorRequired": true,
+  "explanation": "元寇後に困窮した御家人を救済するために出された徳政令です。御家人の所領売却や質入れが進んだことへの対応として位置づけられます。鎌倉幕府が御家人制の立て直しを図った政策として、13世紀後半に整理します。"
+ },
+ {
+  "id": "p-medieval11",
+  "type": "period",
+  "scope": "premodern",
+  "term": "鎌倉幕府滅亡",
+  "era": "鎌倉時代",
+  "century": "14世紀",
+  "half": "前半",
+  "personRequired": false,
+  "explanation": "後醍醐天皇の倒幕運動などを背景に、鎌倉幕府が滅亡します。建武の新政へつながります。"
+ },
+ {
+  "id": "p-medieval12",
+  "type": "period",
+  "scope": "premodern",
+  "term": "建武の新政",
+  "era": "南北朝時代",
+  "century": "14世紀",
+  "half": "前半",
+  "person": "後醍醐天皇",
+  "personRequired": true,
+  "explanation": "鎌倉幕府滅亡後、後醍醐天皇が行った親政です。南北朝の動乱へつながる政治として整理します。"
+ },
+ {
+  "id": "p-medieval13",
+  "type": "period",
+  "scope": "premodern",
+  "term": "室町幕府の成立",
+  "era": "室町時代",
+  "century": "14世紀",
+  "half": "前半",
+  "personRequired": false,
+  "explanation": "足利尊氏が武家政権を開き、室町幕府の基礎がつくられました。この設問では、将軍名よりも重要人物として足利尊氏を結びつけて整理します。",
+  "actorRequired": true,
+  "actor": "足利尊氏"
+ },
+ {
+  "id": "p-medieval14",
+  "type": "period",
+  "scope": "premodern",
+  "term": "南北朝の合一",
+  "era": "室町時代",
+  "century": "14世紀",
+  "half": "後半",
+  "person": "足利義満",
+  "personRequired": true,
+  "explanation": "南朝と北朝に分裂していた朝廷が一つにまとまった出来事です。足利義満の時期に実現したため、室町幕府の政治的安定と結びつけて押さえます。14世紀後半の室町前期を判断するうえで重要な目印になります。"
+ },
+ {
+  "id": "p-medieval15",
+  "type": "period",
+  "scope": "premodern",
+  "term": "日明貿易の開始",
+  "era": "室町時代",
+  "century": "15世紀",
+  "half": "前半",
+  "person": "足利義満",
+  "personRequired": true,
+  "explanation": "明との間で行われた貿易で、倭寇と正式な貿易船を区別するために勘合が用いられました。足利義満の時期の対外関係として整理します。室町幕府の政治的安定と東アジア外交を結びつける事項です。"
+ },
+ {
+  "id": "p-medieval16",
+  "type": "period",
+  "scope": "premodern",
+  "term": "正長の土一揆",
+  "era": "室町時代",
+  "century": "15世紀",
+  "half": "前半",
+  "personRequired": false,
+  "explanation": "徳政を求める土一揆です。室町時代の惣村・民衆運動の高まりと結びつけます。"
+ },
+ {
+  "id": "p-medieval17",
+  "type": "period",
+  "scope": "premodern",
+  "term": "嘉吉の変",
+  "era": "室町時代",
+  "century": "15世紀",
+  "half": "前半",
+  "person": "足利義教",
+  "personRequired": true,
+  "explanation": "将軍足利義教が赤松満祐に殺害された事件です。室町幕府の将軍権威の動揺と関係します。"
+ },
+ {
+  "id": "p-medieval18",
+  "type": "period",
+  "scope": "premodern",
+  "term": "応仁の乱",
+  "era": "室町時代",
+  "century": "15世紀",
+  "half": "後半",
+  "person": "足利義政",
+  "personRequired": true,
+  "explanation": "将軍後継問題や有力守護大名の対立を背景に起こった大規模な内乱です。京都を中心に長期化し、室町幕府の統制力低下を示す出来事として押さえます。戦国時代へ向かう転換点として、15世紀後半に位置づけます。"
+ },
+ {
+  "id": "p-medieval19",
+  "type": "period",
+  "scope": "premodern",
+  "term": "山城国一揆",
+  "era": "室町時代",
+  "century": "15世紀",
+  "half": "後半",
+  "personRequired": false,
+  "explanation": "国人と農民が守護大名を排除した一揆です。惣村・国一揆の動きとして整理します。"
+ },
+ {
+  "id": "p-medieval20",
+  "type": "period",
+  "scope": "premodern",
+  "term": "加賀の一向一揆",
+  "era": "室町時代",
+  "century": "15世紀",
+  "half": "後半",
+  "personRequired": false,
+  "explanation": "一向宗門徒らによる一揆です。室町後期の民衆・宗教勢力の動きと結びつけます。"
+ },
+ {
+  "id": "p-medieval21",
+  "type": "period",
+  "scope": "premodern",
+  "term": "明応の政変",
+  "era": "室町時代",
+  "century": "15世紀",
+  "half": "後半",
+  "personRequired": false,
+  "explanation": "室町幕府の政治秩序がさらに動揺し、戦国期への移行を考えるうえで重要な事件です。"
+ },
+ {
+  "id": "c-medieval01",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "新古今和歌集",
+  "era": "鎌倉時代",
+  "century": "13世紀",
+  "half": "前半",
+  "culture": "院政期文化",
+  "explanation": "院政期から鎌倉初期の和歌文化を代表する勅撰和歌集です。"
+ },
+ {
+  "id": "c-medieval02",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "方丈記",
+  "era": "鎌倉時代",
+  "century": "13世紀",
+  "half": "前半",
+  "culture": "鎌倉文化",
+  "explanation": "鴨長明の随筆です。鎌倉文化の文学として整理します。"
+ },
+ {
+  "id": "c-medieval03",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "徒然草",
+  "era": "鎌倉時代",
+  "century": "14世紀",
+  "half": "前半",
+  "culture": "鎌倉文化",
+  "explanation": "吉田兼好の随筆です。鎌倉末期から南北朝期にかけての文化として押さえます。"
+ },
+ {
+  "id": "c-medieval04",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "平家物語",
+  "era": "鎌倉時代",
+  "century": "13世紀",
+  "half": "前半",
+  "culture": "鎌倉文化",
+  "explanation": "軍記物語の代表です。源平争乱の記憶と武士の時代の文化を結びつけます。"
+ },
+ {
+  "id": "c-medieval05",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "金剛力士像",
+  "era": "鎌倉時代",
+  "century": "13世紀",
+  "half": "前半",
+  "culture": "鎌倉文化",
+  "explanation": "運慶・快慶ら慶派の写実的な彫刻として、鎌倉文化を代表します。"
+ },
+ {
+  "id": "c-medieval06",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "東大寺南大門",
+  "era": "鎌倉時代",
+  "century": "13世紀",
+  "half": "前半",
+  "culture": "鎌倉文化",
+  "explanation": "鎌倉時代の復興事業と大仏様建築を示す文化事項です。"
+ },
+ {
+  "id": "c-medieval07",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "浄土宗",
+  "era": "鎌倉時代",
+  "century": "12世紀",
+  "half": "後半",
+  "culture": "鎌倉文化",
+  "explanation": "法然が開いた鎌倉新仏教です。専修念仏と結びつけて整理します。"
+ },
+ {
+  "id": "c-medieval08",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "浄土真宗",
+  "era": "鎌倉時代",
+  "century": "13世紀",
+  "half": "前半",
+  "culture": "鎌倉文化",
+  "explanation": "親鸞を祖とする鎌倉新仏教です。阿弥陀信仰の展開として押さえます。"
+ },
+ {
+  "id": "c-medieval09",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "臨済宗",
+  "era": "鎌倉時代",
+  "century": "12世紀",
+  "half": "後半",
+  "culture": "鎌倉文化",
+  "explanation": "栄西が伝えた禅宗です。武士層との結びつきも重要です。"
+ },
+ {
+  "id": "c-medieval10",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "曹洞宗",
+  "era": "鎌倉時代",
+  "century": "13世紀",
+  "half": "前半",
+  "culture": "鎌倉文化",
+  "explanation": "道元が伝えた禅宗です。鎌倉新仏教の一つとして整理します。"
+ },
+ {
+  "id": "c-medieval11",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "日蓮宗",
+  "era": "鎌倉時代",
+  "century": "13世紀",
+  "half": "後半",
+  "culture": "鎌倉文化",
+  "explanation": "日蓮が開いた鎌倉新仏教です。法華経信仰と結びつけます。"
+ },
+ {
+  "id": "c-medieval13",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "能",
+  "era": "室町時代",
+  "century": "14世紀",
+  "half": "後半",
+  "culture": "北山文化",
+  "explanation": "観阿弥・世阿弥によって大成された芸能です。室町文化の代表として押さえます。"
+ },
+ {
+  "id": "c-medieval14",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "水墨画",
+  "era": "室町時代",
+  "century": "15世紀",
+  "half": "後半",
+  "culture": "東山文化",
+  "explanation": "禅宗文化と関係の深い絵画です。雪舟らと結びつけて整理します。"
+ },
+ {
+  "id": "c-medieval16",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "書院造",
+  "era": "室町時代",
+  "century": "15世紀",
+  "half": "後半",
+  "culture": "東山文化",
+  "explanation": "東山文化を代表する建築様式です。銀閣や同仁斎と結びつけます。"
+ },
+ {
+  "id": "c-medieval17",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "雪舟",
+  "era": "室町時代",
+  "century": "15世紀",
+  "half": "後半",
+  "culture": "東山文化",
+  "explanation": "水墨画を大成した人物として、東山文化と結びつけて整理します。"
+ },
+ {
+  "id": "o-earlymodern01",
+  "type": "order",
+  "scope": "premodern",
+  "title": "戦国から織豊政権へ",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "応仁の乱",
+    1467
+   ],
+   [
+    "鉄砲伝来",
+    1543
+   ],
+   [
+    "桶狭間の戦い",
+    1560
+   ],
+   [
+    "室町幕府滅亡",
+    1573
+   ]
+  ],
+  "explanation": "応仁の乱後に戦国の動きが広がり、鉄砲伝来などを経て、織田信長が室町幕府を滅ぼす流れを確認します。"
+ },
+ {
+  "id": "o-earlymodern02",
+  "type": "order",
+  "scope": "premodern",
+  "title": "織田信長の時期",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "桶狭間の戦い",
+    1560
+   ],
+   [
+    "室町幕府滅亡",
+    1573
+   ],
+   [
+    "長篠の戦い",
+    1575
+   ],
+   [
+    "本能寺の変",
+    1582
+   ]
+  ],
+  "explanation": "織田信長の台頭から室町幕府滅亡、鉄砲を活用した戦い、本能寺の変までの流れです。"
+ },
+ {
+  "id": "o-earlymodern03",
+  "type": "order",
+  "scope": "premodern",
+  "title": "豊臣秀吉の統一政策",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "山崎の戦い",
+    1582
+   ],
+   [
+    "太閤検地",
+    1582
+   ],
+   [
+    "刀狩令",
+    1588
+   ],
+   [
+    "小田原平定",
+    1590
+   ]
+  ],
+  "explanation": "本能寺の変後、豊臣秀吉が全国統一へ向かう過程と、兵農分離につながる政策を整理します。"
+ },
+ {
+  "id": "o-earlymodern04",
+  "type": "order",
+  "scope": "premodern",
+  "title": "江戸幕府成立の流れ",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "関ヶ原の戦い",
+    1600
+   ],
+   [
+    "江戸幕府成立",
+    1603
+   ],
+   [
+    "大坂夏の陣",
+    1615
+   ],
+   [
+    "武家諸法度",
+    1615
+   ]
+  ],
+  "explanation": "関ヶ原の戦い後、徳川家康が江戸幕府を開き、大坂の陣後に武家支配の制度が整えられます。"
+ },
+ {
+  "id": "o-earlymodern05",
+  "type": "order",
+  "scope": "premodern",
+  "title": "江戸初期の支配体制",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "武家諸法度",
+    1615
+   ],
+   [
+    "禁中並公家諸法度",
+    1615
+   ],
+   [
+    "参勤交代の制度化",
+    1635
+   ],
+   [
+    "島原・天草一揆",
+    1637
+   ]
+  ],
+  "explanation": "江戸幕府が大名・朝廷を統制し、さらに対外・宗教政策を固めていく流れです。"
+ },
+ {
+  "id": "o-earlymodern06",
+  "type": "order",
+  "scope": "premodern",
+  "title": "鎖国体制への流れ",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "日本人の海外渡航禁止",
+    1635
+   ],
+   [
+    "島原・天草一揆",
+    1637
+   ],
+   [
+    "ポルトガル船来航禁止",
+    1639
+   ],
+   [
+    "オランダ商館の出島移転",
+    1641
+   ]
+  ],
+  "explanation": "江戸幕府の対外統制が強まり、いわゆる鎖国体制が整っていく流れを確認します。"
+ },
+ {
+  "id": "o-earlymodern07",
+  "type": "order",
+  "scope": "premodern",
+  "title": "江戸幕政改革の流れ",
+  "prompt": "次の政治・改革を古い順に並べよ。",
+  "items": [
+   [
+    "生類憐みの令",
+    1685
+   ],
+   [
+    "享保の改革",
+    1716
+   ],
+   [
+    "寛政の改革",
+    1787
+   ],
+   [
+    "天保の改革",
+    1841
+   ]
+  ],
+  "explanation": "江戸幕府の政治を、綱吉・吉宗・松平定信・水野忠邦の流れで整理する問題です。"
+ },
+ {
+  "id": "o-earlymodern08",
+  "type": "order",
+  "scope": "premodern",
+  "title": "江戸後期の社会不安",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "天明の飢饉",
+    1782
+   ],
+   [
+    "大塩平八郎の乱",
+    1837
+   ],
+   [
+    "蛮社の獄",
+    1839
+   ],
+   [
+    "天保の改革",
+    1841
+   ]
+  ],
+  "explanation": "飢饉や都市の混乱、思想・言論統制、幕政改革が続く江戸後期の流れを確認します。"
+ },
+ {
+  "id": "o-earlymodern09",
+  "type": "order",
+  "scope": "premodern",
+  "title": "桃山文化から江戸文化へ",
+  "prompt": "次の文化事項を古い順に並べよ。",
+  "items": [
+   [
+    "狩野永徳",
+    1570
+   ],
+   [
+    "千利休",
+    1580
+   ],
+   [
+    "井原西鶴",
+    1682
+   ],
+   [
+    "葛飾北斎",
+    1831
+   ]
+  ],
+  "explanation": "桃山文化から元禄文化、化政文化へ移る文化史の大まかな流れです。"
+ },
+ {
+  "id": "p-earlymodern01",
+  "type": "period",
+  "scope": "premodern",
+  "term": "鉄砲伝来",
+  "era": "室町時代",
+  "century": "16世紀",
+  "half": "前半",
+  "personRequired": false,
+  "explanation": "戦国期の戦い方に大きな影響を与えた出来事です。16世紀前半の室町時代後期に位置づけます。"
+ },
+ {
+  "id": "p-earlymodern02",
+  "type": "period",
+  "scope": "premodern",
+  "term": "キリスト教伝来",
+  "era": "室町時代",
+  "century": "16世紀",
+  "half": "後半",
+  "personRequired": false,
+  "actor": "フランシスコ・ザビエル",
+  "actorRequired": true,
+  "explanation": "ヨーロッパ人の来航とともにキリスト教が伝わった出来事です。戦国期の対外交流の広がりと結びつけます。"
+ },
+ {
+  "id": "p-earlymodern03",
+  "type": "period",
+  "scope": "premodern",
+  "term": "桶狭間の戦い",
+  "era": "室町時代",
+  "century": "16世紀",
+  "half": "後半",
+  "personRequired": false,
+  "actor": "織田信長",
+  "actorRequired": true,
+  "explanation": "織田信長が台頭するきっかけとして押さえる戦いです。戦国時代の流れの中で、16世紀後半に位置づけます。"
+ },
+ {
+  "id": "p-earlymodern04",
+  "type": "period",
+  "scope": "premodern",
+  "term": "室町幕府滅亡",
+  "era": "室町時代",
+  "century": "16世紀",
+  "half": "後半",
+  "person": "足利義昭",
+  "personRequired": true,
+  "actor": "織田信長",
+  "actorRequired": true,
+  "explanation": "織田信長が足利義昭を追放し、室町幕府が滅亡した出来事です。室町時代の終わりを判断する重要な目印になります。"
+ },
+ {
+  "id": "p-earlymodern05",
+  "type": "period",
+  "scope": "premodern",
+  "term": "長篠の戦い",
+  "era": "安土桃山時代",
+  "century": "16世紀",
+  "half": "後半",
+  "personRequired": false,
+  "actor": "武田勝頼",
+  "actorRequired": true,
+  "explanation": "鉄砲の活用と結びつけて整理される戦いです。1575年の出来事なので、安土桃山時代・16世紀後半に位置づけます。この設問では、敗れた側の中心人物として武田勝頼を結びつけます。"
+ },
+ {
+  "id": "p-earlymodern06",
+  "type": "period",
+  "scope": "premodern",
+  "term": "本能寺の変",
+  "era": "安土桃山時代",
+  "century": "16世紀",
+  "half": "後半",
+  "personRequired": false,
+  "actor": "織田信長",
+  "actorRequired": false,
+  "explanation": "織田信長が倒れた事件です。直接関係する人物が複数いるため人物欄は出さず、16世紀後半の安土桃山期として整理します。"
+ },
+ {
+  "id": "p-earlymodern07",
+  "type": "period",
+  "scope": "premodern",
+  "term": "太閤検地",
+  "era": "安土桃山時代",
+  "century": "16世紀",
+  "half": "後半",
+  "personRequired": false,
+  "actor": "豊臣秀吉",
+  "actorRequired": true,
+  "explanation": "豊臣秀吉の全国統一政策と結びつける制度です。土地と農民支配を把握するための政策として整理します。"
+ },
+ {
+  "id": "p-earlymodern08",
+  "type": "period",
+  "scope": "premodern",
+  "term": "刀狩令",
+  "era": "安土桃山時代",
+  "century": "16世紀",
+  "half": "後半",
+  "personRequired": false,
+  "actor": "豊臣秀吉",
+  "actorRequired": true,
+  "explanation": "豊臣秀吉の兵農分離政策と結びつけて押さえる法令です。太閤検地とあわせて整理します。"
+ },
+ {
+  "id": "p-earlymodern09",
+  "type": "period",
+  "scope": "premodern",
+  "term": "小田原平定",
+  "era": "安土桃山時代",
+  "century": "16世紀",
+  "half": "後半",
+  "personRequired": false,
+  "actor": "豊臣秀吉",
+  "actorRequired": true,
+  "explanation": "豊臣秀吉による全国統一の完成と結びつける出来事です。16世紀後半の安土桃山時代に位置づけます。"
+ },
+ {
+  "id": "p-earlymodern10",
+  "type": "period",
+  "scope": "premodern",
+  "term": "文禄・慶長の役",
+  "era": "安土桃山時代",
+  "century": "16世紀",
+  "half": "後半",
+  "personRequired": false,
+  "actor": "豊臣秀吉",
+  "actorRequired": true,
+  "explanation": "豊臣秀吉の対外政策と結びつけて押さえる朝鮮出兵です。安土桃山時代後期の出来事として整理します。"
+ },
+ {
+  "id": "p-earlymodern11",
+  "type": "period",
+  "scope": "premodern",
+  "term": "関ヶ原の戦い",
+  "era": "安土桃山時代",
+  "century": "16世紀",
+  "half": "後半",
+  "personRequired": false,
+  "actor": "徳川家康",
+  "actorRequired": true,
+  "explanation": "徳川家康が全国支配を確立していくうえで重要な戦いです。1600年なので、時代感は桃山末期ですが、世紀判断では16世紀後半になります。"
+ },
+ {
+  "id": "p-earlymodern12",
+  "type": "period",
+  "scope": "premodern",
+  "term": "江戸幕府成立",
+  "era": "江戸時代",
+  "century": "17世紀",
+  "half": "前半",
+  "person": "徳川家康",
+  "personRequired": true,
+  "explanation": "徳川家康が征夷大将軍となり、江戸幕府を開いた出来事です。江戸時代の始まりを判断する基本事項です。"
+ },
+ {
+  "id": "p-earlymodern13",
+  "type": "period",
+  "scope": "premodern",
+  "term": "武家諸法度",
+  "era": "江戸時代",
+  "century": "17世紀",
+  "half": "前半",
+  "person": "徳川秀忠",
+  "personRequired": true,
+  "explanation": "江戸幕府が大名を統制するために定めた法令です。初めは徳川秀忠の時期の法令として整理します。"
+ },
+ {
+  "id": "p-earlymodern14",
+  "type": "period",
+  "scope": "premodern",
+  "term": "禁中並公家諸法度",
+  "era": "江戸時代",
+  "century": "17世紀",
+  "half": "前半",
+  "person": "徳川秀忠",
+  "personRequired": true,
+  "explanation": "江戸幕府が天皇・公家を統制するために定めた法令です。武家諸法度と同じく、江戸初期の支配体制整備として押さえます。"
+ },
+ {
+  "id": "p-earlymodern15",
+  "type": "period",
+  "scope": "premodern",
+  "term": "参勤交代の制度化",
+  "era": "江戸時代",
+  "century": "17世紀",
+  "half": "前半",
+  "person": "徳川家光",
+  "personRequired": true,
+  "explanation": "大名統制を強める制度として、徳川家光の時期に制度化されました。江戸初期の幕藩体制の整備と結びつけます。"
+ },
+ {
+  "id": "p-earlymodern16",
+  "type": "period",
+  "scope": "premodern",
+  "term": "島原・天草一揆",
+  "era": "江戸時代",
+  "century": "17世紀",
+  "half": "前半",
+  "person": "徳川家光",
+  "personRequired": true,
+  "explanation": "キリスト教禁制や重い負担を背景に起こった一揆です。江戸幕府の宗教・対外統制が強まる流れと結びつけます。"
+ },
+ {
+  "id": "p-earlymodern17",
+  "type": "period",
+  "scope": "premodern",
+  "term": "ポルトガル船来航禁止",
+  "era": "江戸時代",
+  "century": "17世紀",
+  "half": "前半",
+  "person": "徳川家光",
+  "personRequired": true,
+  "explanation": "江戸幕府の対外統制が強化される過程の重要事項です。島原・天草一揆後の鎖国体制完成に関わります。"
+ },
+ {
+  "id": "p-earlymodern18",
+  "type": "period",
+  "scope": "premodern",
+  "term": "生類憐みの令",
+  "era": "江戸時代",
+  "century": "17世紀",
+  "half": "後半",
+  "person": "徳川綱吉",
+  "personRequired": true,
+  "explanation": "徳川綱吉の時期の政治を象徴する法令として押さえます。江戸前期から中期に移る時期の事項です。"
+ },
+ {
+  "id": "p-earlymodern19",
+  "type": "period",
+  "scope": "premodern",
+  "term": "正徳の治",
+  "era": "江戸時代",
+  "century": "18世紀",
+  "half": "前半",
+  "person": "徳川家宣",
+  "personRequired": true,
+  "actor": "新井白石",
+  "actorRequired": true,
+  "explanation": "新井白石の政治と結びつける事項です。18世紀前半の江戸中期の政治として整理します。"
+ },
+ {
+  "id": "p-earlymodern20",
+  "type": "period",
+  "scope": "premodern",
+  "term": "享保の改革",
+  "era": "江戸時代",
+  "century": "18世紀",
+  "half": "前半",
+  "person": "徳川吉宗",
+  "personRequired": true,
+  "explanation": "徳川吉宗の幕政改革です。江戸中期の改革政治として、寛政の改革・天保の改革と区別して押さえます。"
+ },
+ {
+  "id": "p-earlymodern21",
+  "type": "period",
+  "scope": "premodern",
+  "term": "田沼政治",
+  "era": "江戸時代",
+  "century": "18世紀",
+  "half": "後半",
+  "person": "徳川家治",
+  "personRequired": true,
+  "actor": "田沼意次",
+  "actorRequired": true,
+  "explanation": "田沼意次の時期の政治として整理します。享保の改革と寛政の改革の間に位置づけると流れがつかみやすくなります。"
+ },
+ {
+  "id": "p-earlymodern23",
+  "type": "period",
+  "scope": "premodern",
+  "term": "大塩平八郎の乱",
+  "era": "江戸時代",
+  "century": "19世紀",
+  "half": "前半",
+  "person": "徳川家斉",
+  "personRequired": true,
+  "actor": "大塩平八郎",
+  "actorRequired": false,
+  "explanation": "江戸後期の社会不安を示す事件です。天保の改革の前後関係とあわせて、19世紀前半に整理します。"
+ },
+ {
+  "id": "p-earlymodern24",
+  "type": "period",
+  "scope": "premodern",
+  "term": "蛮社の獄",
+  "era": "江戸時代",
+  "century": "19世紀",
+  "half": "前半",
+  "person": "徳川家慶",
+  "personRequired": true,
+  "explanation": "江戸後期の対外問題や言論統制と結びつけて押さえる事件です。関係人物が複数いるため人物欄は出していません。"
+ },
+ {
+  "id": "p-earlymodern25",
+  "type": "period",
+  "scope": "premodern",
+  "term": "天保の改革",
+  "era": "江戸時代",
+  "century": "19世紀",
+  "half": "前半",
+  "person": "徳川家慶",
+  "personRequired": true,
+  "actor": "水野忠邦",
+  "actorRequired": true,
+  "explanation": "水野忠邦による幕政改革です。享保・寛政に続く三大改革の一つとして、19世紀前半に整理します。"
+ },
+ {
+  "id": "c-earlymodern01",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "狩野永徳",
+  "era": "安土桃山時代",
+  "century": "16世紀",
+  "half": "後半",
+  "culture": "桃山文化",
+  "explanation": "桃山文化を代表する絵画の人物として整理します。豪壮な障壁画と結びつけて押さえます。"
+ },
+ {
+  "id": "c-earlymodern02",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "長谷川等伯",
+  "era": "安土桃山時代",
+  "century": "16世紀",
+  "half": "後半",
+  "culture": "桃山文化",
+  "explanation": "桃山文化を代表する絵画の人物として整理します。狩野永徳と並べて、桃山期の絵画を押さえます。"
+ },
+ {
+  "id": "c-earlymodern03",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "千利休",
+  "era": "安土桃山時代",
+  "century": "16世紀",
+  "half": "後半",
+  "culture": "桃山文化",
+  "explanation": "茶の湯の大成と結びつける人物です。安土桃山時代の文化として整理します。"
+ },
+ {
+  "id": "c-earlymodern04",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "南蛮文化",
+  "era": "安土桃山時代",
+  "century": "16世紀",
+  "half": "後半",
+  "culture": "桃山文化",
+  "explanation": "ヨーロッパ人の来航やキリスト教伝来と関係する文化です。戦国から桃山期の対外交流と結びつけます。"
+ },
+ {
+  "id": "c-earlymodern05",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "井原西鶴",
+  "era": "江戸時代",
+  "century": "17世紀",
+  "half": "後半",
+  "culture": "元禄文化",
+  "explanation": "元禄文化を代表する文学者として整理します。町人文化の発展と結びつけて押さえます。"
+ },
+ {
+  "id": "c-earlymodern06",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "松尾芭蕉",
+  "era": "江戸時代",
+  "century": "17世紀",
+  "half": "後半",
+  "culture": "元禄文化",
+  "explanation": "元禄文化を代表する俳諧の人物です。江戸前期から中期にかけての町人文化として整理します。"
+ },
+ {
+  "id": "c-earlymodern07",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "近松門左衛門",
+  "era": "江戸時代",
+  "century": "18世紀",
+  "half": "前半",
+  "culture": "元禄文化",
+  "explanation": "元禄文化を代表する浄瑠璃作者として整理します。上方を中心とする町人文化と結びつけます。"
+ },
+ {
+  "id": "c-earlymodern08",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "尾形光琳",
+  "era": "江戸時代",
+  "century": "18世紀",
+  "half": "前半",
+  "culture": "元禄文化",
+  "explanation": "元禄文化を代表する美術の人物です。町人文化の発展と結びつけて押さえます。"
+ },
+ {
+  "id": "c-earlymodern09",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "菱川師宣",
+  "era": "江戸時代",
+  "century": "17世紀",
+  "half": "後半",
+  "culture": "元禄文化",
+  "explanation": "浮世絵の発展と結びつける人物です。元禄文化の美術として整理します。"
+ },
+ {
+  "id": "c-earlymodern10",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "十返舎一九",
+  "era": "江戸時代",
+  "century": "19世紀",
+  "half": "前半",
+  "culture": "化政文化",
+  "explanation": "化政文化を代表する文学者として整理します。江戸後期の庶民文化と結びつけます。"
+ },
+ {
+  "id": "c-earlymodern11",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "滝沢馬琴",
+  "era": "江戸時代",
+  "century": "19世紀",
+  "half": "前半",
+  "culture": "化政文化",
+  "explanation": "化政文化を代表する読本作者として整理します。江戸後期の文学と結びつけます。"
+ },
+ {
+  "id": "c-earlymodern12",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "葛飾北斎",
+  "era": "江戸時代",
+  "century": "19世紀",
+  "half": "前半",
+  "culture": "化政文化",
+  "explanation": "化政文化を代表する浮世絵師として整理します。江戸後期の庶民文化と結びつけます。"
+ },
+ {
+  "id": "c-earlymodern13",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "歌川広重",
+  "era": "江戸時代",
+  "century": "19世紀",
+  "half": "前半",
+  "culture": "化政文化",
+  "explanation": "化政文化を代表する浮世絵師として整理します。葛飾北斎とともに江戸後期の美術として押さえます。"
+ },
+ {
+  "id": "c-earlymodern14",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "東海道中膝栗毛",
+  "era": "江戸時代",
+  "century": "19世紀",
+  "half": "前半",
+  "culture": "化政文化",
+  "explanation": "十返舎一九の滑稽本として、化政文化の文学に位置づけます。江戸後期の庶民文化として整理します。"
+ },
+ {
+  "id": "c-earlymodern15",
+  "type": "culture",
+  "scope": "premodern",
+  "term": "南総里見八犬伝",
+  "era": "江戸時代",
+  "century": "19世紀",
+  "half": "前半",
+  "culture": "化政文化",
+  "explanation": "滝沢馬琴の読本として、化政文化の文学に位置づけます。江戸後期の文化事項として押さえます。"
+ },
+ {
+  "id": "o-modern03",
+  "type": "order",
+  "scope": "modern",
+  "title": "王政復古から明治政府へ",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "大政奉還",
+    1867
+   ],
+   [
+    "王政復古の大号令",
+    1867
+   ],
+   [
+    "五箇条の誓文",
+    1868
+   ],
+   [
+    "版籍奉還",
+    1869
+   ]
+  ],
+  "explanation": "江戸幕府の終わりから新政府の基本方針、版籍奉還へと進む明治初期の流れを確認します。"
+ },
+ {
+  "id": "o-modern04",
+  "type": "order",
+  "scope": "modern",
+  "title": "明治初期の改革",
+  "prompt": "次の政策・出来事を古い順に並べよ。",
+  "items": [
+   [
+    "廃藩置県",
+    1871
+   ],
+   [
+    "学制",
+    1872
+   ],
+   [
+    "徴兵令",
+    1873
+   ],
+   [
+    "地租改正",
+    1873
+   ]
+  ],
+  "explanation": "中央集権化、教育、軍事、税制の整備を通じて、明治国家の基礎が作られていく流れです。"
+ },
+ {
+  "id": "o-modern05",
+  "type": "order",
+  "scope": "modern",
+  "title": "自由民権運動と憲法制定",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "民撰議院設立建白書",
+    1874
+   ],
+   [
+    "大阪会議",
+    1875
+   ],
+   [
+    "国会開設の勅諭",
+    1881
+   ],
+   [
+    "大日本帝国憲法発布",
+    1889
+   ]
+  ],
+  "explanation": "自由民権運動の高まりから、国会開設の約束、憲法制定へ進む流れです。"
+ },
+ {
+  "id": "o-modern06",
+  "type": "order",
+  "scope": "modern",
+  "title": "明治の対外関係",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "岩倉使節団派遣",
+    1871
+   ],
+   [
+    "江華島事件",
+    1875
+   ],
+   [
+    "日朝修好条規",
+    1876
+   ],
+   [
+    "琉球処分",
+    1879
+   ]
+  ],
+  "explanation": "明治初期の対外関係を、欧米視察、朝鮮との関係、琉球処分の流れで確認します。"
+ },
+ {
+  "id": "o-modern07",
+  "type": "order",
+  "scope": "modern",
+  "title": "日清・日露戦争の流れ",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "日清戦争",
+    1894
+   ],
+   [
+    "下関条約",
+    1895
+   ],
+   [
+    "三国干渉",
+    1895
+   ],
+   [
+    "日露戦争",
+    1904
+   ]
+  ],
+  "explanation": "日清戦争後の講和と三国干渉を経て、日露戦争へ向かう対外関係の流れを確認します。"
+ },
+ {
+  "id": "o-modern08",
+  "type": "order",
+  "scope": "modern",
+  "title": "明治文化の流れ",
+  "prompt": "次の文化事項を古い順に並べよ。",
+  "items": [
+   [
+    "学問のすゝめ",
+    1872
+   ],
+   [
+    "浮雲",
+    1887
+   ],
+   [
+    "舞姫",
+    1890
+   ],
+   [
+    "たけくらべ",
+    1895
+   ]
+  ],
+  "explanation": "文明開化期から明治中後期の文学へ進む文化史の流れを確認します。"
+ },
+ {
+  "id": "p-modern04",
+  "type": "period",
+  "scope": "modern",
+  "term": "安政の大獄",
+  "era": "江戸時代末期",
+  "century": "19世紀",
+  "half": "後半",
+  "personRequired": false,
+  "actor": "井伊直弼",
+  "actorRequired": true,
+  "explanation": "大老井伊直弼が反対派を弾圧した事件です。条約調印や将軍継嗣問題をめぐる幕末政治の対立と結びつけます。",
+  "year": 1858,
+  "timeLevel": "decade",
+  "timeRange": "1850年代"
+ },
+ {
+  "id": "p-modern05",
+  "type": "period",
+  "scope": "modern",
+  "term": "桜田門外の変",
+  "era": "江戸時代末期",
+  "century": "19世紀",
+  "half": "後半",
+  "person": "徳川家茂",
+  "personRequired": true,
+  "actor": "井伊直弼",
+  "actorRequired": true,
+  "explanation": "大老井伊直弼が暗殺された事件です。安政の大獄後の反発と幕府権威の動揺を示す出来事として押さえます。",
+  "year": 1860,
+  "timeLevel": "decade",
+  "timeRange": "1860年代"
+ },
+ {
+  "id": "p-modern06",
+  "type": "period",
+  "scope": "modern",
+  "term": "薩長同盟",
+  "era": "江戸時代末期",
+  "century": "19世紀",
+  "half": "後半",
+  "person": "徳川家茂",
+  "personRequired": true,
+  "explanation": "薩摩藩と長州藩が連携した出来事です。倒幕へ向かう勢力関係の変化として整理します。関係人物が複数いるため人物欄は出していません。",
+  "year": 1866,
+  "timeLevel": "decade",
+  "timeRange": "1860年代"
+ },
+ {
+  "id": "p-modern07",
+  "type": "period",
+  "scope": "modern",
+  "term": "大政奉還",
+  "era": "江戸時代末期",
+  "century": "19世紀",
+  "half": "後半",
+  "person": "徳川慶喜",
+  "personRequired": true,
+  "explanation": "徳川慶喜が政権を朝廷に返上した出来事です。江戸幕府の終わりを判断する重要事項として押さえます。",
+  "year": 1867,
+  "timeLevel": "decade",
+  "timeRange": "1860年代"
+ },
+ {
+  "id": "p-modern08",
+  "type": "period",
+  "scope": "modern",
+  "term": "王政復古の大号令",
+  "era": "江戸時代末期",
+  "century": "19世紀",
+  "half": "後半",
+  "personRequired": false,
+  "explanation": "新政府樹立を示す宣言です。大政奉還後、江戸幕府に代わる新たな政治体制へ向かう流れで整理します。",
+  "year": 1867,
+  "timeLevel": "decade",
+  "timeRange": "1860年代"
+ },
+ {
+  "id": "p-modern09",
+  "type": "period",
+  "scope": "modern",
+  "term": "五箇条の誓文",
+  "era": "明治時代",
+  "century": "19世紀",
+  "half": "後半",
+  "personRequired": false,
+  "explanation": "明治新政府の基本方針を示したものです。明治初期の政治改革の出発点として位置づけます。",
+  "year": 1868,
+  "timeLevel": "decade",
+  "timeRange": "1860年代"
+ },
+ {
+  "id": "p-modern10",
+  "type": "period",
+  "scope": "modern",
+  "term": "版籍奉還",
+  "era": "明治時代",
+  "century": "19世紀",
+  "half": "後半",
+  "personRequired": false,
+  "explanation": "大名が土地と人民を朝廷に返した政策です。廃藩置県へ向かう中央集権化の過程として整理します。",
+  "year": 1869,
+  "timeLevel": "decade",
+  "timeRange": "1860年代"
+ },
+ {
+  "id": "p-modern11",
+  "type": "period",
+  "scope": "modern",
+  "term": "廃藩置県",
+  "era": "明治時代",
+  "century": "19世紀",
+  "half": "後半",
+  "personRequired": false,
+  "explanation": "藩を廃止して府県を置いた政策です。明治政府の中央集権化を示す重要事項として押さえます。",
+  "year": 1871,
+  "timeLevel": "decade",
+  "timeRange": "1870年代"
+ },
+ {
+  "id": "p-modern12",
+  "type": "period",
+  "scope": "modern",
+  "term": "岩倉使節団派遣",
+  "era": "明治時代",
+  "century": "19世紀",
+  "half": "後半",
+  "personRequired": false,
+  "actor": "岩倉具視",
+  "actorRequired": true,
+  "explanation": "欧米諸国を視察し、条約改正交渉も試みた使節団です。明治初期の対外政策と近代化の方向性に関わります。",
+  "year": 1871,
+  "timeLevel": "decade",
+  "timeRange": "1870年代"
+ },
+ {
+  "id": "p-modern13",
+  "type": "period",
+  "scope": "modern",
+  "term": "学制",
+  "era": "明治時代",
+  "century": "19世紀",
+  "half": "後半",
+  "personRequired": false,
+  "explanation": "近代的な学校制度の整備に関わる政策です。徴兵令・地租改正とともに、明治初期の制度改革として整理します。",
+  "year": 1872,
+  "timeLevel": "decade",
+  "timeRange": "1870年代"
+ },
+ {
+  "id": "p-modern14",
+  "type": "period",
+  "scope": "modern",
+  "term": "徴兵令",
+  "era": "明治時代",
+  "century": "19世紀",
+  "half": "後半",
+  "personRequired": false,
+  "explanation": "近代的な軍制を整えるための法令です。明治国家の軍事制度整備として、地租改正と同時期に押さえます。",
+  "year": 1873,
+  "timeLevel": "decade",
+  "timeRange": "1870年代"
+ },
+ {
+  "id": "p-modern15",
+  "type": "period",
+  "scope": "modern",
+  "term": "地租改正",
+  "era": "明治時代",
+  "century": "19世紀",
+  "half": "後半",
+  "personRequired": false,
+  "explanation": "明治政府の財政基盤を整えるための税制改革です。土地制度・税制の近代化として押さえます。",
+  "year": 1873,
+  "timeLevel": "decade",
+  "timeRange": "1870年代"
+ },
+ {
+  "id": "p-modern16",
+  "type": "period",
+  "scope": "modern",
+  "term": "民撰議院設立建白書",
+  "era": "明治時代",
+  "century": "19世紀",
+  "half": "後半",
+  "personRequired": false,
+  "actor": "板垣退助",
+  "actorRequired": true,
+  "explanation": "自由民権運動の出発点として押さえる建白書です。国会開設を求める動きと結びつけます。",
+  "year": 1874,
+  "timeLevel": "decade",
+  "timeRange": "1870年代"
+ },
+ {
+  "id": "p-modern17",
+  "type": "period",
+  "scope": "modern",
+  "term": "大阪会議",
+  "era": "明治時代",
+  "century": "19世紀",
+  "half": "後半",
+  "personRequired": false,
+  "explanation": "政府内外の有力者が集まり、立憲政治への方向を確認した会議です。自由民権運動と政府の対応を結びつけて整理します。",
+  "year": 1875,
+  "timeLevel": "decade",
+  "timeRange": "1870年代"
+ },
+ {
+  "id": "p-modern18",
+  "type": "period",
+  "scope": "modern",
+  "term": "西南戦争",
+  "era": "明治時代",
+  "century": "19世紀",
+  "half": "後半",
+  "personRequired": false,
+  "actor": "西郷隆盛",
+  "actorRequired": true,
+  "explanation": "士族反乱の最大規模のものとして押さえる戦争です。明治政府による近代国家形成への反発と結びつけます。",
+  "year": 1877,
+  "timeLevel": "decade",
+  "timeRange": "1870年代"
+ },
+ {
+  "id": "p-modern19",
+  "type": "period",
+  "scope": "modern",
+  "term": "国会開設の勅諭",
+  "era": "明治時代",
+  "century": "19世紀",
+  "half": "後半",
+  "personRequired": false,
+  "explanation": "国会開設を約束した勅諭です。自由民権運動の高まりと、憲法制定・国会開設へ向かう流れで整理します。",
+  "year": 1881,
+  "timeLevel": "decade",
+  "timeRange": "1880年代"
+ },
+ {
+  "id": "p-modern20",
+  "type": "period",
+  "scope": "modern",
+  "term": "内閣制度の創設",
+  "era": "明治時代",
+  "century": "19世紀",
+  "half": "後半",
+  "person": "第1次伊藤博文内閣",
+  "personRequired": true,
+  "explanation": "太政官制に代わり内閣制度が設けられた出来事です。初代内閣総理大臣は伊藤博文として整理します。",
+  "year": 1885,
+  "timeLevel": "decade",
+  "timeRange": "1880年代"
+ },
+ {
+  "id": "p-modern21",
+  "type": "period",
+  "scope": "modern",
+  "term": "大日本帝国憲法発布",
+  "era": "明治時代",
+  "century": "19世紀",
+  "half": "後半",
+  "person": "黒田清隆内閣",
+  "personRequired": true,
+  "explanation": "明治国家の憲法として発布されたものです。国会開設へ向かう制度整備の流れで押さえます。",
+  "year": 1889,
+  "timeLevel": "decade",
+  "timeRange": "1880年代"
+ },
+ {
+  "id": "p-modern22",
+  "type": "period",
+  "scope": "modern",
+  "term": "帝国議会開設",
+  "era": "明治時代",
+  "century": "19世紀",
+  "half": "後半",
+  "person": "第1次山県有朋内閣",
+  "personRequired": true,
+  "explanation": "大日本帝国憲法にもとづいて開かれた議会です。憲法発布後の政治制度の運用開始として整理します。",
+  "year": 1890,
+  "timeLevel": "decade",
+  "timeRange": "1890年代"
+ },
+ {
+  "id": "p-modern23",
+  "type": "period",
+  "scope": "modern",
+  "term": "教育勅語",
+  "era": "明治時代",
+  "century": "19世紀",
+  "half": "後半",
+  "person": "第1次山県有朋内閣",
+  "personRequired": true,
+  "explanation": "明治国家の教育理念に関わる勅語です。帝国議会開設と同じ時期の制度整備として押さえます。",
+  "year": 1890,
+  "timeLevel": "decade",
+  "timeRange": "1890年代"
+ },
+ {
+  "id": "p-modern24",
+  "type": "period",
+  "scope": "modern",
+  "term": "日清戦争",
+  "era": "明治時代",
+  "century": "19世紀",
+  "half": "後半",
+  "person": "第2次伊藤博文内閣",
+  "personRequired": true,
+  "explanation": "朝鮮をめぐる日本と清の戦争です。明治後期の対外戦争として、下関条約とセットで整理します。",
+  "year": 1894,
+  "timeLevel": "decade",
+  "timeRange": "1890年代"
+ },
+ {
+  "id": "p-modern25",
+  "type": "period",
+  "scope": "modern",
+  "term": "下関条約",
+  "era": "明治時代",
+  "century": "19世紀",
+  "half": "後半",
+  "person": "第2次伊藤博文内閣",
+  "personRequired": true,
+  "actor": "陸奥宗光",
+  "actorRequired": true,
+  "explanation": "日清戦争の講和条約です。陸奥宗光の外交と結びつけて、日清戦争後の対外関係として押さえます。",
+  "year": 1895,
+  "timeLevel": "decade",
+  "timeRange": "1890年代"
+ },
+ {
+  "id": "p-modern26",
+  "type": "period",
+  "scope": "modern",
+  "term": "三国干渉",
+  "era": "明治時代",
+  "century": "19世紀",
+  "half": "後半",
+  "person": "第2次伊藤博文内閣",
+  "personRequired": true,
+  "explanation": "下関条約後、ロシア・ドイツ・フランスが日本に遼東半島返還を求めた出来事です。日露対立へつながる流れで整理します。",
+  "year": 1895,
+  "timeLevel": "decade",
+  "timeRange": "1890年代"
+ },
+ {
+  "id": "p-modern27",
+  "type": "period",
+  "scope": "modern",
+  "term": "日英同盟",
+  "era": "明治時代",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "第1次桂太郎内閣",
+  "personRequired": true,
+  "explanation": "日本とイギリスの同盟です。日露戦争前の国際関係として、20世紀前半に位置づけます。",
+  "year": 1902,
+  "timeLevel": "decade",
+  "timeRange": "1900年代"
+ },
+ {
+  "id": "p-modern28",
+  "type": "period",
+  "scope": "modern",
+  "term": "日露戦争",
+  "era": "明治時代",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "第1次桂太郎内閣",
+  "personRequired": true,
+  "explanation": "日本とロシアの戦争です。日英同盟後の対外関係、ポーツマス条約と結びつけて整理します。",
+  "year": 1904,
+  "timeLevel": "decade",
+  "timeRange": "1900年代"
+ },
+ {
+  "id": "p-modern29",
+  "type": "period",
+  "scope": "modern",
+  "term": "ポーツマス条約",
+  "era": "明治時代",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "第1次桂太郎内閣",
+  "personRequired": true,
+  "actor": "小村寿太郎",
+  "actorRequired": true,
+  "explanation": "日露戦争の講和条約です。小村寿太郎の外交と結びつけて、日露戦争後の対外関係として押さえます。",
+  "year": 1905,
+  "timeLevel": "decade",
+  "timeRange": "1900年代"
+ },
+ {
+  "id": "p-modern30",
+  "type": "period",
+  "scope": "modern",
+  "term": "韓国併合",
+  "era": "明治時代",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "第2次桂太郎内閣",
+  "personRequired": true,
+  "explanation": "日本が韓国を併合した出来事です。明治末期の対外関係として整理します。",
+  "year": 1910,
+  "timeLevel": "decade",
+  "timeRange": "1910年代"
+ },
+ {
+  "id": "c-modern03",
+  "type": "culture",
+  "scope": "modern",
+  "term": "中江兆民",
+  "era": "明治時代",
+  "century": "19世紀",
+  "half": "後半",
+  "culture": "明治文化",
+  "explanation": "自由民権思想と結びつける人物です。明治中期の思想・言論の流れで整理します。",
+  "year": 1882,
+  "timeLevel": "decade",
+  "timeRange": "1880年代"
+ },
+ {
+  "id": "c-modern04",
+  "type": "culture",
+  "scope": "modern",
+  "term": "浮雲",
+  "era": "明治時代",
+  "century": "19世紀",
+  "half": "後半",
+  "culture": "明治文化",
+  "explanation": "二葉亭四迷の小説として、明治文学の展開に位置づけます。",
+  "year": 1887,
+  "timeLevel": "decade",
+  "timeRange": "1880年代"
+ },
+ {
+  "id": "c-modern06",
+  "type": "culture",
+  "scope": "modern",
+  "term": "たけくらべ",
+  "era": "明治時代",
+  "century": "19世紀",
+  "half": "後半",
+  "culture": "明治文化",
+  "explanation": "樋口一葉の作品として、明治文学の流れで押さえる文化事項です。",
+  "year": 1895,
+  "timeLevel": "decade",
+  "timeRange": "1890年代"
+ },
+ {
+  "id": "c-modern07",
+  "type": "culture",
+  "scope": "modern",
+  "term": "夏目漱石",
+  "era": "明治時代",
+  "century": "20世紀",
+  "half": "前半",
+  "culture": "明治文化",
+  "explanation": "明治後期の文学を代表する人物として整理します。20世紀前半の明治文化として押さえます。",
+  "year": 1905,
+  "timeLevel": "decade",
+  "timeRange": "1900年代"
+ },
+ {
+  "id": "c-modern08",
+  "type": "culture",
+  "scope": "modern",
+  "term": "与謝野晶子",
+  "era": "明治時代",
+  "century": "20世紀",
+  "half": "前半",
+  "culture": "明治文化",
+  "explanation": "明治後期の文学と結びつける人物です。近代文学の展開として整理します。",
+  "year": 1901,
+  "timeLevel": "decade",
+  "timeRange": "1900年代"
+ },
+ {
+  "id": "o-modern2-01",
+  "type": "order",
+  "scope": "modern",
+  "title": "大正初期から第一次世界大戦へ",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "第一次護憲運動",
+    1912
+   ],
+   [
+    "第一次世界大戦参戦",
+    1914
+   ],
+   [
+    "二十一カ条の要求",
+    1915
+   ],
+   [
+    "シベリア出兵",
+    1918
+   ]
+  ],
+  "explanation": "大正初期の政党政治を求める動きから、第一次世界大戦期の対外政策へ進む流れを確認します。"
+ },
+ {
+  "id": "o-modern2-02",
+  "type": "order",
+  "scope": "modern",
+  "title": "大正デモクラシーの流れ",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "米騒動",
+    1918
+   ],
+   [
+    "原敬内閣成立",
+    1918
+   ],
+   [
+    "全国水平社の結成",
+    1922
+   ],
+   [
+    "普通選挙法",
+    1925
+   ]
+  ],
+  "explanation": "民衆運動の高まりと政党内閣の成立、社会運動の展開、普通選挙法へ進む流れです。"
+ },
+ {
+  "id": "o-modern2-03",
+  "type": "order",
+  "scope": "modern",
+  "title": "第一次世界大戦後の国際関係",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "パリ講和会議",
+    1919
+   ],
+   [
+    "ベルサイユ条約",
+    1919
+   ],
+   [
+    "国際連盟発足",
+    1920
+   ],
+   [
+    "ワシントン会議",
+    1921
+   ]
+  ],
+  "explanation": "第一次世界大戦後の国際秩序と、日本を含む国際協調の流れを整理します。"
+ },
+ {
+  "id": "o-modern2-04",
+  "type": "order",
+  "scope": "modern",
+  "title": "政党内閣から金融恐慌へ",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "護憲三派内閣成立",
+    1924
+   ],
+   [
+    "普通選挙法",
+    1925
+   ],
+   [
+    "治安維持法",
+    1925
+   ],
+   [
+    "金融恐慌",
+    1927
+   ]
+  ],
+  "explanation": "護憲三派内閣の成立後、普通選挙法と治安維持法が同時期に成立し、金融恐慌へ進みます。"
+ },
+ {
+  "id": "o-modern2-05",
+  "type": "order",
+  "scope": "modern",
+  "title": "昭和初期の政治と外交",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "金融恐慌",
+    1927
+   ],
+   [
+    "張作霖爆殺事件",
+    1928
+   ],
+   [
+    "ロンドン海軍軍縮条約",
+    1930
+   ],
+   [
+    "満州事変",
+    1931
+   ]
+  ],
+  "explanation": "昭和初期の経済不安、対中国政策、軍縮問題、満州事変へ向かう流れです。"
+ },
+ {
+  "id": "o-modern2-06",
+  "type": "order",
+  "scope": "modern",
+  "title": "満州事変から政党政治の終焉へ",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "満州事変",
+    1931
+   ],
+   [
+    "満州国建国",
+    1932
+   ],
+   [
+    "五・一五事件",
+    1932
+   ],
+   [
+    "国際連盟脱退",
+    1933
+   ]
+  ],
+  "explanation": "満州事変後、満州国建国、五・一五事件、国際連盟脱退へ進む流れを確認します。"
+ },
+ {
+  "id": "o-modern2-07",
+  "type": "order",
+  "scope": "modern",
+  "title": "軍部の台頭と戦時体制",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "二・二六事件",
+    1936
+   ],
+   [
+    "日中戦争開始",
+    1937
+   ],
+   [
+    "国家総動員法",
+    1938
+   ],
+   [
+    "日独伊三国同盟",
+    1940
+   ]
+  ],
+  "explanation": "軍部の発言力拡大から、日中戦争、国家総動員法、日独伊三国同盟へ進む戦時体制化の流れです。"
+ },
+ {
+  "id": "o-modern2-08",
+  "type": "order",
+  "scope": "modern",
+  "title": "アジア太平洋戦争への流れ",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "日独伊三国同盟",
+    1940
+   ],
+   [
+    "日ソ中立条約",
+    1941
+   ],
+   [
+    "太平洋戦争開始",
+    1941
+   ],
+   [
+    "ポツダム宣言受諾",
+    1945
+   ]
+  ],
+  "explanation": "国際関係の変化と戦争拡大、敗戦へ向かう流れを確認します。"
+ },
+ {
+  "id": "o-modern2-09",
+  "type": "order",
+  "scope": "modern",
+  "title": "大正・昭和戦前の文化",
+  "prompt": "次の文化事項を古い順に並べよ。",
+  "items": [
+   [
+    "白樺派",
+    1910
+   ],
+   [
+    "民本主義",
+    1916
+   ],
+   [
+    "プロレタリア文学",
+    1920
+   ],
+   [
+    "ラジオ放送開始",
+    1925
+   ]
+  ],
+  "explanation": "大正から昭和戦前の思想・文学・大衆文化の大まかな流れを整理します。"
+ },
+ {
+  "id": "p-modern2-01",
+  "type": "period",
+  "scope": "modern",
+  "term": "第一次護憲運動",
+  "era": "大正時代",
+  "century": "20世紀",
+  "half": "前半",
+  "personRequired": false,
+  "explanation": "藩閥政治に反対し、憲政擁護を求めた運動です。大正政変につながる大正初期の政治運動として押さえます。",
+  "year": 1912,
+  "timeLevel": "decade",
+  "timeRange": "1910年代"
+ },
+ {
+  "id": "p-modern2-02",
+  "type": "period",
+  "scope": "modern",
+  "term": "第一次世界大戦参戦",
+  "era": "大正時代",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "第2次大隈重信内閣",
+  "personRequired": true,
+  "explanation": "日本が連合国側で第一次世界大戦に参戦した出来事です。大正初期の対外政策として整理します。",
+  "year": 1914,
+  "timeLevel": "decade",
+  "timeRange": "1910年代"
+ },
+ {
+  "id": "p-modern2-03",
+  "type": "period",
+  "scope": "modern",
+  "term": "二十一カ条の要求",
+  "era": "大正時代",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "第2次大隈重信内閣",
+  "personRequired": true,
+  "explanation": "日本が中国に対して行った要求です。第一次世界大戦期の日本の対中国政策として押さえます。",
+  "year": 1915,
+  "timeLevel": "decade",
+  "timeRange": "1910年代"
+ },
+ {
+  "id": "p-modern2-04",
+  "type": "period",
+  "scope": "modern",
+  "term": "シベリア出兵",
+  "era": "大正時代",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "寺内正毅内閣",
+  "personRequired": true,
+  "explanation": "ロシア革命後の国際情勢のなかで行われた出兵です。米騒動と同時期の寺内正毅内閣期として整理します。",
+  "year": 1918,
+  "timeLevel": "decade",
+  "timeRange": "1910年代"
+ },
+ {
+  "id": "p-modern2-05",
+  "type": "period",
+  "scope": "modern",
+  "term": "米騒動",
+  "era": "大正時代",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "寺内正毅内閣",
+  "personRequired": true,
+  "explanation": "米価高騰を背景に全国へ広がった民衆運動です。寺内正毅内閣退陣と原敬内閣成立につながる流れで押さえます。",
+  "year": 1918,
+  "timeLevel": "decade",
+  "timeRange": "1910年代"
+ },
+ {
+  "id": "p-modern2-06",
+  "type": "period",
+  "scope": "modern",
+  "term": "原敬内閣成立",
+  "era": "大正時代",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "原敬内閣",
+  "personRequired": true,
+  "explanation": "本格的な政党内閣として整理される内閣です。米騒動後の政治変化と結びつけます。",
+  "year": 1918,
+  "timeLevel": "decade",
+  "timeRange": "1910年代"
+ },
+ {
+  "id": "p-modern2-07",
+  "type": "period",
+  "scope": "modern",
+  "term": "パリ講和会議",
+  "era": "大正時代",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "原敬内閣",
+  "personRequired": true,
+  "explanation": "第一次世界大戦後の講和会議です。戦後国際秩序の形成と日本外交を結びつけて整理します。",
+  "year": 1919,
+  "timeLevel": "decade",
+  "timeRange": "1910年代"
+ },
+ {
+  "id": "p-modern2-08",
+  "type": "period",
+  "scope": "modern",
+  "term": "国際連盟発足",
+  "era": "大正時代",
+  "century": "20世紀",
+  "half": "前半",
+  "personRequired": false,
+  "explanation": "第一次世界大戦後の国際協調を象徴する国際組織です。大正期の国際関係として押さえます。",
+  "year": 1920,
+  "timeLevel": "decade",
+  "timeRange": "1920年代"
+ },
+ {
+  "id": "p-modern2-09",
+  "type": "period",
+  "scope": "modern",
+  "term": "ワシントン会議",
+  "era": "大正時代",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "高橋是清内閣",
+  "personRequired": true,
+  "explanation": "海軍軍縮やアジア太平洋地域の国際秩序に関わる会議です。第一次世界大戦後の国際協調外交と結びつけます。原敬暗殺直後に始まり、会議期間の大半は高橋是清内閣期にあたるため、このアプリでは高橋是清内閣と結びつけて整理します。",
+  "year": 1921,
+  "timeLevel": "decade",
+  "timeRange": "1920年代"
+ },
+ {
+  "id": "p-modern2-10",
+  "type": "period",
+  "scope": "modern",
+  "term": "全国水平社の結成",
+  "era": "大正時代",
+  "century": "20世紀",
+  "half": "前半",
+  "personRequired": false,
+  "explanation": "被差別部落の人々による差別撤廃を求める運動として整理します。大正デモクラシー期の社会運動と結びつけます。",
+  "year": 1922,
+  "timeLevel": "decade",
+  "timeRange": "1920年代"
+ },
+ {
+  "id": "p-modern2-11",
+  "type": "period",
+  "scope": "modern",
+  "term": "護憲三派内閣成立",
+  "era": "大正時代",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "加藤高明内閣",
+  "personRequired": true,
+  "explanation": "第二次護憲運動後に成立した内閣です。普通選挙法と治安維持法の成立と結びつけます。",
+  "year": 1924,
+  "timeLevel": "decade",
+  "timeRange": "1920年代"
+ },
+ {
+  "id": "p-modern2-13",
+  "type": "period",
+  "scope": "modern",
+  "term": "治安維持法",
+  "era": "大正時代",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "加藤高明内閣",
+  "personRequired": true,
+  "explanation": "社会主義運動などの取り締まりと結びつける法律です。普通選挙法と同時期に成立した点を押さえます。",
+  "year": 1925,
+  "timeLevel": "decade",
+  "timeRange": "1920年代"
+ },
+ {
+  "id": "p-modern2-14",
+  "type": "period",
+  "scope": "modern",
+  "term": "金融恐慌",
+  "era": "昭和戦前",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "第1次若槻礼次郎内閣",
+  "personRequired": true,
+  "explanation": "昭和初期の経済不安を示す出来事です。政党内閣期の経済問題として整理します。",
+  "year": 1927,
+  "timeLevel": "decade",
+  "timeRange": "1920年代"
+ },
+ {
+  "id": "p-modern2-15",
+  "type": "period",
+  "scope": "modern",
+  "term": "張作霖爆殺事件",
+  "era": "昭和戦前",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "田中義一内閣",
+  "personRequired": true,
+  "explanation": "関東軍による事件として整理します。昭和初期の対中国政策と軍部の独走を考えるうえで重要です。",
+  "year": 1928,
+  "timeLevel": "decade",
+  "timeRange": "1920年代"
+ },
+ {
+  "id": "p-modern2-16",
+  "type": "period",
+  "scope": "modern",
+  "term": "ロンドン海軍軍縮条約",
+  "era": "昭和戦前",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "浜口雄幸内閣",
+  "personRequired": true,
+  "explanation": "海軍軍縮をめぐる条約です。統帥権干犯問題と結びつけて押さえます。",
+  "year": 1930,
+  "timeLevel": "decade",
+  "timeRange": "1930年代"
+ },
+ {
+  "id": "p-modern2-18",
+  "type": "period",
+  "scope": "modern",
+  "term": "満州国建国",
+  "era": "昭和戦前",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "犬養毅内閣",
+  "personRequired": true,
+  "explanation": "満州事変後に建国された国家です。国際連盟との対立へつながる流れで整理します。",
+  "year": 1932,
+  "timeLevel": "decade",
+  "timeRange": "1930年代"
+ },
+ {
+  "id": "p-modern2-19",
+  "type": "period",
+  "scope": "modern",
+  "term": "五・一五事件",
+  "era": "昭和戦前",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "犬養毅内閣",
+  "personRequired": true,
+  "explanation": "犬養毅首相が暗殺された事件です。政党内閣の終わりを示す出来事として押さえます。",
+  "year": 1932,
+  "timeLevel": "decade",
+  "timeRange": "1930年代"
+ },
+ {
+  "id": "p-modern2-20",
+  "type": "period",
+  "scope": "modern",
+  "term": "国際連盟脱退",
+  "era": "昭和戦前",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "斎藤実内閣",
+  "personRequired": true,
+  "explanation": "満州事変をめぐる国際的批判のなかで、日本が国際連盟を脱退した出来事です。",
+  "year": 1933,
+  "timeLevel": "decade",
+  "timeRange": "1930年代"
+ },
+ {
+  "id": "p-modern2-21",
+  "type": "period",
+  "scope": "modern",
+  "term": "二・二六事件",
+  "era": "昭和戦前",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "岡田啓介内閣",
+  "personRequired": true,
+  "explanation": "陸軍青年将校らによるクーデタ未遂事件です。軍部の政治的影響力拡大と結びつけます。",
+  "year": 1936,
+  "timeLevel": "decade",
+  "timeRange": "1930年代"
+ },
+ {
+  "id": "p-modern2-22",
+  "type": "period",
+  "scope": "modern",
+  "term": "日中戦争開始",
+  "era": "昭和戦前",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "第1次近衛文麿内閣",
+  "personRequired": true,
+  "explanation": "盧溝橋事件をきっかけに全面化した戦争です。昭和戦前の戦時体制化と結びつけます。",
+  "year": 1937,
+  "timeLevel": "decade",
+  "timeRange": "1930年代"
+ },
+ {
+  "id": "p-modern2-23",
+  "type": "period",
+  "scope": "modern",
+  "term": "国家総動員法",
+  "era": "昭和戦前",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "第1次近衛文麿内閣",
+  "personRequired": true,
+  "explanation": "戦争遂行のため、人的・物的資源を統制する法律です。日中戦争後の戦時体制化として整理します。",
+  "year": 1938,
+  "timeLevel": "decade",
+  "timeRange": "1930年代"
+ },
+ {
+  "id": "p-modern2-24",
+  "type": "period",
+  "scope": "modern",
+  "term": "日独伊三国同盟",
+  "era": "昭和戦前",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "第2次近衛文麿内閣",
+  "personRequired": true,
+  "explanation": "日本・ドイツ・イタリアの同盟です。アジア太平洋戦争へ向かう国際関係の中で押さえます。",
+  "year": 1940,
+  "timeLevel": "decade",
+  "timeRange": "1940年代"
+ },
+ {
+  "id": "p-modern2-25",
+  "type": "period",
+  "scope": "modern",
+  "term": "日ソ中立条約",
+  "era": "昭和戦前",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "第2次近衛文麿内閣",
+  "personRequired": true,
+  "explanation": "日本とソ連の中立条約です。太平洋戦争直前の国際関係として整理します。",
+  "year": 1941,
+  "timeLevel": "decade",
+  "timeRange": "1940年代"
+ },
+ {
+  "id": "p-modern2-26",
+  "type": "period",
+  "scope": "modern",
+  "term": "太平洋戦争開始",
+  "era": "昭和戦前",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "東条英機内閣",
+  "personRequired": true,
+  "explanation": "日本が米英などと戦争を開始した出来事です。昭和戦前の戦争拡大の到達点として押さえます。",
+  "year": 1941,
+  "timeLevel": "decade",
+  "timeRange": "1940年代"
+ },
+ {
+  "id": "p-modern2-27",
+  "type": "period",
+  "scope": "modern",
+  "term": "ポツダム宣言受諾",
+  "era": "昭和戦前",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "鈴木貫太郎内閣",
+  "personRequired": true,
+  "explanation": "日本が降伏を決定し、戦争が終結した出来事です。戦後改革へ移る境目として整理します。",
+  "year": 1945,
+  "timeLevel": "decade",
+  "timeRange": "1940年代"
+ },
+ {
+  "id": "c-modern2-01",
+  "type": "culture",
+  "scope": "modern",
+  "term": "民本主義",
+  "era": "大正時代",
+  "century": "20世紀",
+  "half": "前半",
+  "culture": "大正文化",
+  "explanation": "吉野作造の思想と結びつけて、大正デモクラシー期の思想として整理します。",
+  "year": 1916,
+  "timeLevel": "decade",
+  "timeRange": "1910年代"
+ },
+ {
+  "id": "c-modern2-02",
+  "type": "culture",
+  "scope": "modern",
+  "term": "白樺派",
+  "era": "大正時代",
+  "century": "20世紀",
+  "half": "前半",
+  "culture": "大正文化",
+  "explanation": "大正期の文学・美術に関わる文化事項です。大正文化の代表として整理します。",
+  "year": 1910,
+  "timeLevel": "decade",
+  "timeRange": "1910年代"
+ },
+ {
+  "id": "c-modern2-03",
+  "type": "culture",
+  "scope": "modern",
+  "term": "志賀直哉",
+  "era": "大正時代",
+  "century": "20世紀",
+  "half": "前半",
+  "culture": "大正文化",
+  "explanation": "白樺派と結びつけて押さえる作家です。大正文化の文学として整理します。",
+  "year": 1910,
+  "timeLevel": "decade",
+  "timeRange": "1910年代"
+ },
+ {
+  "id": "c-modern2-04",
+  "type": "culture",
+  "scope": "modern",
+  "term": "柳宗悦",
+  "era": "大正時代",
+  "century": "20世紀",
+  "half": "前半",
+  "culture": "大正文化",
+  "explanation": "民芸運動と結びつけて整理する人物です。大正期以降の文化動向として押さえます。",
+  "year": 1920,
+  "timeLevel": "decade",
+  "timeRange": "1920年代"
+ },
+ {
+  "id": "c-modern2-05",
+  "type": "culture",
+  "scope": "modern",
+  "term": "ラジオ放送開始",
+  "era": "大正時代",
+  "century": "20世紀",
+  "half": "前半",
+  "culture": "大正文化",
+  "explanation": "大衆文化の広がりと結びつける事項です。都市化・メディアの発達として整理します。",
+  "year": 1925,
+  "timeLevel": "decade",
+  "timeRange": "1920年代"
+ },
+ {
+  "id": "c-modern2-07",
+  "type": "culture",
+  "scope": "modern",
+  "term": "小林多喜二",
+  "era": "昭和戦前",
+  "century": "20世紀",
+  "half": "前半",
+  "culture": "昭和戦前の文化",
+  "explanation": "プロレタリア文学と結びつけて整理する人物です。昭和戦前の文化事項として押さえます。",
+  "year": 1929,
+  "timeLevel": "decade",
+  "timeRange": "1920年代"
+ },
+ {
+  "id": "c-modern2-08",
+  "type": "culture",
+  "scope": "modern",
+  "term": "円本",
+  "era": "昭和戦前",
+  "century": "20世紀",
+  "half": "前半",
+  "culture": "昭和戦前の文化",
+  "explanation": "出版文化・大衆文化の広がりと結びつける事項です。昭和戦前の文化として整理します。",
+  "year": 1926,
+  "timeLevel": "decade",
+  "timeRange": "1920年代"
+ },
+ {
+  "id": "o-modern3-01",
+  "type": "order",
+  "scope": "modern",
+  "title": "敗戦直後の改革",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "ポツダム宣言受諾",
+    1945
+   ],
+   [
+    "五大改革指令",
+    1945
+   ],
+   [
+    "日本国憲法公布",
+    1946
+   ],
+   [
+    "日本国憲法施行",
+    1947
+   ]
+  ],
+  "explanation": "敗戦後、占領下で民主化改革が進み、日本国憲法の公布・施行へ向かう流れを確認します。"
+ },
+ {
+  "id": "o-modern3-02",
+  "type": "order",
+  "scope": "modern",
+  "title": "占領改革の流れ",
+  "prompt": "次の政策・出来事を古い順に並べよ。",
+  "items": [
+   [
+    "財閥解体",
+    1945
+   ],
+   [
+    "農地改革",
+    1946
+   ],
+   [
+    "教育基本法",
+    1947
+   ],
+   [
+    "労働基準法",
+    1947
+   ]
+  ],
+  "explanation": "占領下で、経済・農村・教育・労働の各分野にわたる改革が進められました。"
+ },
+ {
+  "id": "o-modern3-03",
+  "type": "order",
+  "scope": "modern",
+  "title": "占領政策の転換と講和",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "ドッジ・ライン",
+    1949
+   ],
+   [
+    "朝鮮戦争開始",
+    1950
+   ],
+   [
+    "サンフランシスコ平和条約",
+    1951
+   ],
+   [
+    "日本の主権回復",
+    1952
+   ]
+  ],
+  "explanation": "占領政策の転換、朝鮮戦争、講和条約を経て、日本が主権を回復する流れです。"
+ },
+ {
+  "id": "o-modern3-04",
+  "type": "order",
+  "scope": "modern",
+  "title": "冷戦下の日本外交",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "日ソ共同宣言",
+    1956
+   ],
+   [
+    "国際連合加盟",
+    1956
+   ],
+   [
+    "安保改定",
+    1960
+   ],
+   [
+    "日韓基本条約",
+    1965
+   ]
+  ],
+  "explanation": "主権回復後、冷戦下の国際秩序のなかで日本外交が展開していく流れを確認します。"
+ },
+ {
+  "id": "o-modern3-05",
+  "type": "order",
+  "scope": "modern",
+  "title": "戦後政治の流れ",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "55年体制成立",
+    1955
+   ],
+   [
+    "安保改定",
+    1960
+   ],
+   [
+    "所得倍増計画",
+    1960
+   ],
+   [
+    "沖縄返還",
+    1972
+   ]
+  ],
+  "explanation": "戦後政治の枠組み、安保改定、高度経済成長期の政策、沖縄返還へ進む流れです。"
+ },
+ {
+  "id": "o-modern3-06",
+  "type": "order",
+  "scope": "modern",
+  "title": "高度経済成長から石油危機へ",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "所得倍増計画",
+    1960
+   ],
+   [
+    "東京オリンピック",
+    1964
+   ],
+   [
+    "大阪万博",
+    1970
+   ],
+   [
+    "第一次石油危機",
+    1973
+   ]
+  ],
+  "explanation": "高度経済成長を象徴する出来事から、石油危機による転換へ向かう流れを確認します。"
+ },
+ {
+  "id": "o-modern3-07",
+  "type": "order",
+  "scope": "modern",
+  "title": "戦後後半の政治・経済",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "日中国交正常化",
+    1972
+   ],
+   [
+    "第一次石油危機",
+    1973
+   ],
+   [
+    "プラザ合意",
+    1985
+   ],
+   [
+    "バブル経済の崩壊",
+    1991
+   ]
+  ],
+  "explanation": "1970年代以降の外交・経済の変化を、石油危機、円高、バブル崩壊の流れで整理します。"
+ },
+ {
+  "id": "o-modern3-08",
+  "type": "order",
+  "scope": "modern",
+  "title": "平成期の政治",
+  "prompt": "次の出来事を古い順に並べよ。",
+  "items": [
+   [
+    "55年体制の崩壊",
+    1993
+   ],
+   [
+    "阪神・淡路大震災",
+    1995
+   ],
+   [
+    "地下鉄サリン事件",
+    1995
+   ],
+   [
+    "東日本大震災",
+    2011
+   ]
+  ],
+  "explanation": "平成期の政治・社会の大きな転換点となる出来事を時期順に確認します。"
+ },
+ {
+  "id": "p-modern3-01",
+  "type": "period",
+  "scope": "modern",
+  "term": "五大改革指令",
+  "era": "昭和戦後",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "幣原喜重郎内閣",
+  "personRequired": true,
+  "explanation": "占領下で民主化改革の方向を示した指令です。敗戦直後の改革として整理します。",
+  "year": 1945,
+  "timeLevel": "halfdecade",
+  "timeRange": "1940年代後半"
+ },
+ {
+  "id": "p-modern3-02",
+  "type": "period",
+  "scope": "modern",
+  "term": "財閥解体",
+  "era": "昭和戦後",
+  "century": "20世紀",
+  "half": "前半",
+  "personRequired": false,
+  "explanation": "占領下の経済民主化政策として押さえる事項です。戦後改革の一つとして整理します。",
+  "year": 1945,
+  "timeLevel": "halfdecade",
+  "timeRange": "1940年代後半"
+ },
+ {
+  "id": "p-modern3-03",
+  "type": "period",
+  "scope": "modern",
+  "term": "農地改革",
+  "era": "昭和戦後",
+  "century": "20世紀",
+  "half": "前半",
+  "personRequired": false,
+  "explanation": "地主制を解体し、自作農を増やす方向で行われた改革です。戦後改革の重要事項として押さえます。",
+  "year": 1946,
+  "timeLevel": "halfdecade",
+  "timeRange": "1940年代後半"
+ },
+ {
+  "id": "p-modern3-04",
+  "type": "period",
+  "scope": "modern",
+  "term": "日本国憲法公布",
+  "era": "昭和戦後",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "第1次吉田茂内閣",
+  "personRequired": true,
+  "explanation": "日本国憲法が公布された出来事です。戦後改革と新しい政治制度の成立に関わる重要事項です。",
+  "year": 1946,
+  "timeLevel": "halfdecade",
+  "timeRange": "1940年代後半"
+ },
+ {
+  "id": "p-modern3-05",
+  "type": "period",
+  "scope": "modern",
+  "term": "日本国憲法施行",
+  "era": "昭和戦後",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "第1次吉田茂内閣",
+  "personRequired": true,
+  "explanation": "日本国憲法が実際に施行された出来事です。1947年なので、20世紀前半に位置づけます。",
+  "year": 1947,
+  "timeLevel": "halfdecade",
+  "timeRange": "1940年代後半"
+ },
+ {
+  "id": "p-modern3-06",
+  "type": "period",
+  "scope": "modern",
+  "term": "教育基本法",
+  "era": "昭和戦後",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "第1次吉田茂内閣",
+  "personRequired": true,
+  "explanation": "戦後教育改革に関わる法律です。日本国憲法施行と同時期の戦後改革として整理します。",
+  "year": 1947,
+  "timeLevel": "halfdecade",
+  "timeRange": "1940年代後半"
+ },
+ {
+  "id": "p-modern3-07",
+  "type": "period",
+  "scope": "modern",
+  "term": "労働基準法",
+  "era": "昭和戦後",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "第1次吉田茂内閣",
+  "personRequired": true,
+  "explanation": "労働条件の基準を定めた法律です。戦後改革の労働分野の重要事項として押さえます。",
+  "year": 1947,
+  "timeLevel": "halfdecade",
+  "timeRange": "1940年代後半"
+ },
+ {
+  "id": "p-modern3-08",
+  "type": "period",
+  "scope": "modern",
+  "term": "ドッジ・ライン",
+  "era": "昭和戦後",
+  "century": "20世紀",
+  "half": "前半",
+  "person": "第3次吉田茂内閣",
+  "personRequired": true,
+  "explanation": "インフレーション収束をめざす占領期の経済政策です。占領政策の転換と結びつけます。",
+  "year": 1949,
+  "timeLevel": "halfdecade",
+  "timeRange": "1940年代後半"
+ },
+ {
+  "id": "p-modern3-09",
+  "type": "period",
+  "scope": "modern",
+  "term": "朝鮮戦争開始",
+  "era": "昭和戦後",
+  "century": "20世紀",
+  "half": "後半",
+  "person": "第3次吉田茂内閣",
+  "personRequired": true,
+  "explanation": "日本経済にも大きな影響を与えた戦争です。1950年なので、20世紀後半の出来事として整理します。",
+  "year": 1950,
+  "timeLevel": "halfdecade",
+  "timeRange": "1950年代前半"
+ },
+ {
+  "id": "p-modern3-10",
+  "type": "period",
+  "scope": "modern",
+  "term": "警察予備隊創設",
+  "era": "昭和戦後",
+  "century": "20世紀",
+  "half": "後半",
+  "person": "第3次吉田茂内閣",
+  "personRequired": true,
+  "explanation": "朝鮮戦争を背景に創設された組織です。のちの自衛隊へつながる流れとして押さえます。",
+  "year": 1950,
+  "timeLevel": "halfdecade",
+  "timeRange": "1950年代前半"
+ },
+ {
+  "id": "p-modern3-12",
+  "type": "period",
+  "scope": "modern",
+  "term": "日米安全保障条約",
+  "era": "昭和戦後",
+  "century": "20世紀",
+  "half": "後半",
+  "person": "第3次吉田茂内閣",
+  "personRequired": true,
+  "explanation": "サンフランシスコ平和条約と同時に結ばれた条約です。戦後日本の安全保障体制と結びつけて押さえます。",
+  "year": 1951,
+  "timeLevel": "halfdecade",
+  "timeRange": "1950年代前半"
+ },
+ {
+  "id": "p-modern3-13",
+  "type": "period",
+  "scope": "modern",
+  "term": "55年体制成立",
+  "era": "昭和戦後",
+  "century": "20世紀",
+  "half": "後半",
+  "person": "鳩山一郎内閣",
+  "personRequired": true,
+  "explanation": "保守合同と日本社会党の統一によって成立した戦後政治の枠組みです。1955年の出来事として整理します。",
+  "year": 1955,
+  "timeLevel": "halfdecade",
+  "timeRange": "1950年代後半"
+ },
+ {
+  "id": "p-modern3-14",
+  "type": "period",
+  "scope": "modern",
+  "term": "日ソ共同宣言",
+  "era": "昭和戦後",
+  "century": "20世紀",
+  "half": "後半",
+  "person": "鳩山一郎内閣",
+  "personRequired": true,
+  "explanation": "日本とソ連の国交回復に関わる宣言です。国際連合加盟と同じ時期の外交として整理します。",
+  "year": 1956,
+  "timeLevel": "halfdecade",
+  "timeRange": "1950年代後半"
+ },
+ {
+  "id": "p-modern3-15",
+  "type": "period",
+  "scope": "modern",
+  "term": "国際連合加盟",
+  "era": "昭和戦後",
+  "century": "20世紀",
+  "half": "後半",
+  "person": "鳩山一郎内閣",
+  "personRequired": true,
+  "explanation": "日本が国際連合に加盟した出来事です。戦後日本の国際社会復帰として押さえます。1956年12月の出来事なので、このアプリでは鳩山一郎内閣と結びつけて整理します。",
+  "year": 1956,
+  "timeLevel": "halfdecade",
+  "timeRange": "1950年代後半"
+ },
+ {
+  "id": "p-modern3-16",
+  "type": "period",
+  "scope": "modern",
+  "term": "安保改定",
+  "era": "昭和戦後",
+  "century": "20世紀",
+  "half": "後半",
+  "person": "岸信介内閣",
+  "personRequired": true,
+  "explanation": "日米安全保障条約を改定した出来事です。安保闘争とあわせて、戦後政治の重要事項として整理します。",
+  "year": 1960,
+  "timeLevel": "halfdecade",
+  "timeRange": "1960年代前半"
+ },
+ {
+  "id": "p-modern3-17",
+  "type": "period",
+  "scope": "modern",
+  "term": "所得倍増計画",
+  "era": "昭和戦後",
+  "century": "20世紀",
+  "half": "後半",
+  "person": "池田勇人内閣",
+  "personRequired": true,
+  "explanation": "高度経済成長期の経済政策として押さえる事項です。池田勇人内閣と結びつけて整理します。",
+  "year": 1960,
+  "timeLevel": "halfdecade",
+  "timeRange": "1960年代前半"
+ },
+ {
+  "id": "p-modern3-18",
+  "type": "period",
+  "scope": "modern",
+  "term": "日韓基本条約",
+  "era": "昭和戦後",
+  "century": "20世紀",
+  "half": "後半",
+  "person": "佐藤栄作内閣",
+  "personRequired": true,
+  "explanation": "日本と韓国の国交正常化に関わる条約です。佐藤栄作内閣期の外交として整理します。",
+  "year": 1965,
+  "timeLevel": "halfdecade",
+  "timeRange": "1960年代後半"
+ },
+ {
+  "id": "p-modern3-19",
+  "type": "period",
+  "scope": "modern",
+  "term": "沖縄返還",
+  "era": "昭和戦後",
+  "century": "20世紀",
+  "half": "後半",
+  "person": "佐藤栄作内閣",
+  "personRequired": true,
+  "explanation": "沖縄の施政権が日本に返還された出来事です。戦後外交と米軍基地問題に関わる重要事項です。",
+  "year": 1972,
+  "timeLevel": "halfdecade",
+  "timeRange": "1970年代前半"
+ },
+ {
+  "id": "p-modern3-20",
+  "type": "period",
+  "scope": "modern",
+  "term": "日中国交正常化",
+  "era": "昭和戦後",
+  "century": "20世紀",
+  "half": "後半",
+  "person": "田中角栄内閣",
+  "personRequired": true,
+  "explanation": "日本と中国の国交が正常化した出来事です。1970年代の外交として整理します。",
+  "year": 1972,
+  "timeLevel": "halfdecade",
+  "timeRange": "1970年代前半"
+ },
+ {
+  "id": "p-modern3-21",
+  "type": "period",
+  "scope": "modern",
+  "term": "第一次石油危機",
+  "era": "昭和戦後",
+  "century": "20世紀",
+  "half": "後半",
+  "person": "田中角栄内閣",
+  "personRequired": true,
+  "explanation": "高度経済成長の終わりを考えるうえで重要な出来事です。1970年代の経済変化として押さえます。",
+  "year": 1973,
+  "timeLevel": "halfdecade",
+  "timeRange": "1970年代前半"
+ },
+ {
+  "id": "p-modern3-22",
+  "type": "period",
+  "scope": "modern",
+  "term": "プラザ合意",
+  "era": "昭和戦後",
+  "century": "20世紀",
+  "half": "後半",
+  "person": "中曽根康弘内閣",
+  "personRequired": true,
+  "explanation": "円高が進むきっかけとなった合意です。1980年代の経済変化として整理します。",
+  "year": 1985,
+  "timeLevel": "halfdecade",
+  "timeRange": "1980年代後半"
+ },
+ {
+  "id": "p-modern3-23",
+  "type": "period",
+  "scope": "modern",
+  "term": "バブル経済の崩壊",
+  "era": "平成時代",
+  "century": "20世紀",
+  "half": "後半",
+  "personRequired": false,
+  "explanation": "平成初期の経済変化として押さえる事項です。高度経済成長後の日本経済の転換と結びつけます。",
+  "year": 1991,
+  "timeLevel": "halfdecade",
+  "timeRange": "1990年代前半"
+ },
+ {
+  "id": "p-modern3-24",
+  "type": "period",
+  "scope": "modern",
+  "term": "55年体制の崩壊",
+  "era": "平成時代",
+  "century": "20世紀",
+  "half": "後半",
+  "personRequired": false,
+  "explanation": "自由民主党中心の長期政権構造が崩れた出来事です。平成初期の政治変化として整理します。",
+  "year": 1993,
+  "timeLevel": "halfdecade",
+  "timeRange": "1990年代前半"
+ },
+ {
+  "id": "p-modern3-25",
+  "type": "period",
+  "scope": "modern",
+  "term": "阪神・淡路大震災",
+  "era": "平成時代",
+  "century": "20世紀",
+  "half": "後半",
+  "personRequired": false,
+  "explanation": "平成期の社会に大きな影響を与えた災害です。1995年の出来事として整理します。",
+  "year": 1995,
+  "timeLevel": "halfdecade",
+  "timeRange": "1990年代後半"
+ },
+ {
+  "id": "p-modern3-26",
+  "type": "period",
+  "scope": "modern",
+  "term": "地下鉄サリン事件",
+  "era": "平成時代",
+  "century": "20世紀",
+  "half": "後半",
+  "personRequired": false,
+  "explanation": "平成期の社会不安を象徴する事件です。阪神・淡路大震災と同じ1995年の出来事として押さえます。",
+  "year": 1995,
+  "timeLevel": "halfdecade",
+  "timeRange": "1990年代後半"
+ },
+ {
+  "id": "p-modern3-27",
+  "type": "period",
+  "scope": "modern",
+  "term": "東日本大震災",
+  "era": "平成時代",
+  "century": "21世紀",
+  "half": "前半",
+  "personRequired": false,
+  "explanation": "平成期の大きな災害として押さえる事項です。21世紀前半の出来事として整理します。",
+  "year": 2011,
+  "timeLevel": "halfdecade",
+  "timeRange": "2010年代前半"
+ },
+ {
+  "id": "c-modern3-01",
+  "type": "culture",
+  "scope": "modern",
+  "term": "太陽の季節",
+  "era": "昭和戦後",
+  "century": "20世紀",
+  "half": "後半",
+  "culture": "昭和戦後の文化",
+  "explanation": "戦後文学・大衆文化と結びつけて押さえる作品です。昭和戦後の文化事項として整理します。",
+  "year": 1955,
+  "timeLevel": "halfdecade",
+  "timeRange": "1950年代後半"
+ },
+ {
+  "id": "c-modern3-02",
+  "type": "period",
+  "scope": "modern",
+  "term": "東京オリンピック",
+  "era": "昭和戦後",
+  "explanation": "東京オリンピックは、高度経済成長期の日本を象徴する出来事です。1960年代前半の戦後史として整理します。",
+  "year": 1964,
+  "timeLevel": "halfdecade",
+  "timeRange": "1960年代前半",
+  "personRequired": false,
+  "actorRequired": false
+ },
+ {
+  "id": "c-modern3-03",
+  "type": "period",
+  "scope": "modern",
+  "term": "大阪万博",
+  "era": "昭和戦後",
+  "explanation": "大阪万博は、高度経済成長期後半の社会と文化を象徴する出来事です。1970年代前半の戦後史として整理します。",
+  "year": 1970,
+  "timeLevel": "halfdecade",
+  "timeRange": "1970年代前半",
+  "personRequired": false,
+  "actorRequired": false
+ },
+ {
+  "id": "c-modern3-04",
+  "type": "period",
+  "scope": "modern",
+  "term": "高度経済成長の終焉",
+  "era": "昭和戦後",
+  "explanation": "高度経済成長は、第一次石油危機を境に終わりを迎えます。このアプリでは、その終焉を1970年代前半の出来事として押さえます。",
+  "year": 1973,
+  "timeLevel": "halfdecade",
+  "timeRange": "1970年代前半",
+  "personRequired": false,
+  "actorRequired": false
+ }
+];
+
+let state = {screen:"home", mode:"period", scope:"all", count:10, quiz:[], index:0, answer:null, submitted:false, results:[]};
+
+const $ = (s)=>document.querySelector(s);
+const app = $("#app");
+function shuffle(a){const x=[...a];for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x}
+function typesFor(mode){return mode==="random"?["order","period","culture"]:[mode]}
+function pool(){const types=typesFor(state.mode);return QUESTIONS.filter(q=>types.includes(q.type)&&(state.scope==="all"||q.scope===state.scope))}
+function initialAnswer(q){
+  if(q.type==="order") return [];
+  if(q.type==="period"){
+    const ans = {era:""};
+    if(usesTimeRange(q)){
+      ans.timeRange = "";
+    }else{
+      ans.century = "";
+      ans.half = "";
+    }
+    if(shouldAskPerson(q)) ans.person = "";
+    if(shouldAskActor(q)) ans.actor = "";
+    return ans;
+  }
+  if(q.type==="culture"){
+    const ans = {era:"", culture:""};
+    if(usesTimeRange(q)){
+      ans.timeRange = "";
+    }else if(!omitsCenturyHalf(q)){
+      ans.century = "";
+      ans.half = "";
+    }
+    return ans;
+  }
+  return {era:"", century:"", half:"", culture:""};
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
+function set(part){Object.assign(state,part);render()}
+function scrollToQuizTop(targetSelector=".questionHead"){
+  requestAnimationFrame(()=>{
+    const target = document.querySelector(targetSelector) || document.querySelector(".card") || document.body;
+    target.scrollIntoView({behavior:"smooth", block:"start"});
+  });
+}
+
+function playTone(ctx, frequency, start, duration, type="sine", volume=0.12){
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = type;
+  osc.frequency.setValueAtTime(frequency, start);
+  gain.gain.setValueAtTime(0.0001, start);
+  gain.gain.exponentialRampToValueAtTime(volume, start + 0.02);
+  gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.start(start);
+  osc.stop(start + duration + 0.02);
+}
+
+function playResultSound(isCorrect){
+  try{
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if(!AudioContext) return;
+    const ctx = new AudioContext();
+
+    const startSound = ()=>{
+      const now = ctx.currentTime + 0.03;
+
+      if(isCorrect){
+        // ピンポン：柔らかいが聞き取りやすい上昇3音
+        playTone(ctx, 784, now, 0.15, "triangle", 0.24);
+        playTone(ctx, 1047, now + 0.13, 0.17, "triangle", 0.25);
+        playTone(ctx, 1319, now + 0.29, 0.20, "triangle", 0.20);
+      }else{
+        // ブー：PCスピーカーでも聞こえやすい中低音。音量と長さを強化。
+        playTone(ctx, 392, now, 0.20, "triangle", 0.34);
+        playTone(ctx, 294, now + 0.18, 0.46, "triangle", 0.38);
+        playTone(ctx, 196, now + 0.20, 0.46, "sine", 0.18);
+        // 柔らかさを残しつつ輪郭を出す短い低音パルス
+        playTone(ctx, 147, now + 0.23, 0.34, "square", 0.07);
+      }
+
+      setTimeout(()=>ctx.close(), 1200);
+    };
+
+    if(ctx.state === "suspended"){
+      ctx.resume().then(startSound).catch(startSound);
+    }else{
+      startSound();
+    }
+  }catch(e){
+    // 音が鳴らない環境でもアプリ本体は止めない
+  }
+}
+function centuryNum(s){return Number(String(s).replace("世紀",""))}
+function adjacentCenturyOptions(correct){
+  const n = centuryNum(correct);
+  const nums = [n-1,n,n+1,n+2].filter(x=>x>0);
+  if(nums.length < 4 && n-2>0) nums.unshift(n-2);
+  return shuffle([...new Set(nums)].slice(0,4).map(x=>`${x}世紀`));
+}
+function decadeNum(label){
+  const m = String(label||"").match(/(\d{4})年代/);
+  return m ? Number(m[1]) : 0;
+}
+function adjacentDecadeOptions(correct){
+  const d = decadeNum(correct);
+  const vals = [d-10, d, d+10, d+20].filter(x=>x>0).map(x=>`${x}年代`);
+  return shuffle([...new Set(vals)].slice(0,4));
+}
+function halfDecadeIndex(label){
+  const m = String(label||"").match(/(\d{4})年代(前半|後半)/);
+  if(!m) return 0;
+  return Number(m[1]) * 2 + (m[2] === "後半" ? 1 : 0);
+}
+function halfDecadeLabelFromIndex(idx){
+  const decade = Math.floor(idx / 2);
+  const half = idx % 2 === 0 ? "前半" : "後半";
+  return `${decade}年代${half}`;
+}
+function adjacentHalfDecadeOptions(correct){
+  const idx = halfDecadeIndex(correct);
+  const vals = [idx-1, idx, idx+1, idx+2].filter(x=>x>0).map(halfDecadeLabelFromIndex);
+  return shuffle([...new Set(vals)].slice(0,4));
+}
+function usesTimeRange(q){
+  return q && q.timeRange;
+}
+function omitsCenturyHalf(q){
+  return Boolean(q && q.omitCenturyHalf);
+}
+const PERSON_ALIAS_GROUPS = [
+  ["ワカタケル大王", "倭王武"],
+  ["中大兄皇子", "天智天皇"],
+  ["大海人皇子", "天武天皇"],
+  ["オホド大王", "継体天皇"],
+  ["聖徳太子", "厩戸王", "厩戸皇子"],
+  ["中臣鎌足", "藤原鎌足"],
+  ["皇極天皇", "斉明天皇"],
+  ["孝謙天皇", "称徳天皇"],
+  ["大友皇子", "弘文天皇"],
+  ["白河天皇", "白河上皇"],
+  ["後白河天皇", "後白河上皇"],
+  ["大友皇子", "弘文天皇"],
+  ["吉田茂内閣", "第1次吉田茂内閣", "第2次吉田茂内閣", "第3次吉田茂内閣", "第4次吉田茂内閣"],
+  ["第1次伊藤博文内閣", "第2次伊藤博文内閣", "第3次伊藤博文内閣", "第4次伊藤博文内閣"],
+  ["第1次桂太郎内閣", "第2次桂太郎内閣", "第3次桂太郎内閣"],
+  ["第1次若槻礼次郎内閣", "第2次若槻礼次郎内閣"],
+  ["第1次近衛文麿内閣", "第2次近衛文麿内閣", "第3次近衛文麿内閣"]
+];
+
+function personAliasKey(name){
+  for(const group of PERSON_ALIAS_GROUPS){
+    if(group.includes(name)) return group.join("／");
+  }
+  return name;
+}
+
+function samePersonAlias(a, b){
+  return personAliasKey(a) === personAliasKey(b);
+}
+
+function neighborOptions(correct, map, fallbackPool, n=4){
+  const base = map[correct] || [correct, ...fallbackPool.filter(x=>x!==correct)];
+  const result = [];
+
+  function addCandidate(x){
+    if(!x) return;
+    // 正解と同一人物の別名は、同一設問の選択肢から除外する。
+    if(x !== correct && samePersonAlias(x, correct)) return;
+    // 既に入っている選択肢と同一人物の別名も除外する。
+    if(result.some(y => y === x || samePersonAlias(y, x))) return;
+    result.push(x);
+  }
+
+  addCandidate(correct);
+  base.forEach(addCandidate);
+  fallbackPool.forEach(addCandidate);
+
+  return shuffle(result.slice(0, n));
+}
+function shouldAskPerson(q){
+  return q && q.type === "period" && q.person && q.personRequired === true;
+}
+function shouldAskActor(q){
+  return q && q.type === "period" && q.actor && q.actorRequired === true;
+}
+function enhanceQuestion(q){
+  if(q.type==="order") return {...q, displayItems:shuffle(q.items)};
+  if(q.type==="period"){
+    const opts = {
+      era: neighborOptions(q.era, ERA_NEIGHBORS, Object.keys(ERA_NEIGHBORS))
+    };
+    if(usesTimeRange(q)){
+      opts.timeRange = q.timeLevel === "halfdecade"
+        ? adjacentHalfDecadeOptions(q.timeRange)
+        : adjacentDecadeOptions(q.timeRange);
+    }else{
+      opts.century = adjacentCenturyOptions(q.century);
+      opts.half = ["前半","後半"];
+    }
+    if(shouldAskPerson(q)){
+      opts.person = neighborOptions(q.person, RULER_NEIGHBORS, RULER_FALLBACK);
+    }
+    if(shouldAskActor(q)){
+      opts.actor = neighborOptions(q.actor, ACTOR_NEIGHBORS, ACTOR_FALLBACK);
+    }
+    return {...q, options: opts};
+  }
+  return {...q, options:{
+    era: neighborOptions(q.era, ERA_NEIGHBORS, Object.keys(ERA_NEIGHBORS)),
+    ...(usesTimeRange(q)
+      ? {timeRange: q.timeLevel === "halfdecade" ? adjacentHalfDecadeOptions(q.timeRange) : adjacentDecadeOptions(q.timeRange)}
+      : {century: adjacentCenturyOptions(q.century), half: ["前半","後半"]}),
+    culture: neighborOptions(q.culture, CULTURE_NEIGHBORS, Object.keys(CULTURE_NEIGHBORS))
+  }};
+}
+function start(){
+  let q=shuffle(pool()).slice(0, Math.min(state.count,pool().length)).map(enhanceQuestion);
+  state={...state, screen:"quiz", quiz:q, index:0, answer:initialAnswer(q[0]), submitted:false, results:[]};
+  render();
+  scrollToQuizTop(".questionHead");
+}
+function isCorrect(q,a){
+  if(q.type==="order"){
+    const correct=[...q.items].sort((x,y)=>x[1]-y[1]).map(x=>x[0]);
+    return a.length===q.items.length && a.every((it,i)=>it[0]===correct[i])
+  }
+  if(q.type==="period"){
+    const timeOk = usesTimeRange(q) ? a.timeRange===q.timeRange : (a.century===q.century && a.half===q.half);
+    const base = a.era===q.era && timeOk;
+    const personOk = shouldAskPerson(q) ? a.person===q.person : true;
+    const actorOk = shouldAskActor(q) ? a.actor===q.actor : true;
+    return base && personOk && actorOk;
+  }
+  if(q.type==="culture"){
+    const timeOk = omitsCenturyHalf(q) ? true : (usesTimeRange(q) ? a.timeRange===q.timeRange : (a.century===q.century && a.half===q.half));
+    return a.era===q.era && timeOk && a.culture===q.culture;
+  }
+  return a.era===q.era && a.century===q.century && a.half===q.half && a.culture===q.culture;
+}
+function canSubmit(q,a){
+  if(q.type==="order") return a.length===q.items.length;
+  if(q.type==="period"){
+    const timeOk = usesTimeRange(q) ? Boolean(a.timeRange) : Boolean(a.century && a.half);
+    const base = Boolean(a.era) && timeOk;
+    const personOk = shouldAskPerson(q) ? Boolean(a.person) : true;
+    const actorOk = shouldAskActor(q) ? Boolean(a.actor) : true;
+    return base && personOk && actorOk;
+  }
+  if(q.type==="culture"){
+    const timeOk = omitsCenturyHalf(q) ? true : (usesTimeRange(q) ? Boolean(a.timeRange) : Boolean(a.century && a.half));
+    return Boolean(a.era && timeOk && a.culture);
+  }
+  return Boolean(a.era && a.century && a.half && a.culture);
+}
+function statusBanner(correct){
+  if(!state.submitted) return "";
+  const title = correct ? "せいかい！" : "ざんねん！";
+  const msg = correct ? "よくできました。この調子で次もいきましょう。" : "どこが違ったか、すぐ下の比較で確認できます。";
+  const confetti = correct ? `<div class="confetti">
+    <span class="piece c1 p1 d1"></span><span class="piece c2 p2 d2"></span><span class="piece c3 p3 d3"></span>
+    <span class="piece c4 p4 d4"></span><span class="piece c5 p5 d5"></span><span class="piece c2 p6 d6"></span>
+    <span class="piece c1 p7 d7"></span><span class="piece c4 p8 d8"></span><span class="piece c3 p9 d9"></span>
+  </div>` : "";
+  return `<div class="statusBanner ${correct?'ok':'ng'}">
+    ${confetti}
+    <div class="statusIcon ${correct?'celebrate':''}">${correct?'✓':'✕'}</div>
+    <div style="z-index:1">
+      <div class="statusTitle">${title}</div>
+      <div class="statusText">${msg}</div>
+    </div>
+  </div>`;
+}
+
+/* いらすとや風の、歴史人物をイメージしたかわいい人物SVG */
+/* 顔がつぶれないよう、人物ではなく建物・文化作品・モチーフ中心のSVGに変更 */
+function iconFrame(inner){
+  return `<svg width="118" height="118" viewBox="0 0 118 118" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect x="5" y="5" width="108" height="108" rx="18" fill="#fffaf2" stroke="#d9c3a7" stroke-width="2.2"/>
+    <rect x="11" y="11" width="96" height="96" rx="14" fill="#f8efe2" stroke="#ead9c2" stroke-width="1.6"/>
+    ${inner}
+  </svg>`;
+}
+function objectSVG(kind){
+  if(kind==="pagoda"){
+    return iconFrame(`
+      <ellipse cx="59" cy="101" rx="30" ry="6" fill="#e4d6c5"/>
+      <rect x="55" y="20" width="8" height="63" rx="2" fill="#7e5b43"/>
+      <path d="M36 36 H82 L74 44 H44 Z" fill="#c35f3c" stroke="#8f432c" stroke-width="2"/>
+      <path d="M33 51 H85 L76 59 H42 Z" fill="#cf6b47" stroke="#8f432c" stroke-width="2"/>
+      <path d="M30 66 H88 L78 75 H40 Z" fill="#dc7a52" stroke="#8f432c" stroke-width="2"/>
+      <rect x="45" y="75" width="28" height="20" rx="3" fill="#c89a55" stroke="#8b6a31" stroke-width="2"/>
+      <rect x="54" y="80" width="10" height="15" rx="2" fill="#705038"/>
+    `);
+  }
+  if(kind==="torii"){
+    return iconFrame(`
+      <ellipse cx="59" cy="101" rx="28" ry="6" fill="#e4d6c5"/>
+      <rect x="39" y="34" width="8" height="56" rx="2" fill="#c6553d"/>
+      <rect x="71" y="34" width="8" height="56" rx="2" fill="#c6553d"/>
+      <rect x="28" y="28" width="62" height="8" rx="2" fill="#d7664a"/>
+      <rect x="24" y="22" width="70" height="7" rx="2" fill="#8c5142"/>
+      <rect x="48" y="40" width="22" height="6" rx="2" fill="#8c5142"/>
+      <path d="M31 90 H87" stroke="#8d7b6a" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="59" cy="61" r="12" fill="#f2dfba" stroke="#c9ac74" stroke-width="2"/>
+      <path d="M59 51 L63 60 L73 61 L65 67 L67 77 L59 72 L51 77 L53 67 L45 61 L55 60 Z" fill="#c7a04f"/>
+    `);
+  }
+  if(kind==="castle"){
+    return iconFrame(`
+      <ellipse cx="59" cy="102" rx="31" ry="6" fill="#e4d6c5"/>
+      <path d="M38 86 H80 V95 H38 Z" fill="#a9b5bf" stroke="#6e7c88" stroke-width="2"/>
+      <path d="M43 70 H75 V86 H43 Z" fill="#f2f0ea" stroke="#9ba3a9" stroke-width="2"/>
+      <path d="M49 54 H69 V70 H49 Z" fill="#f7f5ef" stroke="#9ba3a9" stroke-width="2"/>
+      <path d="M36 64 H82 L76 70 H42 Z" fill="#46586a" stroke="#2f3d49" stroke-width="2"/>
+      <path d="M42 48 H76 L71 54 H47 Z" fill="#516477" stroke="#2f3d49" stroke-width="2"/>
+      <path d="M33 80 H85 L79 86 H39 Z" fill="#596d80" stroke="#2f3d49" stroke-width="2"/>
+      <rect x="56" y="76" width="6" height="10" fill="#8a673b"/>
+      <circle cx="23" cy="33" r="8" fill="#ffd77c"/>
+      <path d="M21 23 Q23 18 25 23" stroke="#ffd77c" stroke-width="2" fill="none"/>
+    `);
+  }
+  if(kind==="scroll"){
+    return iconFrame(`
+      <ellipse cx="59" cy="102" rx="28" ry="5" fill="#e4d6c5"/>
+      <rect x="28" y="27" width="62" height="56" rx="6" fill="#f6eddc" stroke="#c9b899" stroke-width="2"/>
+      <rect x="24" y="27" width="8" height="56" rx="4" fill="#9a7147"/>
+      <rect x="86" y="27" width="8" height="56" rx="4" fill="#9a7147"/>
+      <line x1="40" y1="41" x2="78" y2="41" stroke="#8a6a47" stroke-width="2"/>
+      <line x1="40" y1="51" x2="72" y2="51" stroke="#8a6a47" stroke-width="2"/>
+      <line x1="40" y1="61" x2="76" y2="61" stroke="#8a6a47" stroke-width="2"/>
+      <line x1="40" y1="71" x2="67" y2="71" stroke="#8a6a47" stroke-width="2"/>
+      <path d="M52 82 L60 92 L68 82" fill="#d35e4b" stroke="#9b4335" stroke-width="2"/>
+    `);
+  }
+  if(kind==="book"){
+    return iconFrame(`
+      <ellipse cx="59" cy="102" rx="28" ry="5" fill="#e4d6c5"/>
+      <path d="M27 34 Q43 27 57 34 V85 Q43 78 27 85 Z" fill="#fff7ee" stroke="#cdbca6" stroke-width="2"/>
+      <path d="M61 34 Q75 27 91 34 V85 Q75 78 61 85 Z" fill="#fffdf7" stroke="#cdbca6" stroke-width="2"/>
+      <line x1="59" y1="34" x2="59" y2="85" stroke="#d8cab7" stroke-width="2"/>
+      <line x1="36" y1="46" x2="51" y2="46" stroke="#9a8a74" stroke-width="2"/>
+      <line x1="36" y1="56" x2="51" y2="56" stroke="#9a8a74" stroke-width="2"/>
+      <line x1="67" y1="46" x2="82" y2="46" stroke="#9a8a74" stroke-width="2"/>
+      <line x1="67" y1="56" x2="82" y2="56" stroke="#9a8a74" stroke-width="2"/>
+      <circle cx="59" cy="24" r="8" fill="#f2d38a" stroke="#caa14d" stroke-width="2"/>
+    `);
+  }
+  if(kind==="bell"){
+    return iconFrame(`
+      <ellipse cx="59" cy="102" rx="28" ry="5" fill="#e4d6c5"/>
+      <path d="M59 22 L66 30 H52 Z" fill="#84613d"/>
+      <path d="M37 32 Q59 20 81 32 L74 76 Q59 86 44 76 Z" fill="#a87443" stroke="#7e5b3a" stroke-width="2.2"/>
+      <line x1="44" y1="44" x2="74" y2="44" stroke="#d2a46b" stroke-width="2"/>
+      <line x1="42" y1="56" x2="76" y2="56" stroke="#d2a46b" stroke-width="2"/>
+      <path d="M55 76 H63 V89 H55 Z" fill="#7e5b3a"/>
+      <circle cx="59" cy="92" r="5" fill="#d35e4b" stroke="#9b4335" stroke-width="2"/>
+    `);
+  }
+  if(kind==="diet"){
+    return iconFrame(`
+      <ellipse cx="59" cy="102" rx="31" ry="5.5" fill="#e4d6c5"/>
+      <path d="M26 83 H92 V95 H26 Z" fill="#b38b5e" stroke="#856443" stroke-width="2"/>
+      <path d="M36 51 H82 V83 H36 Z" fill="#dcc7a3" stroke="#9e815c" stroke-width="2"/>
+      <path d="M49 28 H69 V51 H49 Z" fill="#d6be98" stroke="#9e815c" stroke-width="2"/>
+      <path d="M54 18 H64 V28 H54 Z" fill="#c4563f"/>
+      <line x1="46" y1="58" x2="46" y2="83" stroke="#9e815c" stroke-width="2"/>
+      <line x1="59" y1="58" x2="59" y2="83" stroke="#9e815c" stroke-width="2"/>
+      <line x1="72" y1="58" x2="72" y2="83" stroke="#9e815c" stroke-width="2"/>
+      <circle cx="21" cy="29" r="7" fill="#ffd77c"/>
+    `);
+  }
+  if(kind==="factory"){
+    return iconFrame(`
+      <ellipse cx="59" cy="102" rx="31" ry="5.5" fill="#e4d6c5"/>
+      <path d="M28 63 H91 V94 H28 Z" fill="#9ba7b3" stroke="#6f7d8a" stroke-width="2"/>
+      <path d="M28 74 L42 66 V74 L56 66 V74 L70 66 V94 H28 Z" fill="#b0bcc7" stroke="#6f7d8a" stroke-width="2"/>
+      <rect x="73" y="46" width="12" height="48" fill="#8b7869" stroke="#675649" stroke-width="2"/>
+      <path d="M76 40 Q72 32 77 26 Q82 31 81 40" fill="#d9d9d9" opacity=".9"/>
+      <path d="M84 36 Q80 29 85 23 Q90 28 89 36" fill="#d9d9d9" opacity=".75"/>
+      <rect x="35" y="80" width="7" height="8" fill="#f7e4a5"/><rect x="48" y="80" width="7" height="8" fill="#f7e4a5"/><rect x="61" y="80" width="7" height="8" fill="#f7e4a5"/>
+    `);
+  }
+  if(kind==="dove"){
+    return iconFrame(`
+      <ellipse cx="59" cy="102" rx="28" ry="5" fill="#e4d6c5"/>
+      <path d="M31 69 Q48 49 68 58 Q81 63 84 76 Q74 74 68 70 Q61 80 49 80 Q37 79 31 69 Z" fill="#fffdfb" stroke="#b9b9b9" stroke-width="2"/>
+      <path d="M44 65 Q48 48 63 41 Q68 53 61 63" fill="#f8f8f8" stroke="#b9b9b9" stroke-width="2"/>
+      <circle cx="75" cy="66" r="2" fill="#444"/>
+      <path d="M82 68 L91 64 L84 73 Z" fill="#e0a546"/>
+      <path d="M62 83 Q69 89 75 88" fill="none" stroke="#c4563f" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M66 28 L70 35 L78 35 L72 40 L74 48 L66 43 L58 48 L60 40 L54 35 L62 35 Z" fill="#d5b25d"/>
+    `);
+  }
+  return objectSVG("scroll");
+}
+function figureByQuestion(q){
+  const key = `${q.person||''} ${q.term||''} ${q.title||''} ${q.culture||''}`;
+  if(/大宝律令|平安京遷都|律令国家|古事記/.test(key)) return objectSVG("scroll");
+  if(/飛鳥|奈良|文武天皇|桓武天皇/.test(key)) return objectSVG("pagoda");
+  if(/鎌倉|北条|源頼朝|御成敗式目|文永の役|弘安の役|永仁の徳政令|承久の乱/.test(key)) return objectSVG("bell");
+  if(/室町|足利|応仁の乱|日明貿易|南北朝|金閣|銀閣|江戸|徳川|関ヶ原|武家諸法度|参勤交代|寛政の改革|享保の改革|天保の改革|松平定信|生類憐みの令/.test(key)) return objectSVG("castle");
+  if(/源氏物語|紫式部|国風文化|文化|舞姫|プロレタリア|金閣|銀閣|東山|北山/.test(key)) return objectSVG("book");
+  if(/伊藤|加藤高明|若槻|普通選挙法|明治|大正|昭和|憲法|国会|内閣|帝国議会|教育勅語|護憲|選挙|治安維持|国際連盟/.test(key)) return objectSVG("diet");
+  if(/満州事変|近代|工業|鉄砲|キリスト教|南蛮|国家総動員|太平洋戦争|日中戦争|三国同盟|高度経済成長|石油危機|プラザ合意|バブル/.test(key)) return objectSVG("factory");
+  if(/吉田茂|サンフランシスコ平和条約|昭和戦後|日本国憲法|日米安全保障|国際連合|沖縄返還|日ソ共同|日韓基本|日中国交|日米和親|日米修好|ペリー|大政奉還|王政復古/.test(key)) return objectSVG("dove");
+  if(q.type==="culture") return objectSVG("book");
+  if(q.scope==="modern") return objectSVG("diet");
+  return objectSVG("pagoda");
+}
+function topPersonSet(){
+  return [objectSVG("pagoda"), objectSVG("castle"), objectSVG("book"), objectSVG("diet")].map(svg=>`<div class="miniCard">${svg}</div>`).join("");
+}
+function questionArtSet(q){
+  return figureByQuestion(q);
+}
+function renderHome(){
+  const available=pool().length;
+  app.innerHTML=`<div class="wrap">
+    <section class="hero">
+      <div class="heroGrid">
+        <div>
+          <span class="badge">PDF準拠プロトタイプ</span>
+          <span class="badge">受験日本史</span>
+          <span class="badge">時期判断</span>
+          <span class="badge">オレンジ版・建物作品イラスト</span>
+          <h1>時代と流れで覚える！日本史用語<br>時期判断トレーニング</h1>
+          <p class="lead">出題モードと範囲を選び、出来事・人物・文化事項の時期感覚を鍛える教材アプリです。</p>
+          <div class="note">前近代編①（原始・古代〜平安）の問題データを追加しました。色味はオレンジ寄り、イラストは建物・文化作品・歴史モチーフ中心です。</div>
+        </div>
+        <div class="mascotArea">
+          ${topPersonSet()}
+        </div>
+      </div>
+    </section>
+
+    <div class="grid grid2">
+      <section class="card">
+        <h2>1. モードを選ぶ</h2>
+        <div class="grid modes">
+          ${MODES.map(m=>`<button class="selectCard ${state.mode===m.id?'active':''}" data-mode="${m.id}">
+            <div class="hint">${m.short}</div>
+            <div style="font-weight:1000;font-size:16px;margin-top:4px">${m.label}</div>
+            <p class="hint">${m.desc}</p>
+          </button>`).join("")}
+        </div>
+      </section>
+
+      <aside class="card">
+        <h2>2. 範囲を選ぶ</h2>
+        ${SCOPES.map(s=>`<button class="scopeBtn ${state.scope===s.id?'active':''}" data-scope="${s.id}">
+          <div style="font-weight:1000">${s.label}</div>
+          <div class="hint">${s.desc}</div>
+        </button>`).join("")}
+        <h2 style="margin-top:20px">3. 問題数</h2>
+        <div class="countRow">
+          ${COUNTS.map(c=>`<button class="countBtn ${state.count===c?'active':''}" data-count="${c}">${c}問</button>`).join("")}
+        </div>
+        <div class="summaryCard" style="margin-top:16px">
+          <div class="small">現在の条件で出題可能</div>
+          <div style="font-size:28px;font-weight:1000;margin-top:4px">${available}<span style="font-size:14px;font-weight:800;margin-left:4px">問</span></div>
+        </div>
+        <div style="margin-top:16px">
+          <button class="primary" id="start" ${available===0?'disabled':''}>スタートする</button>
+        </div>
+      </aside>
+    </div>
+  </div>`;
+
+  document.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>set({mode:b.dataset.mode}));
+  document.querySelectorAll("[data-scope]").forEach(b=>b.onclick=()=>set({scope:b.dataset.scope}));
+  document.querySelectorAll("[data-count]").forEach(b=>b.onclick=()=>set({count:Number(b.dataset.count)}));
+  $("#start").onclick=start;
+}
+function renderChoiceGroup(title, options, key, correct, three=false){
+  return `<div class="choiceGroup">
+    <div class="small"><b>${title}</b></div>
+    <div class="grid choices ${three?'three':''}" style="margin-top:10px">
+      ${options.map(o=>{
+        const val=state.answer[key];
+        let cls="choiceBtn";
+        if(!state.submitted && val===o) cls+=" picked";
+        if(state.submitted && o===correct) cls+=" correct";
+        if(state.submitted && val===o && o!==correct) cls+=" wrong";
+        return `<button class="${cls}" data-choice-key="${key}" data-choice-val="${escapeHtml(o)}" ${state.submitted?'disabled':''}>${escapeHtml(o)}</button>`
+      }).join("")}
+    </div>
+  </div>`;
+}
+function renderQuestionHeader(q, title, description, subtitle){
+  return `<div class="questionHead">
+    <div class="questionArt">${questionArtSet(q)}</div>
+    <div class="questionText">
+      <p class="small"><b>${escapeHtml(subtitle)}</b></p>
+      <div class="questionTitle">${escapeHtml(title)}</div>
+      <p class="small">${escapeHtml(description)}</p>
+    </div>
+  </div>`;
+}
+function renderDiffForPeriodCulture(q, answer){
+  const fields = q.type==="period"
+    ? [["時代", answer.era, q.era]]
+        .concat(usesTimeRange(q) ? [["年代", answer.timeRange, q.timeRange]] : [["世紀", answer.century, q.century], ["前半/後半", answer.half, q.half]])
+        .concat(shouldAskPerson(q) ? [["その時の天皇・将軍・内閣", answer.person, q.person]] : [])
+        .concat(shouldAskActor(q) ? [["重要な政権担当者・関係人物", answer.actor, q.actor]] : [])
+    : [["時代", answer.era, q.era]]
+        .concat(omitsCenturyHalf(q) ? [] : (usesTimeRange(q) ? [["年代", answer.timeRange, q.timeRange]] : [["世紀", answer.century, q.century], ["前半/後半", answer.half, q.half]]))
+        .concat([["文化区分", answer.culture, q.culture]]);
+  return `<div class="diffBox">
+    <div class="diffTitle">あなたの解答と正解の比較</div>
+    <div class="diffGrid">
+      <div class="diffRow">
+        <div class="diffHead">項目</div>
+        <div class="diffHead">あなたの解答</div>
+        <div class="diffHead">正解</div>
+      </div>
+      ${fields.map(([name,user,correct])=>{
+        const same = user===correct;
+        const userHtml = same
+          ? escapeHtml(user || "未選択")
+          : `<span class="answerTextWithMark"><span class="bigX">×</span><span>${escapeHtml(user || "未選択")}</span></span>`;
+        return `<div class="diffRow ${same?'':'wrongRow'}">
+          <div class="diffCell">${escapeHtml(name)} ${same?'<span class="labelGood">OK</span>':'<span class="labelBad">ここが違う</span>'}</div>
+          <div class="diffCell ${same?'same':'different'}">${userHtml}</div>
+          <div class="diffCell ${same?'same':'different'}">${escapeHtml(correct)}</div>
+        </div>`;
+      }).join("")}
+    </div>
+  </div>`;
+}
+function renderDiffForOrder(q, answer){
+  const correctOrder=[...q.items].sort((a,b)=>a[1]-b[1]).map(x=>x[0]);
+  return `<div class="diffBox">
+    <div class="diffTitle">あなたの並べ順と正しい順序の比較</div>
+    <div class="diffGrid">
+      <div class="diffRow">
+        <div class="diffHead">位置</div>
+        <div class="diffHead">あなたの並べ順</div>
+        <div class="diffHead">正しい順序</div>
+      </div>
+      ${correctOrder.map((correct, i)=>{
+        const mine = answer[i] ? answer[i][0] : "未選択";
+        const same = mine===correct;
+        const mineHtml = same
+          ? escapeHtml(mine)
+          : `<span class="answerTextWithMark"><span class="bigX">×</span><span>${escapeHtml(mine)}</span></span>`;
+        return `<div class="diffRow ${same?'':'wrongRow'}">
+          <div class="diffCell">${i+1}番目 ${same?'<span class="labelGood">OK</span>':'<span class="labelBad">ここが違う</span>'}</div>
+          <div class="diffCell ${same?'same':'different'}">${mineHtml}</div>
+          <div class="diffCell ${same?'same':'different'}">${escapeHtml(correct)}</div>
+        </div>`;
+      }).join("")}
+    </div>
+  </div>`;
+}
+function explainBlock(q, contentHtml){
+  return `<div class="explainWrap">
+    <div class="explainArt">${questionArtSet(q)}</div>
+    <div class="explain">
+      ${contentHtml}
+    </div>
+  </div>`;
+}
+
+function buildDetailedExplanation(q){
+  const detail = q.detail || q.explanation || "";
+  return `<div class="detailExplain">
+    <div class="detailExplainTitle">解説</div>
+    <p style="margin:0;line-height:1.9">${escapeHtml(detail)}</p>
+  </div>`;
+}
+function renderQuestion(q){
+  const correct = state.submitted && isCorrect(q,state.answer);
+  if(q.type==="order"){
+    const rem=q.displayItems.filter(it=>!state.answer.some(a=>a[0]===it[0]));
+    const correctOrder=[...q.items].sort((a,b)=>a[1]-b[1]).map(x=>x[0]);
+    return `
+      ${renderQuestionHeader(q, q.prompt, "タップして、古い順に下へ並べていきましょう。", q.title)}
+
+      <div class="choiceGroup">
+        <div class="small"><b>選択肢</b></div>
+        <div class="grid choices" style="margin-top:10px">
+          ${rem.map(it=>`<button class="choiceBtn" data-order="${escapeHtml(it[0])}" ${state.submitted?'disabled':''}>${escapeHtml(it[0])}</button>`).join("")}
+        </div>
+      </div>
+
+      <div class="answerBox">
+        <div class="small"><b>あなたの並べ順</b></div>
+        ${state.answer.length ? state.answer.map((it,i)=>{
+          let cls="answerItem";
+          if(state.submitted && correctOrder[i]===it[0]) cls+=" correct";
+          if(state.submitted && correctOrder[i]!==it[0]) cls+=" wrong";
+          const icon = !state.submitted ? "" : (correctOrder[i]===it[0] ? " ✅" : " ❌");
+          return `<div class="${cls}">
+            <div class="answerMain"><span class="step">${i+1}</span><span>${escapeHtml(it[0])}${icon}</span></div>
+            ${!state.submitted?`<button class="ghostBtn" data-remove="${escapeHtml(it[0])}">取り消す</button>`:""}
+          </div>`
+        }).join("") : `<p class="small">まだ並べていません。上の選択肢を古い順にタップしてください。</p>`}
+      </div>
+
+      ${state.submitted ? `<div class="answerFeedback">${statusBanner(correct)}${explainBlock(q, `
+        <div class="muted">正しい順序</div>
+        <h2>${correctOrder.map(escapeHtml).join(" → ")}</h2>
+        ${buildDetailedExplanation(q)}
+        ${!correct ? renderDiffForOrder(q, state.answer) : ""}
+      `)}</div>` : ""}
+    `;
+  }
+  if(q.type==="period"){
+    return `
+      ${statusBanner(correct)}
+      ${renderQuestionHeader(q, q.term, usesTimeRange(q) ? "何時代・どの年代の出来事かを選びましょう。必要な問題では、その時の天皇・将軍・内閣、または重要な政権担当者も別々に選びます。" : "何時代・何世紀・前半／後半の出来事かを選びましょう。必要な問題では、その時の天皇・将軍・内閣、または重要な政権担当者も別々に選びます。", usesTimeRange(q) ? "時代・年代・政権担当者判断" : "時代・世紀・政権担当者判断")}
+      ${renderChoiceGroup("何時代か", q.options.era, "era", q.era)}
+      ${usesTimeRange(q) ? renderChoiceGroup("どの年代か", q.options.timeRange, "timeRange", q.timeRange) : `
+        ${renderChoiceGroup("何世紀か", q.options.century, "century", q.century)}
+        ${renderChoiceGroup("前半／後半", q.options.half, "half", q.half, true)}
+      `}
+      ${shouldAskPerson(q) ? renderChoiceGroup("その時の天皇・将軍・内閣", q.options.person, "person", q.person) : ""}
+      ${shouldAskActor(q) ? renderChoiceGroup("重要な政権担当者・関係人物", q.options.actor, "actor", q.actor) : ""}
+
+      ${state.submitted ? `<div class="answerFeedback">${statusBanner(correct)}${explainBlock(q, `
+        <div class="muted">正解</div>
+        <div class="answerChips">
+          <span class="chip">${escapeHtml(q.era)}</span>
+          ${usesTimeRange(q) ? `<span class="chip">${escapeHtml(q.timeRange)}</span>` : `<span class="chip">${escapeHtml(q.century)}</span><span class="chip">${escapeHtml(q.half)}</span>`}
+          ${shouldAskPerson(q) ? `<span class="chip">${escapeHtml(q.person)}</span>` : ""}
+          ${shouldAskActor(q) ? `<span class="chip">${escapeHtml(q.actor)}</span>` : ""}
+        </div>
+        ${buildDetailedExplanation(q)}
+        ${!correct ? renderDiffForPeriodCulture(q, state.answer) : ""}
+      `)}</div>` : ""}
+    `;
+  }
+  return `
+    ${renderQuestionHeader(q, q.term, omitsCenturyHalf(q) ? "この文化事項について、時代・文化区分を選びましょう。" : (usesTimeRange(q) ? "この文化事項について、時代・年代・文化区分を選びましょう。" : "この文化事項について、時代・世紀・前半／後半・文化区分を選びましょう。"), omitsCenturyHalf(q) ? "文化史の時代判断" : (usesTimeRange(q) ? "文化史の年代判断" : "文化史の時期判断"))}
+    ${renderChoiceGroup("何時代か", q.options.era, "era", q.era)}
+    ${omitsCenturyHalf(q) ? `` : (usesTimeRange(q) ? renderChoiceGroup("どの年代か", q.options.timeRange, "timeRange", q.timeRange) : `
+      ${renderChoiceGroup("何世紀か", q.options.century, "century", q.century)}
+      ${renderChoiceGroup("前半／後半", q.options.half, "half", q.half, true)}
+    `)}
+    ${renderChoiceGroup("どの文化に関係するか", q.options.culture, "culture", q.culture)}
+
+    ${state.submitted ? `<div class="answerFeedback">${statusBanner(correct)}${explainBlock(q, `
+      <div class="muted">正解</div>
+      <div class="answerChips">
+        <span class="chip">${escapeHtml(q.era)}</span>
+        ${omitsCenturyHalf(q) ? `` : (usesTimeRange(q) ? `<span class="chip">${escapeHtml(q.timeRange)}</span>` : `<span class="chip">${escapeHtml(q.century)}</span><span class="chip">${escapeHtml(q.half)}</span>`)}
+        <span class="chip">${escapeHtml(q.culture)}</span>
+      </div>
+      ${buildDetailedExplanation(q)}
+      ${!correct ? renderDiffForPeriodCulture(q, state.answer) : ""}
+    `)}</div>` : ""}
+  `;
+}
+function renderQuiz(){
+  if(state.index>=state.quiz.length){return renderResult()}
+  const q=state.quiz[state.index], ok=state.submitted && isCorrect(q,state.answer);
+  app.innerHTML=`<div class="wrap">
+    <div class="topbar">
+      <button class="secondary" id="back">トップに戻る</button>
+      <div>
+        <span class="pill">📚 ${MODES.find(m=>m.id===state.mode).label}</span>
+        <span class="pill">🗂️ ${SCOPES.find(s=>s.id===state.scope).label}</span>
+        <span class="pill">📝 ${state.index+1}/${state.quiz.length}</span>
+      </div>
+    </div>
+
+    <div class="progressWrap"><div class="bar" style="width:${Math.round((state.index+1)/state.quiz.length*100)}%"></div></div>
+
+    <section class="card">
+      ${renderQuestion(q)}
+      <div class="footerActions">
+        <div class="resultMini">
+          ${state.submitted ? (ok ? '✅ この問題は正解です' : '❌ この問題は不正解です') : '解答を選んでください'}
+        </div>
+        <div>
+          ${!state.submitted && q.type==="order" ? '<button class="secondary" id="resetOrder">やり直す</button>' : ''}
+          ${!state.submitted
+            ? `<button class="primary" id="submit" style="width:auto" ${canSubmit(q,state.answer)?'':'disabled'}>採点する</button>`
+            : `<button class="primary" id="next" style="width:auto">${state.index+1>=state.quiz.length?'結果を見る':'次の問題へ'}</button>`}
+        </div>
+      </div>
+    </section>
+  </div>`;
+
+  $("#back").onclick=()=>set({screen:"home",quiz:[]});
+  const sub=$("#submit");
+  if(sub) sub.onclick=()=>{
+    const correctNow = isCorrect(q,state.answer);
+    state.results[state.index]={question:q, answer:state.answer, correct:correctNow};
+    playResultSound(correctNow);
+    set({submitted:true});
+    scrollToQuizTop(".answerFeedback");
+  };
+  const next=$("#next");
+  if(next) next.onclick=()=>{
+    const ni=state.index+1;
+    if(ni>=state.quiz.length){
+      set({index:ni});
+      scrollToQuizTop(".hero");
+    }else{
+      set({index:ni, answer:initialAnswer(state.quiz[ni]), submitted:false});
+      scrollToQuizTop(".questionHead");
+    }
+  };
+  const reset=$("#resetOrder");
+  if(reset) reset.onclick=()=>set({answer:[]});
+  document.querySelectorAll("[data-order]").forEach(b=>b.onclick=()=>{
+    const it=q.items.find(x=>x[0]===b.dataset.order);
+    set({answer:[...state.answer,it]});
+  });
+  document.querySelectorAll("[data-remove]").forEach(b=>b.onclick=()=>set({answer:state.answer.filter(x=>x[0]!==b.dataset.remove)}));
+  document.querySelectorAll("[data-choice-key]").forEach(b=>b.onclick=()=>{
+    const key=b.dataset.choiceKey;
+    state.answer[key]=b.dataset.choiceVal;
+    set({answer:{...state.answer}});
+  });
+}
+function renderResult(){
+  const correct=state.results.filter(r=>r&&r.correct).length;
+  const wrongs=state.results.filter(r=>r&&!r.correct);
+  const rate=Math.round(correct/state.quiz.length*100);
+  const heroPerson = rate >= 80 ? objectSVG("pagoda") : rate >= 60 ? objectSVG("diet") : objectSVG("castle");
+  app.innerHTML=`<div class="wrap">
+    <section class="hero">
+      <div class="heroGrid">
+        <div>
+          <span class="badge">おつかれさまでした</span>
+          <h1>結果発表</h1>
+          <div class="summaryCard">
+            <div class="small">正答数</div>
+            <div class="resultBig">${correct} / ${state.quiz.length}</div>
+            <div style="margin-top:8px;font-weight:900">${rate >= 80 ? '🌸 とてもよいです！' : rate >= 60 ? '👍 まずまずです！' : '💪 復習してもう一度挑戦！'}</div>
+            <div class="small">正答率 ${rate}%</div>
+          </div>
+        </div>
+        <div class="mascotArea">
+          <div class="miniCard">${heroPerson}</div>
+          <div class="miniCard">${objectSVG("book")}</div>
+        </div>
+      </div>
+
+      ${wrongs.length ? `<div class="card" style="margin-top:18px">
+        <h2>復習すべき問題</h2>
+        ${wrongs.map(r=>`<div class="reviewItem">
+          <div style="font-weight:1000">${escapeHtml(r.question.type==="order" ? r.question.title : r.question.term)}</div>
+          <div class="small">${escapeHtml(r.question.explanation)}</div>
+        </div>`).join("")}
+      </div>` : `<div class="note" style="margin-top:16px">全問正解です。すばらしい！</div>`}
+      <div style="margin-top:16px"><button class="primary" id="backHome">トップに戻る</button></div>
+    </section>
+  </div>`;
+  $("#backHome").onclick=()=>set({screen:"home",quiz:[]});
+}
+function render(){state.screen==="home"?renderHome():renderQuiz()}
+render();
+</script>
+</body>
+</html>
